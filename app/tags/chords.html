@@ -1,0 +1,23 @@
+<chords>
+    <h2>{selectedChord.chord} Chord</h2>
+    <select id="chord-select" onchange={chordSelected}>
+              <option each={opts.chorddatabase}>{chord}</option>
+    </select>
+    <neck chord={selectedChord}></neck>
+    <script>
+        var self = this;
+        self.chordIndex = 0;
+        self.selectedChord = null;
+
+        self.on('mount', function(e) {});
+
+        self.on('update', function() {
+            self.selectedChord = self.opts.chorddatabase[self.chordIndex];
+        });
+
+        chordSelected(e) {
+            self.logObject(self.selectedChord);
+            self.chordIndex = e.target.selectedIndex;
+        }
+    </script>
+</chords>

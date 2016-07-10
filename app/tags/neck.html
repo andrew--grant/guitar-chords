@@ -1,0 +1,27 @@
+<neck>
+    <fret each={shape in chord.shape} details={shape}>shape {shape}</fret>
+    <script>
+        var self = this;
+        self.chord = opts.chord;
+
+        self.on('mount', function(e) {});
+
+        self.on('update', function() {
+            self.chord = opts.chord;
+            self.display();
+        });
+
+        display(strings) {
+            /*
+            
+            we know the chord we want to show, now we need to render it.
+            
+            Idea: loop through all frets on guitar neck, and see if any of the
+            chord strings match it (eg; need a 'held' icon on it) 
+
+            */
+
+            self.logObject(self.chord, 'chord');
+        }
+    </script>
+</neck>
