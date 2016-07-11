@@ -1,5 +1,10 @@
 <app>
-    <h1>{ opts[0].families}</h1>
+    <h1>{ opts.chords[0].families}</h1>
     <chords chorddatabase={opts}></chords>
-    <script></script>
+    <script>
+        var self = this;
+        self.on('update', function(e) { 
+            self.logObject(opts, 'opts');
+        });
+    </script>
 </app>

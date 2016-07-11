@@ -1,9 +1,12 @@
 <neck>
-    <fret each={shape in chord.shape} details={shape}>shape {shape}</fret>
+    <!--<fret each={shape in chord.shape} details={shape}>shape {shape}</fret>-->
+    <fret each={shape in new Array(22)} details={shape}>
+        shape {shape}
+    </fret>
     <script>
         var self = this;
         self.chord = opts.chord;
-
+        self.frets = [[1,3],[2,0],[3,0]]
         self.on('mount', function(e) {});
 
         self.on('update', function() {
@@ -20,6 +23,13 @@
             chord strings match it (eg; need a 'held' icon on it) 
 
             */
+ 
+            for(i = 0; i <22; i++){
+                self.log('* ' + (i + 1));  
+                for(j = 0; j <6; j++){
+                    self.log('*** ' + (j + 1));  
+                } 
+            }
 
             self.logObject(self.chord, 'chord');
         }
