@@ -1,19 +1,15 @@
 function guitar() {
-
-    // todo: replace the empty strings with chord families and difficulty rating
-
     return {
-
         chords: [
-            /*
-             Using 'a' as an example: Six strings (1 through 6, first index in sub-array) 
-             indicating which fret to hold that string against (second index in sub-array) 
+            /* 
+             Shape: 
+             First index in sub-array is string number
+             Second index in sub-array is the fret to hold (if any, 0 if no hold)
              */
-
             {
                 name: 'a',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
-                difficulty: '2',
+                difficulty: 2,
                 shape: [
                     [1, 0],
                     [2, 0],
@@ -27,7 +23,7 @@ function guitar() {
             {
                 name: 'g',
                 families: ['g', 'c', 'd', 'em', 'am', 'bm'],
-                difficulty: '4',
+                difficulty: 4,
                 shape: [
                     [1, 1],
                     [2, 0],
@@ -41,7 +37,7 @@ function guitar() {
             {
                 name: 'e',
                 families: ['e', 'a', 'b', 'cm', 'fm', 'gm'],
-                difficulty: '3',
+                difficulty: 3,
                 shape: [
                     [1, 0],
                     [2, 0],
