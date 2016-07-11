@@ -1,5 +1,4 @@
 <neck>
-    <!--<fret each={shape in chord.shape} details={shape}>shape {shape}</fret>-->
     <fret each={fret in opts.frets} fret={fret} chord={chord}></fret>
     <script>
         var self = this;
@@ -9,7 +8,6 @@
 
         self.on('update', function() {
             self.chord = opts.chord;
-            self.logObject(opts.frets, 'frets');
             //self.display();
         });
 
@@ -30,7 +28,6 @@
                 }
             }
 
-            self.logObject(opts.frets, 'frets');
         }
     </script>
 </neck>

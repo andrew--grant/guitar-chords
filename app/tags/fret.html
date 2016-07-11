@@ -6,10 +6,17 @@
 
         self.on('mount', function() {});
 
-        self.on('update', function() {});
+        self.on('update', function() {
+            self.updateFret();
+        });
+
+        updateFret() {
+            console.log('update the ' + opts.fret[0] + ' fret now');
+
+        }
 
         click(e) {
-            console.log('fret ' + opts.fret[0] + ' clicked');
+            console.log('fret ' + opts.fret[0] + ' clicked, chord to show is ' + opts.chord.name);
         }
     </script>
 </fret>
