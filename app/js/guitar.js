@@ -1,4 +1,4 @@
-function guitarChords() {
+function guitar() {
 
     // todo: replace the empty strings with chord families and difficulty rating
 
@@ -53,7 +53,28 @@ function guitarChords() {
             }
 
         ],
-        frets: null
+        frets: [
+            [1, 3],
+            [2, 0],
+            [3, 0],
+            [4, 0],
+            [5, 3],
+            [6, 0],
+            [6, 0],
+            [7, 0],
+            [8, 3],
+            [9, 0],
+            [10, 0],
+            [11, 0],
+            [12, 3],
+            [13, 0],
+            [14, 0],
+            [15, 0],
+            [16, 3],
+            [17, 0],
+            [18, 0],
+            [19, 0]
+        ]
     }
 
 }

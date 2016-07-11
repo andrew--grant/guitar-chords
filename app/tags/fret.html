@@ -1,17 +1,15 @@
 <fret>
-    <p onclick={click}>fret {opts.details}</p>
+    <p onclick={click}>fret {opts.fret[0]}</p>
     <script>
         var self = this;
         self.details = null;
 
-        self.on('mount', function() {
-            self.details = self.opts.details;
-        });
+        self.on('mount', function() {});
 
         self.on('update', function() {});
 
         click(e) {
-            console.log('fret clicked');
+            console.log('fret ' + opts.fret[0] + ' clicked');
         }
     </script>
 </fret>

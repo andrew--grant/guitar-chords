@@ -1,10 +1,8 @@
 <app>
-    <h1>{ opts.chords[0].families}</h1>
-    <chords chorddatabase={opts}></chords>
+    <h1>{opts.chords[0].families}</h1>
+    <chords chords={opts.chords} frets={opts.frets}></chords>
     <script>
         var self = this;
-        self.on('update', function(e) { 
-            self.logObject(opts, 'opts');
-        });
+        self.on('update', function(e) {});
     </script>
 </app>
