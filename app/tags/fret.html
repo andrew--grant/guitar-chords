@@ -1,5 +1,14 @@
 <fret>
-    <p onclick={click}>fret {opts.fret[0]}</p>
+    <div class="fret" onclick={click}>fret {opts.fret[0]}</div>
+    <style>
+        .fret {
+            height: 80px;
+            width: 120px;
+            float: left;
+            background-color: red;
+            border-right: solid 2px black;
+        }
+    </style>
     <script>
         var self = this;
         self.details = null;
