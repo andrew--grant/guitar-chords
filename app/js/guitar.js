@@ -2,9 +2,9 @@ function guitar() {
     return {
         chords: [
             /* 
-             Shape: 
-             First index in sub-array is string number
-             Second index in sub-array is the fret to hold (if any, 0 if no hold)
+                Shape: 
+                First index in sub-array is string number
+                Second index in sub-array is the fret to hold (if any, 0 if no hold)
              */
             {
                 name: 'a',
@@ -49,6 +49,11 @@ function guitar() {
             }
 
         ],
+        /* 
+            Frets: 
+            First index in sub-array is fret number
+            Second index in sub-array is any markings (todo: currently not accounting for more than one)
+       */
         frets: [
             [1, 3],
             [2, 0],
