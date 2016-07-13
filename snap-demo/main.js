@@ -1,45 +1,59 @@
+/* Guitar class */
+var Guitar = function(svg) {
+    var s = Snap(svg);
+    this.svg = s;
+}
 
-window.onload = function () {
+Guitar.prototype.draw = function() {
+    var fret = new Fret(this.svg);
+    fret.draw();
+}
 
-    var s = Snap('#svg');
-    var circle_1 = s.circle(300, 200, 140);
-    var circle_2 = s.circle(250, 200, 140);
+/* Fret class */
+var Fret = function(svg) {
+    this.svg = svg;
+    this.fretWidth = 300;
+    this.fretHeight = 325;
+    this.fretx = 50;
+    this.frety = 45;
+    this.fretbg = 'brown';
+    this.stringbg = 'red';
+    this.fingersize = ((this.fretHeight - 30) / 12) - 4;
+    this.spacer = 55;
+}
 
-    // Group circles together
-
-    var circles = s.group(circle_1, circle_2);
-
-    var ellipse = s.ellipse(275, 220, 170, 90);
-
-    // Add fill color and opacity to circle and apply
-    // the mask
-    circles.attr({
-        fill: 'coral',
-        fillOpacity: .6,
-        mask: ellipse
+Fret.prototype.draw = function() {
+    var fret = this.svg.rect(this.fretx, this.frety + 30, this.fretWidth, this.fretHeight);
+    fret.attr({
+        fill: this.fretbg
     });
+    for (i = 1; i <= 6; i++) {
+        var finger = new Finger(this.svg);
+        finger.draw(this.fretx, this.frety + (i * this.spacer), this.fingersize);
+    }
+}
 
-    ellipse.attr({
-        fill: '#fff',
-        opacity: .8
+/* GuitarString class */
+var GuitarString = function(svg) {
+    this.svg = svg;
+}
+
+GuitarString.prototype.draw = function(fretx, frety, fingersize) {}
+
+var Finger = function(svg) {
+    this.svg = svg;
+    this.fingerbg = 'blue';
+}
+
+Finger.prototype.draw = function(fretx, frety, fingersize) {
+    var finger = this.svg.circle(fretx, frety, fingersize);
+    finger.attr({
+        fill: this.fingerbg
     });
+}
 
-    // Create a blink effect by modifying the rx value
-    // for ellipse from 90px to 1px and backwards
-
-    function blink() {
-        // attrs, duration, easing, callback
-        // ellipse.animate({ ry: 180 },500, function () {
-        //     ellipse.animate({ ry: 140 }, 500);
-        // });
-
-         ellipse.animate({ fill: '#222', transform:'translate(30,100)'},500, function () {
-             ellipse.animate({ fill: '#fff', transform:'translate(275,220)' }, 500);
-        });
-    };
-
-    // Recall blink method once every 3 seconds
-
-    setInterval(blink, 2000);
-
+/* Entry point */
+window.onload = function() {
+    var guitar = new Guitar("#svg");
+    guitar.draw();
 }
