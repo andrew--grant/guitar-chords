@@ -55,5 +55,6 @@ Finger.prototype.draw = function(fretx, frety, fingersize) {
 /* Entry point */
 window.onload = function() {
     var guitar = new Guitar("#svg");
+    // todo: add options - height, width, colours, styles etc
     guitar.draw();
 }
