@@ -21,7 +21,7 @@ var Guitar = function (svg, opts) {
 }
 
 Guitar.prototype.draw = function () {
-    for (var i = 1; i <= 29; i++) {
+    for (var i = 1; i <= 19; i++) {
         var fret = new Fret(this.svg, this.opts, this.x, this.y);
         fret.draw();
         this.x += (this.opts.fingerSize * 6) + this.fretLineWidth;
@@ -50,7 +50,8 @@ Fret.prototype.draw = function () {
     var fret = this.svg.rect(this.fretx, this.frety, this.opts.fingerSize * 6, fretHeight);
     fret.attr({
         fill: this.opts.fretColor,
-        opacity: 1
+        stroke: "#000",
+        strokeWidth: 1, strokeDasharray: '1 1'
     });
 
     // draw strings and fingers
@@ -84,7 +85,7 @@ var Finger = function (svg, opts) {
 }
 
 Finger.prototype.draw = function (fingerx, fingery, fingersize) {
-    var finger = this.svg.circle(fingerx, fingery, fingersize);
+    var finger = this.svg.circle(fingerx, fingery, fingersize * .9);
     finger.attr({
         fill: this.opts.fingerColour
     });
@@ -96,10 +97,10 @@ window.onload = function () {
     var guitar = new Guitar("#svg", {
         x: 20,
         y: 20,
-        fingerSize: 20,
+        fingerSize: 13,
         fingerColour: 'black',
         stringColour: 'black',
-        fretColor: '#8F4401' // #CD853F #B57E1D #8F4401 #683200 #DB8C44 #FFB775
+        fretColor: '#CD853F' // #CD853F #B57E1D #8F4401 #683200 #DB8C44 #FFB775
     });
     guitar.draw();
 }
