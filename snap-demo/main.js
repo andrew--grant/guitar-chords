@@ -27,7 +27,7 @@ var Guitar = function(svg, opts) {
 Guitar.prototype.draw = function() {
     for (var i = 1; i <= this.opts.model.frets.length; i++) {
         var fret = new Fret(this.svg, this.opts, this.x, this.y);
-        fret.draw();
+        fret.draw(i); // todo: pass the chords in from here!!
         this.x += (this.opts.fingerSize * 6) + this.fretLineWidth;
     }
 }
@@ -41,7 +41,7 @@ var Fret = function(svg, opts, x, y) {
     this.spacer = this.fretHeight / 6;
 }
 
-Fret.prototype.draw = function() {
+Fret.prototype.draw = function(fretNumber) {
 
     var fretHeight = 0;
     for (var i = 1; i <= 6; i++) {
@@ -55,21 +55,32 @@ Fret.prototype.draw = function() {
     fret.attr({
         fill: this.opts.fretColor,
         stroke: "#000",
-        //strokeWidth: 4, 
         strokeDasharray: '1 1'
     });
 
     // draw strings and fingers
-    this.drawChord();
+    this.drawChord(fretNumber);
 }
 
-Fret.prototype.drawChord = function(chord) {
+Fret.prototype.drawChord = function(fretNumber) {
+
+
+    // todo: debugging only, see comment above "todo: pass the chords in from here!!"
     for (var i = 1; i <= 6; i++) {
+
         var frety = this.frety + (i * (this.opts.fingerSize * 2) - this.opts.fingerSize);
-        if (i % 4 == 0) {
-            var finger = new Finger(this.svg, this.opts);
-            finger.draw(this.fretx + (this.opts.fingerSize * 3), frety, this.opts.fingerSize);
+
+        for (var j = 0; j < this.opts.model.chords.length; j++) {
+            console.log('Fret Number: ' + fretNumber + ', Chord: ' + this.opts.model.chords[j].name.toUpperCase());
+
+            for (var k = 0; k < this.opts.model.chords[j].shape.length; k++) {
+                console.log(this.opts.model.chords[j].shape[k]);
+            }
+
         }
+
+        var finger = new Finger(this.svg, this.opts);
+        finger.draw(this.fretx + (this.opts.fingerSize * 3), frety, this.opts.fingerSize);
         var guitarString = new GuitarString(this.svg, this.opts);
         guitarString.draw(this.fretx, frety, this.opts.fingerSize * 6);
 
