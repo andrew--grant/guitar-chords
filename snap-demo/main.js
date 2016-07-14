@@ -51,7 +51,8 @@ Fret.prototype.draw = function () {
     fret.attr({
         fill: this.opts.fretColor,
         stroke: "#000",
-        strokeWidth: 1, strokeDasharray: '1 1'
+        //strokeWidth: 4, 
+        strokeDasharray: '1 1'
     });
 
     // draw strings and fingers
@@ -97,7 +98,7 @@ window.onload = function () {
     var guitar = new Guitar("#svg", {
         x: 20,
         y: 20,
-        fingerSize: 13,
+        fingerSize: 23,
         fingerColour: 'black',
         stringColour: 'black',
         fretColor: '#CD853F' // #CD853F #B57E1D #8F4401 #683200 #DB8C44 #FFB775
