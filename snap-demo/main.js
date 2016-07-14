@@ -1,8 +1,12 @@
 /* Guitar class */
-var Guitar = function (svg, opts) {
+var Guitar = function(svg, opts) {
+    // cant go without a mdel
+    if (!opts.model) {
+        throw Error('\'model\' is a required option');
+    }
     var s = Snap(svg);
     this.svg = s;
-    opts = opts == null ? {} : opts;
+    this.opts = opts == null ? {} : opts;
     opts.defaults = {};
     opts.defaults.stringColour = 'red';
     opts.defaults.fingerColour = 'green';
@@ -14,14 +18,14 @@ var Guitar = function (svg, opts) {
     opts.fretColor = opts.fretColor || opts.defaults.fretColor;
     opts.stringColour = opts.stringColour || opts.defaults.stringColour;
     opts.fingerColour = opts.fingerColour || opts.defaults.fingerColour;
-    this.fretLineWidth = 0; // this.fingerSize / 12; // todo: remove if not end up using
-    this.opts = opts;
+    this.fretLineWidth = 0; // this.fingerSize / 12; // todo: remove if not end up using  
+
     this.x = this.opts.x || opts.defaults.x;
     this.y = this.opts.y || opts.defaults.y;
 }
 
-Guitar.prototype.draw = function () {
-    for (var i = 1; i <= 19; i++) {
+Guitar.prototype.draw = function() {
+    for (var i = 1; i <= this.opts.model.frets.length; i++) {
         var fret = new Fret(this.svg, this.opts, this.x, this.y);
         fret.draw();
         this.x += (this.opts.fingerSize * 6) + this.fretLineWidth;
@@ -29,7 +33,7 @@ Guitar.prototype.draw = function () {
 }
 
 /* Fret class */
-var Fret = function (svg, opts, x, y) {
+var Fret = function(svg, opts, x, y) {
     this.svg = svg;
     this.opts = opts;
     this.fretx = x;
@@ -37,7 +41,7 @@ var Fret = function (svg, opts, x, y) {
     this.spacer = this.fretHeight / 6;
 }
 
-Fret.prototype.draw = function () {
+Fret.prototype.draw = function() {
 
     var fretHeight = 0;
     for (var i = 1; i <= 6; i++) {
@@ -56,22 +60,30 @@ Fret.prototype.draw = function () {
     });
 
     // draw strings and fingers
+    this.drawChord();
+}
+
+Fret.prototype.drawChord = function(chord) {
     for (var i = 1; i <= 6; i++) {
         var frety = this.frety + (i * (this.opts.fingerSize * 2) - this.opts.fingerSize);
-        var finger = new Finger(this.svg, this.opts);
-        finger.draw(this.fretx + (this.opts.fingerSize * 3), frety, this.opts.fingerSize);
+        if (i % 4 == 0) {
+            var finger = new Finger(this.svg, this.opts);
+            finger.draw(this.fretx + (this.opts.fingerSize * 3), frety, this.opts.fingerSize);
+        }
         var guitarString = new GuitarString(this.svg, this.opts);
         guitarString.draw(this.fretx, frety, this.opts.fingerSize * 6);
+
     }
 }
 
+
 /* GuitarString class */
-var GuitarString = function (svg, opts) {
+var GuitarString = function(svg, opts) {
     this.svg = svg;
     this.opts = opts;
 }
 
-GuitarString.prototype.draw = function (guitarStringx, guitarStringy, width) {
+GuitarString.prototype.draw = function(guitarStringx, guitarStringy, width) {
     // todo: proportional string widths 
     var guitarString = this.svg.rect(guitarStringx, guitarStringy, width, this.opts.fingerSize / 12);
     guitarString.attr({
@@ -80,12 +92,12 @@ GuitarString.prototype.draw = function (guitarStringx, guitarStringy, width) {
 }
 
 /* Finger class */
-var Finger = function (svg, opts) {
+var Finger = function(svg, opts) {
     this.svg = svg;
     this.opts = opts;
 }
 
-Finger.prototype.draw = function (fingerx, fingery, fingersize) {
+Finger.prototype.draw = function(fingerx, fingery, fingersize) {
     var finger = this.svg.circle(fingerx, fingery, fingersize * .9);
     finger.attr({
         fill: this.opts.fingerColour
@@ -93,15 +105,16 @@ Finger.prototype.draw = function (fingerx, fingery, fingersize) {
 }
 
 /* Entry point */
-window.onload = function () {
+window.onload = function() {
     // finger size is a base ratio
-    var guitar = new Guitar("#svg", {
+    var theGuitar = new Guitar("#svg", {
+        model: guitar(),
         x: 20,
         y: 20,
         fingerSize: 23,
         fingerColour: 'black',
         stringColour: 'black',
-        fretColor: '#CD853F' // #CD853F #B57E1D #8F4401 #683200 #DB8C44 #FFB775
+        fretColor: '#FFB775' // #CD853F #B57E1D #8F4401 #683200 #DB8C44 #FFB775
     });
-    guitar.draw();
+    theGuitar.draw();
 }
