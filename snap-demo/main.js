@@ -15,10 +15,12 @@ var Guitar = function(svg, opts) {
     opts.defaults.fretColour = '#D2B48C';
     opts.defaults.fretNumberColour = 'grey';
     opts.defaults.fingerSize = 40;
+    opts.defaults.openStringColour = 'black';
     opts.defaults.x = 0;
     opts.defaults.y = 0;
     opts.fingerSize = opts.fingerSize || opts.defaults.fingerSize;
     opts.fretColour = opts.fretColour || opts.defaults.fretColour;
+    opts.openStringColour = opts.openStringColour || opts.defaults.openStringColour;
     opts.fretNumberColour = opts.fretNumberColour || opts.defaults.fretNumberColour;
     opts.stringColour = opts.stringColour || opts.defaults.stringColour;
     opts.fingerColour = opts.fingerColour || opts.defaults.fingerColour;
@@ -77,14 +79,12 @@ Fret.prototype.draw = function(fretNumber, chord) {
         fill: this.opts.fretNumberColour
     });
 
-
-    // todo: test 'no play' x strings
     // draw strings and fingers
     this.drawChord(fretNumber, shape);
 }
 
 Fret.prototype.drawChord = function(fretNumber, shape) {
-
+    console.log('-- drawChord');
 
     for (var i = 1; i <= 6; i++) {
 
@@ -108,6 +108,18 @@ Fret.prototype.drawChord = function(fretNumber, shape) {
         if ((shapeDataFret == fretNumber) && (shapeDataString == i) && (shapeDataFinger != 0)) {
             var finger = new Finger(this.svg, this.opts);
             finger.draw(this.fretx + (this.opts.fingerSize * 3), frety, this.opts.fingerSize, shapeDataFinger);
+        } else if ((shapeDataFret == fretNumber - 1) && (shapeDataString == i) && (shapeDataFinger == 0)) {
+            var open = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 7);
+            open.attr({
+                fill: this.opts.openStringColour
+            });
+        } else if ((shapeDataFret == fretNumber - 1) && (shapeDataString == i) && (shapeDataFinger == -1)) {
+            // must be a 'no play'
+            // todo: make an 'x' shape (text)?
+            var doNotPlay = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 7);
+            doNotPlay.attr({
+                fill: 'red'
+            });
         }
 
     }
@@ -137,8 +149,7 @@ var GuitarString = function(svg, opts) {
 }
 
 GuitarString.prototype.draw = function(guitarStringx, guitarStringy, width, stringNumber) {
-    // todo: proportional string 
-    // widths, or stick with this?
+    // proportional string widths 
     var stringThickness = (this.opts.fingerSize / 12);
     if (6 / stringNumber == 1) {
         // thin
@@ -149,7 +160,7 @@ GuitarString.prototype.draw = function(guitarStringx, guitarStringy, width, stri
         stringThickness = stringThickness / .55;
     }
 
-    var guitarString = this.svg.rect(guitarStringx, guitarStringy, width, stringThickness); // todo: better factorial? (this.opts.fingerSize / 12) + (6 / stringNumber)
+    var guitarString = this.svg.rect(guitarStringx, guitarStringy, width, stringThickness);
     guitarString.attr({
         fill: this.opts.stringColour
     });
@@ -175,6 +186,7 @@ Finger.prototype.draw = function(fingerx, fingery, fingersize, fingerNumber) {
         'font-size': fingersize * 1.6,
         fill: this.opts.fingerNumberColour
     });
+
 }
 
 /* Entry point */
