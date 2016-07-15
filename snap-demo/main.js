@@ -79,48 +79,40 @@ Fret.prototype.draw = function(fretNumber, chord) {
         fill: this.opts.fretNumberColour
     });
 
-    // draw strings and fingers
-    this.drawChord(fretNumber, shape);
+    // draw strings and fingers on this fret
+    this.drawStrings(fretNumber, shape);
 }
 
-Fret.prototype.drawChord = function(fretNumber, shape) {
-    console.log('-- drawChord');
+Fret.prototype.extractShapeData = function(stringNumber, shape) {
+    // Shape Data:
+    // Eg: [3,3,2]  Place finger 2 on string 3 at fret 3
+    // Eg: [2,6,0]  Place no finger on string 6 at fret 2
+    // Play open string = 0 | Dont play string = x
+    var shapeData = shape[stringNumber - 1];
+    return {
+        shapeDataFret: shapeData[0],
+        shapeDataString: shapeData[1],
+        shapeDataFinger: shapeData[2],
+    }
+}
+
+Fret.prototype.calcFretY = function(stringNumber) {
+    return this.frety + (stringNumber * (this.opts.fingerSize * 2) - this.opts.fingerSize); //todo: weird expression. shorten it??
+}
+
+Fret.prototype.drawStrings = function(fretNumber, shape) {
 
     for (var i = 1; i <= 6; i++) {
 
-        // Shape Data:
-        // Eg: [3,3,2]  Place finger 2 on string 3 at fret 3
-        // Eg: [2,6,0]  Place no finger on string 6 at fret 2
-        // Play open string = 0 | Dont play string = x
+        var shapeData = this.extractShapeData(i, shape);
 
-        var shapeData = shape[i - 1];
-        var shapeDataFret = shapeData[0];
-        var shapeDataString = shapeData[1];
-        var shapeDataFinger = shapeData[2];
-
-        var frety = this.frety + (i * (this.opts.fingerSize * 2) - this.opts.fingerSize); //todo: weird expression. shorten it??
+        var frety = this.calcFretY(i);
 
         // We always draw the string on the fret, but...
         var guitarString = new GuitarString(this.svg, this.opts);
-        guitarString.draw(this.fretx, frety, this.opts.fingerSize * 6, shapeDataString);
+        guitarString.draw(this.fretx, frety, this.opts.fingerSize * 6, shapeData.shapeDataString);
 
-        // ...should we draw a finger on the string?
-        if ((shapeDataFret == fretNumber) && (shapeDataString == i) && (shapeDataFinger != 0)) {
-            var finger = new Finger(this.svg, this.opts);
-            finger.draw(this.fretx + (this.opts.fingerSize * 3), frety, this.opts.fingerSize, shapeDataFinger);
-        } else if ((shapeDataFret == fretNumber - 1) && (shapeDataString == i) && (shapeDataFinger == 0)) {
-            var open = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 7);
-            open.attr({
-                fill: this.opts.openStringColour
-            });
-        } else if ((shapeDataFret == fretNumber - 1) && (shapeDataString == i) && (shapeDataFinger == -1)) {
-            // must be a 'no play'
-            // todo: make an 'x' shape (text)?
-            var doNotPlay = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 7);
-            doNotPlay.attr({
-                fill: 'red'
-            });
-        }
+        this.drawChordShape(fretNumber, shape);
 
     }
 
@@ -141,6 +133,35 @@ Fret.prototype.drawChord = function(fretNumber, shape) {
 
 }
 
+Fret.prototype.drawChordShape = function(fretNumber, shape) {
+
+    for (var i = 1; i <= 6; i++) {
+
+        var shapeData = this.extractShapeData(i, shape);
+        var frety = this.calcFretY(i);
+        // ...should we draw a finger on the string?
+        if ((shapeData.shapeDataFret == fretNumber) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger != 0)) {
+            var finger = new Finger(this.svg, this.opts);
+            finger.draw(this.fretx + (this.opts.fingerSize * 3), frety, this.opts.fingerSize, shapeData.shapeDataFinger);
+        } else if ((shapeData.shapeDataFret == fretNumber - 1) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == 0)) {
+            var open = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 7);
+            open.attr({
+                fill: this.opts.openStringColour
+            });
+        } else if ((shapeData.shapeDataFret == fretNumber - 1) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == -1)) {
+            // must be a 'no play'
+            // todo: make an 'x' shape (text)?
+            var doNotPlay = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 7);
+            doNotPlay.attr({
+                fill: 'red'
+            });
+        }
+
+    }
+
+}
+
+
 
 /* GuitarString class */
 var GuitarString = function(svg, opts) {
@@ -157,7 +178,7 @@ GuitarString.prototype.draw = function(guitarStringx, guitarStringy, width, stri
     }
     if (6 / stringNumber == 6) {
         // thick
-        stringThickness = stringThickness / .55;
+        stringThickness = stringThickness / .55; // reduce opacity (as in, make grey)
     }
 
     var guitarString = this.svg.rect(guitarStringx, guitarStringy, width, stringThickness);
@@ -198,7 +219,7 @@ window.onload = function() {
         model: guitar(),
         x: 20,
         y: 20,
-        fingerSize: 30,
+        fingerSize: 45,
         fingerColour: 'black',
         stringColour: 'black',
         fretColour: '#D2B48C'
