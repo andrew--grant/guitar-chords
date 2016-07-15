@@ -1,6 +1,7 @@
 /* Guitar class */
-var Guitar = function (svg, opts) {
-    // cant go without a mdel
+var Guitar = function(svg, opts) {
+    // cant do anything without a
+    // guitar and chords data model
     if (!opts.model) {
         throw Error('\'model\' is a required option');
     }
@@ -10,30 +11,33 @@ var Guitar = function (svg, opts) {
     opts.defaults = {};
     opts.defaults.stringColour = 'red';
     opts.defaults.fingerColour = 'green';
-    opts.defaults.fretColour = 'purple';
+    opts.defaults.fingerNumberColour = 'white';
+    opts.defaults.fretColour = '#D2B48C';
+    opts.defaults.fretNumberColour = 'grey';
     opts.defaults.fingerSize = 40;
     opts.defaults.x = 0;
     opts.defaults.y = 0;
     opts.fingerSize = opts.fingerSize || opts.defaults.fingerSize;
-    opts.fretColor = opts.fretColor || opts.defaults.fretColor;
+    opts.fretColour = opts.fretColour || opts.defaults.fretColour;
+    opts.fretNumberColour = opts.fretNumberColour || opts.defaults.fretNumberColour;
     opts.stringColour = opts.stringColour || opts.defaults.stringColour;
     opts.fingerColour = opts.fingerColour || opts.defaults.fingerColour;
-    this.fretLineWidth = 0; // this.fingerSize / 12; // todo: remove if not end up using  
+    opts.fingerNumberColour = opts.fingerNumberColour || opts.defaults.fingerNumberColour;
 
     this.x = this.opts.x || opts.defaults.x;
     this.y = this.opts.y || opts.defaults.y;
 }
 
-Guitar.prototype.draw = function () {
+Guitar.prototype.draw = function() {
     for (var i = 1; i <= this.opts.model.frets.length; i++) {
         var fret = new Fret(this.svg, this.opts, this.x, this.y);
         fret.draw(i, 'g'); // todo: pass the chords from UI (selector)
-        this.x += (this.opts.fingerSize * 6) + this.fretLineWidth;
+        this.x += (this.opts.fingerSize * 6);
     }
 }
 
 /* Fret class */
-var Fret = function (svg, opts, x, y) {
+var Fret = function(svg, opts, x, y) {
     this.svg = svg;
     this.opts = opts;
     this.fretx = x;
@@ -41,12 +45,14 @@ var Fret = function (svg, opts, x, y) {
     this.spacer = this.fretHeight / 6;
 }
 
-Fret.prototype.draw = function (fretNumber, chord) {
+Fret.prototype.draw = function(fretNumber, chord) {
 
     // given a chord, say 'a', need to get shape
     //  of that chord from data model
     var chordObj = _.find(this.opts.model.chords,
-        function (o) { return o.name == chord; });
+        function(o) {
+            return o.name == chord;
+        });
     var shape = chordObj.shape;
 
     var fretHeight = 0;
@@ -59,18 +65,25 @@ Fret.prototype.draw = function (fretNumber, chord) {
     // draw a fret
     var fret = this.svg.rect(this.fretx, this.frety, this.opts.fingerSize * 6, fretHeight);
     fret.attr({
-        fill: this.opts.fretColor,
+        fill: this.opts.fretColour,
         stroke: "#000",
         strokeDasharray: '1 1'
     });
 
-    // todo: show fret number on screen (below fret?)
+    // fret number
+    var text = this.svg.text(this.fretx + this.opts.fingerSize * 3, this.frety + fretHeight + this.opts.fingerSize * 1.6, fretNumber);
+    text.attr({
+        'font-size': this.opts.fingerSize,
+        fill: this.opts.fretNumberColour
+    });
+
+
     // todo: test 'no play' x strings
     // draw strings and fingers
     this.drawChord(fretNumber, shape);
 }
 
-Fret.prototype.drawChord = function (fretNumber, shape) {
+Fret.prototype.drawChord = function(fretNumber, shape) {
 
 
     for (var i = 1; i <= 6; i++) {
@@ -118,12 +131,12 @@ Fret.prototype.drawChord = function (fretNumber, shape) {
 
 
 /* GuitarString class */
-var GuitarString = function (svg, opts) {
+var GuitarString = function(svg, opts) {
     this.svg = svg;
     this.opts = opts;
 }
 
-GuitarString.prototype.draw = function (guitarStringx, guitarStringy, width, stringNumber) {
+GuitarString.prototype.draw = function(guitarStringx, guitarStringy, width, stringNumber) {
     // todo: proportional string 
     // widths, or stick with this?
     var stringThickness = (this.opts.fingerSize / 12);
@@ -143,12 +156,12 @@ GuitarString.prototype.draw = function (guitarStringx, guitarStringy, width, str
 }
 
 /* Finger class */
-var Finger = function (svg, opts) {
+var Finger = function(svg, opts) {
     this.svg = svg;
     this.opts = opts;
 }
 
-Finger.prototype.draw = function (fingerx, fingery, fingersize, fingerNumber) {
+Finger.prototype.draw = function(fingerx, fingery, fingersize, fingerNumber) {
 
     // finger
     var finger = this.svg.circle(fingerx, fingery, fingersize * .9);
@@ -160,23 +173,23 @@ Finger.prototype.draw = function (fingerx, fingery, fingersize, fingerNumber) {
     var text = this.svg.text(fingerx - (fingersize / 2.5), fingery + (fingersize / 2), fingerNumber);
     text.attr({
         'font-size': fingersize * 1.6,
-        fill: 'white'
+        fill: this.opts.fingerNumberColour
     });
 }
 
 /* Entry point */
-window.onload = function () {
+window.onload = function() {
 
-    // fingerSize is the base ratio forall propertions
+    // fingerSize is the base ratio for all proportions
 
     var theGuitar = new Guitar("#svg", {
         model: guitar(),
         x: 20,
         y: 20,
-        fingerSize: 50,
+        fingerSize: 30,
         fingerColour: 'black',
         stringColour: 'black',
-        fretColor: '#D2B48C' // #CD853F #B57E1D #8F4401 #683200 #DB8C44 #FFB775 #D2B48C
+        fretColour: '#D2B48C'
     });
 
     theGuitar.draw();
