@@ -5,6 +5,7 @@ function guitar() {
                 Shape: 
                 First index in sub-array is string number
                 Second index in sub-array is the fret to hold (if any, 0 if no hold)
+                Play open string = 0 | Dont play this string = x
              */
             {
                 name: 'a',
@@ -13,9 +14,9 @@ function guitar() {
                 shape: [
                     [3, 1, 0], // fret, string, finger
                     [3, 2, 0],
-                    [3, 3, 2],
+                    [3, 3, 1],
                     [3, 4, 2],
-                    [3, 5, 2],
+                    [3, 5, 3],
                     [3, 6, 0]
                 ]
             },
@@ -25,12 +26,12 @@ function guitar() {
                 families: ['g', 'c', 'd', 'em', 'am', 'bm'],
                 difficulty: 4,
                 shape: [
-                    [1, 1],
-                    [2, 0],
-                    [3, 0],
-                    [4, 0],
-                    [5, 1],
-                    [6, 1]
+                    [3, 1, 1],
+                    [2, 2, 2],
+                    [3, 3, 0],
+                    [0, 4, 0],
+                    [2, 5, 0],
+                    [3, 6, 3]
                 ]
             },
 
@@ -39,12 +40,12 @@ function guitar() {
                 families: ['e', 'a', 'b', 'cm', 'fm', 'gm'],
                 difficulty: 3,
                 shape: [
-                    [1, 0],
-                    [2, 0],
-                    [3, 1],
-                    [4, 1],
-                    [5, 0],
-                    [6, 1]
+                    [1, 1, 1],
+                    [2, 2, 1],
+                    [3, 3, 1],
+                    [4, 4, 1],
+                    [5, 5, 1],
+                    [6, 6, 1]
                 ]
             }
 
