@@ -1,11 +1,11 @@
 /* Guitar class */
 var Guitar = function(svg, opts) {
-    // cant do anything without a
-    // guitar and chords data model
+    // cant do anything without a guitar 
+    // and chords data model or...
     if (!opts.model) {
         throw Error('\'model\' is a required option');
     }
-
+    // ... an SVG element
     if (!svg) {
         throw Error('\'svg\' is a required argument');
     }
