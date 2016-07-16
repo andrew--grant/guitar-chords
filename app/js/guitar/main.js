@@ -5,8 +5,12 @@ var Guitar = function(svg, opts) {
     if (!opts.model) {
         throw Error('\'model\' is a required option');
     }
-    var s = Snap(svg);
-    this.svg = s;
+
+    if (!svg) {
+        throw Error('\'svg\' is a required argument');
+    }
+
+    this.svg = Snap(svg);
     this.opts = opts == null ? {} : opts;
     opts.defaults = {};
     opts.defaults.stringColour = 'red';
@@ -213,17 +217,17 @@ Finger.prototype.draw = function(fingerx, fingery, fingersize, fingerNumber) {
 /* Entry point */
 window.onload = function() {
 
-    // fingerSize is the base ratio for all proportions
+    // // fingerSize is the base ratio for all proportions
 
-    var theGuitar = new Guitar("#svg", {
-        model: guitar(),
-        x: 20,
-        y: 20,
-        fingerSize: 45,
-        fingerColour: 'black',
-        stringColour: 'black',
-        fretColour: '#D2B48C'
-    });
+    // var theGuitar = new Guitar("#svg", {
+    //     model: guitar(),
+    //     x: 20,
+    //     y: 20,
+    //     fingerSize: 45,
+    //     fingerColour: 'black',
+    //     stringColour: 'black',
+    //     fretColour: '#D2B48C'
+    // });
 
-    theGuitar.draw();
+    // theGuitar.draw();
 }

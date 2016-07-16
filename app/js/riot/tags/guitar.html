@@ -1,0 +1,28 @@
+<guitar>
+    <div class="guitar" onclick={click}>
+        <svg id='svg' style='height:1000px;width:1800px;'></svg>
+    </div>
+    <script>
+        var self = this;
+
+        self.on('update', function(e) {});
+
+        self.on('mount', function(e) {
+
+            // fingerSize is the base ratio for all proportions
+
+            var theGuitar = new Guitar("#svg", {
+                model: this.opts.model,
+                x: 20,
+                y: 20,
+                fingerSize: 22,
+                fingerColour: 'black',
+                stringColour: 'black',
+                fretColour: '#D2B48C'
+            });
+
+            theGuitar.draw();
+
+        });
+    </script>
+</guitar>

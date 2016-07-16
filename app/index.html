@@ -8,12 +8,17 @@
 <body>
     <app></app>
     <script src="https://rawgit.com/riot/riot/master/riot%2Bcompiler.min.js"></script>
-    <script src="tags/app.html" type="riot/tag"></script>
-    <script src="tags/chords.html" type="riot/tag"></script>
-    <script src="tags/neck.html" type="riot/tag"></script>
-    <script src="tags/fret.html" type="riot/tag"></script>
-    <script src="js/guitar.js"></script>
-    <script src="js/mixin.js"></script>
+    <script src="js/lib/snap.svg-min.js"></script>
+    <script src="js/lib/lodash.js"></script>
+    <script src="js/riot/tags/app.html" type="riot/tag"></script>
+    <script src="js/riot/tags/app.html" type="riot/tag"></script>
+    <script src="js/riot/tags/chord-selector.html" type="riot/tag"></script>
+    <script src="js/riot/tags/neck.html" type="riot/tag"></script>
+    <script src="js/riot/tags/fret.html" type="riot/tag"></script>
+    <script src="js/riot/tags/guitar.html" type="riot/tag"></script>
+    <script src="js/guitar/guitar-model.js"></script>
+    <script src="js/guitar/main.js"></script>
+    <script src="js/riot/mixin.js"></script>
 
     <script type="text/javascript">
         riot.mixin(mixin);

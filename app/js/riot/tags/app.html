@@ -1,0 +1,31 @@
+<app>
+    <chord-selector doselect={chordSelected} chords={opts.chords} frets={opts.frets}></chord-selector>
+    <guitar model={opts}></guitar>
+    <script>
+        var self = this;
+        self.guitar = null;
+
+        self.on('mount', function(e) {
+            // get access to the guitar and 
+            // guitar-model for use in tag
+            self.guitar = null; //todo
+            // either leave blank, or animate
+            // the default chord in here
+        });
+
+        self.on('update', function(e) {
+
+        });
+
+        chordSelected(chord) {
+            console.log(chord);
+            self.drawChord(chord);
+        }
+
+        drawChord(chord) {
+            // animate any previous chords out, then
+            // animate the selected chord in
+            alert(chord.name);
+        }
+    </script>
+</app>

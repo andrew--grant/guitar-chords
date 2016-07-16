@@ -1,0 +1,44 @@
+<chord-selector>
+    <select id="chord-select" onchange={chordSelected}>
+              <option each={opts.chords}>{name}</option>
+    </select>
+    <!--<neck frets={opts.frets} chord={selectedChord}></neck>-->
+    <style>
+        #chord-select,
+        option {
+            background: transparent;
+            width: 100px;
+            font-size: 25pt;
+            color: grey;
+            padding: 3px;
+            margin: 20px;
+            border: Solid 2px grey;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            border-radius: 0;
+            /*
+            Removes the default styles
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;*/
+        }
+    </style>
+    <script>
+        var self = this;
+        self.chordIndex = 0;
+        self.selectedChord = null;
+
+        self.on('mount', function(e) {
+
+        });
+
+        self.on('update', function() {
+            self.selectedChord = self.opts.chords[self.chordIndex];
+        });
+
+        chordSelected(e) {
+            self.chordIndex = e.target.selectedIndex;
+            self.opts.doselect(self.opts.chords[self.chordIndex]);
+        }
+    </script>
+</chord-selector>
