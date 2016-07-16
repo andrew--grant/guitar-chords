@@ -5,7 +5,10 @@
     <script>
         var self = this;
 
-        self.on('update', function(e) {});
+        self.on('update', function(e) {
+            console.log('xxxxx');
+
+        });
 
         self.on('mount', function(e) {
 
@@ -21,8 +24,12 @@
                 fretColour: '#D2B48C'
             });
 
-            theGuitar.draw();
+            theGuitar.draw(); // todo: Guitar class: refator to drawFretBoard, add seperate drawChord func
 
         });
+
+        drawChord(chord) {
+            alert('called guitar tag methid from app tag! ' + chord.name);
+        }
     </script>
 </guitar>

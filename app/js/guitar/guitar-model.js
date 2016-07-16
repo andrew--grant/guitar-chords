@@ -1,4 +1,4 @@
-function guitar() {
+function guitarModel() {
     return {
         chords: [
             /* 

@@ -3,7 +3,6 @@
     <guitar model={opts}></guitar>
     <script>
         var self = this;
-        self.guitar = null;
 
         self.on('mount', function(e) {
             // get access to the guitar and 
@@ -13,19 +12,16 @@
             // the default chord in here
         });
 
-        self.on('update', function(e) {
-
-        });
+        self.on('update', function(e) {});
 
         chordSelected(chord) {
-            console.log(chord);
             self.drawChord(chord);
         }
 
         drawChord(chord) {
             // animate any previous chords out, then
             // animate the selected chord in
-            alert(chord.name);
+            self.tags['guitar'].drawChord(chord);
         }
     </script>
 </app>
