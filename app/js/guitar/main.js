@@ -53,8 +53,8 @@ var Fret = function(svg, opts, x, y) {
 
 Fret.prototype.draw = function(fretNumber, chord) {
 
-    // given a chord, say 'a', need to get shape
-    //  of that chord from data model
+    // given the chord of, say 'a', we need to 
+    // get the shape of that chord from data model
     var chordObj = _.find(this.opts.model.chords,
         function(o) {
             return o.name == chord;
@@ -63,8 +63,9 @@ Fret.prototype.draw = function(fretNumber, chord) {
 
     var fretHeight = 0;
     for (var i = 1; i <= 6; i++) {
-        // get calcualted height for use earlier
-        // in the source code order (no z-index)
+        // get calculated height for use earlier
+        // in the source code order (no z-index 
+        // in this SVG version)
         fretHeight += this.opts.fingerSize * 2;
     }
 
@@ -76,7 +77,7 @@ Fret.prototype.draw = function(fretNumber, chord) {
         strokeDasharray: '1 1'
     });
 
-    // fret number
+    // draw fret number
     var text = this.svg.text(this.fretx + this.opts.fingerSize * 3, this.frety + fretHeight + this.opts.fingerSize * 1.6, fretNumber);
     text.attr({
         'font-size': this.opts.fingerSize,
@@ -101,46 +102,24 @@ Fret.prototype.extractShapeData = function(stringNumber, shape) {
 }
 
 Fret.prototype.calcFretY = function(stringNumber) {
-    return this.frety + (stringNumber * (this.opts.fingerSize * 2) - this.opts.fingerSize); //todo: weird expression. shorten it??
+    return this.frety + (stringNumber * (this.opts.fingerSize * 2) - this.opts.fingerSize);
 }
 
 Fret.prototype.drawStrings = function(fretNumber, shape) {
 
     for (var i = 1; i <= 6; i++) {
-
         var shapeData = this.extractShapeData(i, shape);
-
         var frety = this.calcFretY(i);
-
-        // We always draw the string on the fret, but...
+        // draw string on to the fret
         var guitarString = new GuitarString(this.svg, this.opts);
         guitarString.draw(this.fretx, frety, this.opts.fingerSize * 6, shapeData.shapeDataString);
-
         this.drawChordShape(fretNumber, shape);
-
     }
-
-    // for (var i = 1; i <= 6; i++) {
-
-    //     var frety = this.frety + (i * (this.opts.fingerSize * 2) - this.opts.fingerSize);
-
-    //     for (var j = 0; j < this.opts.model.chords.length; j++) {
-    //         console.log('Fret Number: ' + fretNumber + ', Chord: ' + this.opts.model.chords[j].name.toUpperCase());
-
-    //         for (var k = 0; k < this.opts.model.chords[j].shape.length; k++) {
-    //             console.log(this.opts.model.chords[j].shape[k]);
-    //         }
-
-    //     } 
-
-    // }
-
 }
 
 Fret.prototype.drawChordShape = function(fretNumber, shape) {
 
     for (var i = 1; i <= 6; i++) {
-
         var shapeData = this.extractShapeData(i, shape);
         var frety = this.calcFretY(i);
         // ...should we draw a finger on the string?
