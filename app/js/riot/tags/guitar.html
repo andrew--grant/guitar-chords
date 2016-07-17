@@ -5,10 +5,7 @@
     <script>
         var self = this;
 
-        self.on('update', function(e) {
-
-
-        });
+        self.on('update', function(e) {});
 
         self.on('mount', function(e) {
 
@@ -29,8 +26,9 @@
         });
 
         drawChord(chord) {
-            console.log('called guitar tag methid from app tag. Chord is: ' + chord.name);
-            //self.guitar.drawChord(chord);
+            // call guitar tag method with 
+            // the selected chord object
+            self.guitar.drawChord(chord);
         }
     </script>
 </guitar>

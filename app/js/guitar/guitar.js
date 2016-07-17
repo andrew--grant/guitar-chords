@@ -32,24 +32,44 @@ var Guitar = function(svg, opts) {
     opts.fingerNumberColour = opts.fingerNumberColour || opts.defaults.fingerNumberColour;
     this.x = this.opts.x || opts.defaults.x;
     this.y = this.opts.y || opts.defaults.y;
+    this.fretBoard = null;
 }
 
 Guitar.prototype.drawFretBoard = function() {
+
+    // create a reference to the entire fretboard
+    this.fretBoard = new FretBoard();
+
     for (var i = 1; i <= this.opts.model.frets.length; i++) {
         var fret = new Fret(this.svg, this.opts, this.x, this.y);
         fret.draw(i, 'g'); // todo: pass the chords from UI (selector)
         this.x += (this.opts.fingerSize * 6);
+        this.fretBoard.addFret(fret);
     }
+
+
 }
 
 Guitar.prototype.drawChord = function(chord) {
-    // todo: display any given chords' shape on fretboard
-
+    // todo: display any given chords' shape on fretboard 
+    // loop through this.fretBoard, passing chord obj
+    // each time. This is where the drawing can occur as
+    // each fret has an x and y prop and other info
+    console.log('draw this chord: ' + chord.name);
+    console.log(this.fretBoard);
 }
 
 Guitar.prototype.drawNotes = function(note) {
     // todo: draw any given notes' positions across the fretboard
 
+}
+
+var FretBoard = function() {
+    this.frets = [];
+}
+
+FretBoard.prototype.addFret = function(fret) {
+    this.frets.push(fret);
 }
 
 /* Fret class */
@@ -172,7 +192,6 @@ GuitarString.prototype.draw = function(guitarStringx, guitarStringy, width, stri
         // thick
         stringThickness = stringThickness / .55; // todo: reduce opacity (as in, make grey)
     }
-    console.log(stringNumber);
     var guitarString = this.svg.rect(guitarStringx, guitarStringy, width, stringThickness);
     guitarString.attr({
         fill: this.opts.stringColour
