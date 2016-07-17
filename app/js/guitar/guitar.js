@@ -51,15 +51,13 @@ Guitar.prototype.drawFretBoard = function() {
 }
 
 Guitar.prototype.drawChord = function(chord) {
-    // todo: display any given chords' shape on fretboard 
-    // loop through this.fretBoard, passing chord obj
-    // each time. This is where the drawing can occur as
-    // each fret has an x and y prop and other info
+    // display any given chords' shape on fretboard 
     this.fretBoard.drawChord(chord);
 }
 
 Guitar.prototype.drawNotes = function(note) {
-    // todo: draw any given notes' positions across the fretboard
+    // todo: draw any given notes' multiple 
+    // positions across the fretboard
 
 }
 
@@ -73,10 +71,9 @@ FretBoard.prototype.addFret = function(fret) {
 
 FretBoard.prototype.drawChord = function(chord) {
     console.log('chord is: ' + chord.name);
-    // Fret.prototype.drawChordShape = function(fretNumber, shape) {
     for (var i = 0; i < this.frets.length; i++) {
-        console.log('fret: ' + this.frets[i]);
-        this.frets[i].drawChordShape(i, chord.shape)
+        console.log('fret: ' + this.frets[i + 1]);
+        this.frets[i].drawChordShape(i + 1, chord.shape)
     }
 
 
@@ -158,12 +155,19 @@ Fret.prototype.drawStrings = function(fretNumber) {
 }
 
 Fret.prototype.drawChordShape = function(fretNumber, shape) {
+    // todo: draw new fingers each time, or 'slide' a prepared set
+    // in as chord changes? Eg; create a 'fingers' collection that
+    // can be repositioned? Either way, conide performance and if
+    // clean up of any continually generated SVG shapes is required.
+
+    // todo: when fingers move, animate the fret numbers they land on??
+    // or simply make darker/empahasised
 
     for (var i = 1; i <= 6; i++) {
         var shapeData = this.extractShapeData(i, shape);
         var frety = this.calcFretY(i);
-        // ...should we draw a finger on the string?
-        if ((shapeData.shapeDataFret == fretNumber) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger != 0)) {
+        // ...should we draw a finger on this string?
+        if ((shapeData.shapeDataFret == fretNumber) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger > 0)) {
             var finger = new Finger(this.svg, this.opts);
             finger.draw(this.fretx + (this.opts.fingerSize * 3), frety, this.opts.fingerSize, shapeData.shapeDataFinger);
         } else if ((shapeData.shapeDataFret == fretNumber - 1) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == 0)) {
