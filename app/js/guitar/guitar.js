@@ -55,6 +55,14 @@ Guitar.prototype.drawChord = function(chord) {
     this.fretBoard.drawChord(chord);
 }
 
+Guitar.prototype.removeChord = function(chord) {
+    // todo: if sticking with this approach, also
+    // need to consider DOM removal/deletion?
+    // (or should we manipulating the same fingers 
+    // each chord/note change?)
+    $('.chord-indicator').fadeOut();
+}
+
 Guitar.prototype.drawNotes = function(note) {
     // todo: draw any given notes' multiple 
     // positions across the fretboard
@@ -70,13 +78,20 @@ FretBoard.prototype.addFret = function(fret) {
 }
 
 FretBoard.prototype.drawChord = function(chord) {
-    console.log('chord is: ' + chord.name);
     for (var i = 0; i < this.frets.length; i++) {
-        console.log('fret: ' + this.frets[i + 1]);
         this.frets[i].drawChordShape(i + 1, chord.shape)
     }
+}
 
+FretBoard.prototype.removeChord = function(chord) {
+    // find all fingers, x, o, etc
+    // delete them. add a class - .chord-inidcator - to
+    // all svg els relting to chord, then here, query and
+    // remove them.
 
+    // for (var i = 0; i < this.frets.length; i++) {
+    //     this.frets[i].removeChordShape(i + 1, chord.shape)
+    // }
 }
 
 /* Fret class */
@@ -154,6 +169,11 @@ Fret.prototype.drawStrings = function(fretNumber) {
     }
 }
 
+Fret.prototype.removeChordShape = function(fretNumber, shape) {
+
+}
+
+
 Fret.prototype.drawChordShape = function(fretNumber, shape) {
     // todo: draw new fingers each time, or 'slide' a prepared set
     // in as chord changes? Eg; create a 'fingers' collection that
@@ -163,16 +183,19 @@ Fret.prototype.drawChordShape = function(fretNumber, shape) {
     // todo: when fingers move, animate the fret numbers they land on??
     // or simply make darker/empahasised
 
+    // todo: add 'EADGBe' notation near first fret (make option)
+
     for (var i = 1; i <= 6; i++) {
         var shapeData = this.extractShapeData(i, shape);
         var frety = this.calcFretY(i);
-        // ...should we draw a finger on this string?
+        // should we draw a finger on this string?
         if ((shapeData.shapeDataFret == fretNumber) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger > 0)) {
             var finger = new Finger(this.svg, this.opts);
             finger.draw(this.fretx + (this.opts.fingerSize * 3), frety, this.opts.fingerSize, shapeData.shapeDataFinger);
         } else if ((shapeData.shapeDataFret == fretNumber - 1) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == 0)) {
             var open = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 7);
             open.attr({
+                'class': 'chord-indicator',
                 fill: this.opts.openStringColour
             });
         } else if ((shapeData.shapeDataFret == fretNumber - 1) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == -1)) {
@@ -180,6 +203,7 @@ Fret.prototype.drawChordShape = function(fretNumber, shape) {
             // todo: make an 'x' shape (text)?
             var doNotPlay = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 7);
             doNotPlay.attr({
+                'class': 'chord-indicator',
                 fill: 'red'
             });
         }
@@ -187,6 +211,7 @@ Fret.prototype.drawChordShape = function(fretNumber, shape) {
     }
 
 }
+
 
 /* GuitarString class */
 var GuitarString = function(svg, opts) {
@@ -222,12 +247,14 @@ Finger.prototype.draw = function(fingerx, fingery, fingersize, fingerNumber) {
     // finger
     var finger = this.svg.circle(fingerx, fingery, fingersize * .9);
     finger.attr({
+        'class': 'chord-indicator',
         fill: this.opts.fingerColour
     });
 
     // finger number
     var text = this.svg.text(fingerx - (fingersize / 2.5), fingery + (fingersize / 2), fingerNumber);
     text.attr({
+        'class': 'chord-indicator',
         'font-size': fingersize * 1.6,
         fill: this.opts.fingerNumberColour
     });
