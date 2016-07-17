@@ -55,8 +55,7 @@ Guitar.prototype.drawChord = function(chord) {
     // loop through this.fretBoard, passing chord obj
     // each time. This is where the drawing can occur as
     // each fret has an x and y prop and other info
-    console.log('draw this chord: ' + chord.name);
-    console.log(this.fretBoard);
+    this.fretBoard.drawChord(chord);
 }
 
 Guitar.prototype.drawNotes = function(note) {
@@ -70,6 +69,17 @@ var FretBoard = function() {
 
 FretBoard.prototype.addFret = function(fret) {
     this.frets.push(fret);
+}
+
+FretBoard.prototype.drawChord = function(chord) {
+    console.log('chord is: ' + chord.name);
+    // Fret.prototype.drawChordShape = function(fretNumber, shape) {
+    for (var i = 0; i < this.frets.length; i++) {
+        console.log('fret: ' + this.frets[i]);
+        this.frets[i].drawChordShape(i, chord.shape)
+    }
+
+
 }
 
 /* Fret class */
@@ -144,7 +154,6 @@ Fret.prototype.drawStrings = function(fretNumber) {
         // draw string on to the fret
         var guitarString = new GuitarString(this.svg, this.opts);
         guitarString.draw(this.fretx, frety, this.opts.fingerSize * 6, i);
-        // this.drawChordShape(fretNumber, shape);
     }
 }
 
