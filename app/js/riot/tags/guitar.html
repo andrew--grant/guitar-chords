@@ -6,7 +6,7 @@
         var self = this;
 
         self.on('update', function(e) {
-            console.log('xxxxx');
+
 
         });
 
@@ -14,7 +14,7 @@
 
             // fingerSize is the base ratio for all proportions
 
-            var theGuitar = new Guitar("#svg", {
+            self.guitar = new Guitar("#svg", {
                 model: this.opts.model,
                 x: 20,
                 y: 20,
@@ -24,12 +24,13 @@
                 fretColour: '#D2B48C'
             });
 
-            theGuitar.draw(); // todo: Guitar class: refator to drawFretBoard, add seperate drawChord func
+            self.guitar.drawFretBoard(); // todo: Guitar class: refator to drawFretBoard, add seperate drawChord func
 
         });
 
         drawChord(chord) {
-            alert('called guitar tag methid from app tag! ' + chord.name);
+            console.log('called guitar tag methid from app tag. Chord is: ' + chord.name);
+            //self.guitar.drawChord(chord);
         }
     </script>
 </guitar>
