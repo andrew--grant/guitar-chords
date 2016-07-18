@@ -56,17 +56,21 @@ Guitar.prototype.drawChord = function(chord) {
 }
 
 Guitar.prototype.removeChord = function(chord) {
-    // todo: if sticking with this approach, also
-    // need to consider DOM removal/deletion?
-    // (or should we manipulating the same fingers 
-    // each chord/note change?)
-    $('.chord-indicator').fadeOut();
+    // todo: grouping text and finger, or leave separate?
+    var delayTime = 0;
+    $('.chord-indicator').each(function() {
+        $(this).delay(delayTime).animate({
+            opacity: 0
+        }, 50, function() {
+            $(this).remove();
+        });
+        delayTime += 50;
+    }); 
 }
 
 Guitar.prototype.drawNotes = function(note) {
     // todo: draw any given notes' multiple 
-    // positions across the fretboard
-
+    // positions across the fretboard 
 }
 
 var FretBoard = function() {
