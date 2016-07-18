@@ -1,5 +1,4 @@
 /* Guitar class */
-// todo: rename from 'main.js' to something better
 var Guitar = function(svg, opts) {
     // cant do anything without a guitar 
     // and chords data model or...
@@ -37,52 +36,54 @@ var Guitar = function(svg, opts) {
 
 Guitar.prototype.drawFretBoard = function() {
 
-    // create a reference to the entire fretboard
+    // create a reference to 
+    // the entire fretboard
     this.fretBoard = new FretBoard();
 
     for (var i = 1; i <= this.opts.model.frets.length; i++) {
         var fret = new Fret(this.svg, this.opts, this.x, this.y);
-        fret.draw(i, 'g'); // todo: pass the chords from UI (selector)
+        fret.draw(i);
         this.x += (this.opts.fingerSize * 6);
         this.fretBoard.addFret(fret);
     }
-
-
 }
 
 Guitar.prototype.drawChord = function(chord) {
-    // display any given chords' shape on fretboard 
+    // display any given chords' 
+    // shape on to the fretboard 
     this.fretBoard.drawChord(chord);
     var delayTime = 0;
-    // todo: animate text seprately/later
     $('.chord-indicator-finger,.chord-indicator-open,.chord-indicator-finger-text,.chord-indicator-noplay,.chord-indicator')
         .each(function() {
             $(this).delay(delayTime).animate({
                 opacity: 1
-            }, 50, function() {
-                //$(this).remove();
-            });
+            }, 50);
             delayTime += 50;
         });
 }
 
 Guitar.prototype.removeChord = function(chord) {
     // todo: grouping text and finger, or leave separate?
-    // todo: remove in reverse order?
     var delayTime = 0;
-    $('.chord-indicator-finger,.chord-indicator').each(function() {
-        $(this).delay(delayTime).animate({
-            opacity: 0
-        }, 50, function() {
-            $(this).remove();
+    var animationTime = 35;
+    $($(".chord-indicator-finger,.chord-indicator").get().reverse())
+        .each(function() {
+            $(this).delay(delayTime).animate({
+                opacity: 0
+            }, animationTime, function() {
+                $(this).remove();
+            });
+            delayTime += animationTime;
         });
-        delayTime += 50;
-    });
 }
 
 Guitar.prototype.drawNotes = function(note) {
-    // todo: draw any given notes' multiple 
+    // todo-feature: draw any given notes' multiple 
     // positions across the fretboard 
+}
+
+Guitar.prototype.drawCapo = function(note) {
+    // todo-feature: draw a capo when required
 }
 
 var FretBoard = function() {
@@ -120,15 +121,6 @@ var Fret = function(svg, opts, x, y) {
 }
 
 Fret.prototype.draw = function(fretNumber) {
-
-    // todo: store ref to passed fret and draw chord when ready?
-    // given the chord of, say 'a', we need to 
-    // get the shape of that chord from data model
-    // var chordObj = _.find(this.opts.model.chords,
-    //     function(o) {
-    //         return o.name == chord;
-    //     });
-    // var shape = chordObj.shape;
 
     var fretHeight = 0;
     for (var i = 1; i <= 6; i++) {
@@ -201,15 +193,6 @@ Fret.prototype.addOpenNotesReference = function(stringNumber, x, y) {
 }
 
 Fret.prototype.drawChordShape = function(fretNumber, shape) {
-    // todo: draw new fingers each time, or 'slide' a prepared set
-    // in as chord changes? Eg; create a 'fingers' collection that
-    // can be repositioned? Either way, conide performance and if
-    // clean up of any continually generated SVG shapes is required.
-
-    // todo: when fingers move, animate the fret numbers they land on??
-    // or simply make darker/empahasised
-
-    // todo: add 'EADGBe' notation near first fret (make option)
 
     for (var i = 1; i <= 6; i++) {
         var shapeData = this.extractShapeData(i, shape);
@@ -225,8 +208,8 @@ Fret.prototype.drawChordShape = function(fretNumber, shape) {
                 fill: this.opts.openStringColour
             });
         } else if ((shapeData.shapeDataFret == fretNumber - 1) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == -1)) {
-            // must be a 'no play'
-            // todo: make an 'x' shape (text)?
+            // must be a 'no play' indicator
+            // todo: make an 'x' shape as per TAB notation
             var doNotPlay = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 4);
             doNotPlay.attr({
                 'class': 'chord-indicator chord-indicator-noplay',
@@ -254,7 +237,7 @@ GuitarString.prototype.draw = function(guitarStringx, guitarStringy, width, stri
     }
     if (6 / stringNumber == 6) {
         // thick
-        stringThickness = stringThickness / .55; // todo: reduce opacity (as in, make grey)
+        stringThickness = stringThickness / .55;
     }
     var guitarString = this.svg.rect(guitarStringx, guitarStringy, width, stringThickness);
     guitarString.attr({
