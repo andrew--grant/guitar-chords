@@ -53,19 +53,31 @@ Guitar.prototype.drawFretBoard = function() {
 Guitar.prototype.drawChord = function(chord) {
     // display any given chords' shape on fretboard 
     this.fretBoard.drawChord(chord);
+    var delayTime = 0;
+    // todo: animate text seprately/later
+    $('.chord-indicator-finger,.chord-indicator-open,.chord-indicator-finger-text,.chord-indicator-noplay,.chord-indicator')
+        .each(function() {
+            $(this).delay(delayTime).animate({
+                opacity: 1
+            }, 50, function() {
+                //$(this).remove();
+            });
+            delayTime += 50;
+        });
 }
 
 Guitar.prototype.removeChord = function(chord) {
     // todo: grouping text and finger, or leave separate?
+    // todo: remove in reverse order?
     var delayTime = 0;
-    $('.chord-indicator').each(function() {
+    $('.chord-indicator-finger,.chord-indicator').each(function() {
         $(this).delay(delayTime).animate({
             opacity: 0
         }, 50, function() {
             $(this).remove();
         });
         delayTime += 50;
-    }); 
+    });
 }
 
 Guitar.prototype.drawNotes = function(note) {
@@ -170,11 +182,23 @@ Fret.prototype.drawStrings = function(fretNumber) {
         // draw string on to the fret
         var guitarString = new GuitarString(this.svg, this.opts);
         guitarString.draw(this.fretx, frety, this.opts.fingerSize * 6, i);
+
+        if (fretNumber == 1) {
+            this.addOpenNotesReference(i, this.fretx, frety);
+        }
     }
 }
 
-Fret.prototype.removeChordShape = function(fretNumber, shape) {
+Fret.prototype.removeChordShape = function(fretNumber, shape) {}
 
+Fret.prototype.addOpenNotesReference = function(stringNumber, x, y) {
+    console.log('EADGBe notation ' + stringNumber);
+    fretRef = ['E', 'A', 'D', 'G', 'B', 'e'];
+    var eNoteRef = this.svg.text(x - this.opts.fingerSize, y + (this.opts.fingerSize / 2), fretRef[stringNumber - 1]); //todo: tweak centring and distance
+    eNoteRef.attr({
+        'font-size': this.opts.fingerSize * .9,
+        fill: this.opts.fretNumberColour
+    });
 }
 
 
@@ -197,17 +221,17 @@ Fret.prototype.drawChordShape = function(fretNumber, shape) {
             var finger = new Finger(this.svg, this.opts);
             finger.draw(this.fretx + (this.opts.fingerSize * 3), frety, this.opts.fingerSize, shapeData.shapeDataFinger);
         } else if ((shapeData.shapeDataFret == fretNumber - 1) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == 0)) {
-            var open = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 7);
+            var open = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 2);
             open.attr({
-                'class': 'chord-indicator',
+                'class': 'chord-indicator chord-indicator-open',
                 fill: this.opts.openStringColour
             });
         } else if ((shapeData.shapeDataFret == fretNumber - 1) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == -1)) {
             // must be a 'no play'
             // todo: make an 'x' shape (text)?
-            var doNotPlay = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 7);
+            var doNotPlay = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 2);
             doNotPlay.attr({
-                'class': 'chord-indicator',
+                'class': 'chord-indicator chord-indicator-noplay',
                 fill: 'red'
             });
         }
@@ -251,14 +275,14 @@ Finger.prototype.draw = function(fingerx, fingery, fingersize, fingerNumber) {
     // finger
     var finger = this.svg.circle(fingerx, fingery, fingersize * .9);
     finger.attr({
-        'class': 'chord-indicator',
+        'class': 'chord-indicator chord-indicator-finger',
         fill: this.opts.fingerColour
     });
 
     // finger number
     var text = this.svg.text(fingerx - (fingersize / 2.5), fingery + (fingersize / 2), fingerNumber);
     text.attr({
-        'class': 'chord-indicator',
+        'class': 'chord-indicator chord-indicator-finger-text',
         'font-size': fingersize * 1.6,
         fill: this.opts.fingerNumberColour
     });

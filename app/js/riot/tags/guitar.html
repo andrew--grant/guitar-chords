@@ -9,25 +9,26 @@
 
         self.on('mount', function(e) {
 
-            // fingerSize is the base ratio for all proportions
+            // fingerSize is a base ratio for all proportions
 
             self.guitar = new Guitar("#svg", {
                 model: this.opts.model,
-                x: 20,
-                y: 20,
+                x: 50,
+                y: 50,
                 fingerSize: 22,
                 fingerColour: 'black',
                 stringColour: 'black',
                 fretColour: '#D2B48C'
             });
 
-            self.guitar.drawFretBoard(); // todo: Guitar class: refator to drawFretBoard, add seperate drawChord func
+            self.guitar.drawFretBoard();
 
         });
 
         drawChord(chord) {
             // call guitar tag method with 
             // the selected chord object
+            self.guitar.removeChord();
             self.guitar.drawChord(chord);
         }
 

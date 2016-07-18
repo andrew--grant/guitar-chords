@@ -1,5 +1,4 @@
 <app>
-    <p><a href="#" id="test-remove-chord-el" onclick={removeChordEls}>Remove chords</a></p>
     <chord-selector doselect={chordSelected} chords={opts.chords} frets={opts.frets}></chord-selector>
     <guitar model={opts}></guitar>
 
@@ -27,7 +26,6 @@
         }
 
         removeChordEls() {
-            console.log(self.tags['guitar']);
             self.tags['guitar'].removeChordEls();
 
         }
