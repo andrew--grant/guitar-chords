@@ -192,15 +192,13 @@ Fret.prototype.drawStrings = function(fretNumber) {
 Fret.prototype.removeChordShape = function(fretNumber, shape) {}
 
 Fret.prototype.addOpenNotesReference = function(stringNumber, x, y) {
-    console.log('EADGBe notation ' + stringNumber);
     fretRef = ['E', 'A', 'D', 'G', 'B', 'e'];
-    var eNoteRef = this.svg.text(x - this.opts.fingerSize, y + (this.opts.fingerSize / 2), fretRef[stringNumber - 1]); //todo: tweak centring and distance
+    var eNoteRef = this.svg.text(x - (this.opts.fingerSize + 12), y + (this.opts.fingerSize / 2.5), fretRef[stringNumber - 1]);
     eNoteRef.attr({
         'font-size': this.opts.fingerSize * .9,
         fill: this.opts.fretNumberColour
     });
 }
-
 
 Fret.prototype.drawChordShape = function(fretNumber, shape) {
     // todo: draw new fingers each time, or 'slide' a prepared set
@@ -221,7 +219,7 @@ Fret.prototype.drawChordShape = function(fretNumber, shape) {
             var finger = new Finger(this.svg, this.opts);
             finger.draw(this.fretx + (this.opts.fingerSize * 3), frety, this.opts.fingerSize, shapeData.shapeDataFinger);
         } else if ((shapeData.shapeDataFret == fretNumber - 1) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == 0)) {
-            var open = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 2);
+            var open = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 4);
             open.attr({
                 'class': 'chord-indicator chord-indicator-open',
                 fill: this.opts.openStringColour
@@ -229,7 +227,7 @@ Fret.prototype.drawChordShape = function(fretNumber, shape) {
         } else if ((shapeData.shapeDataFret == fretNumber - 1) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == -1)) {
             // must be a 'no play'
             // todo: make an 'x' shape (text)?
-            var doNotPlay = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 2);
+            var doNotPlay = this.svg.circle(this.opts.x, frety, this.opts.fingerSize / 4);
             doNotPlay.attr({
                 'class': 'chord-indicator chord-indicator-noplay',
                 fill: 'red'
