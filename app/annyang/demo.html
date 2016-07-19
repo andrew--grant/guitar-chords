@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <title>annyang demo</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"></script>
+    <script>
+        if (annyang) {
+            // Let's define a command.
+            var commands = {
+                'A': function() {
+                    alert('A');
+                },
+                'bee': function() {
+                    alert('B');
+                },
+                'sea': function() {
+                    alert('C');
+                },
+                'dee': function() {
+                    alert('D');
+                },
+                'eee': function() {
+                    alert('E');
+                },
+                'eff': function() {
+                    alert('F');
+                },
+                'jee': function() {
+                    alert('G');
+                },
+
+
+
+            };
+
+            // Add our commands to annyang
+            annyang.addCommands(commands);
+
+            // Start listening.
+            annyang.start();
+            console.log('started')
+        }
+    </script>
+</head>
+
+<body>
+    <p>annyang demo</p>
+</body>
+
+</html>
