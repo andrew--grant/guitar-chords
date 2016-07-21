@@ -1,4 +1,5 @@
 function guitarModel() {
+    // todo: reserch: https://en.wikipedia.org/wiki/Tablature
     return {
         chords: [
             /* 
