@@ -16,6 +16,31 @@
         self.selectedChord = null;
 
         self.on('mount', function(e) {
+            // start accepting voice commands
+            var vc = new VoiceCommands(
+                // chord cb
+                function(chord) {
+                    console.log(opts.chords);
+                    for (var i = 0; i < opts.chords.length; i++) {
+                        if (opts.chords[i].name == chord) {
+
+                            self.chordSelected({
+                                target: {
+                                    selectedIndex: i,
+                                    isVoiceCommand: true
+                                }
+                            });
+                        }
+                    }
+                },
+                // note cb
+                function() {
+                    // todo
+                }
+            );
+
+            vc.listen();
+
 
         });
 
@@ -26,6 +51,11 @@
         chordSelected(e) {
             self.chordIndex = e.target.selectedIndex;
             self.opts.doselect(self.opts.chords[self.chordIndex]);
+            if (e.target.isVoiceCommand) {
+                // change select UI when voice activated
+                console.log($('#chord-select')[0].selectedIndex = self.chordIndex);
+
+            }
         }
     </script>
 </chord-selector>
