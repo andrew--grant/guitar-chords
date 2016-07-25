@@ -46,7 +46,7 @@ VoiceCommands.prototype.listen = function() {
             self.onChord(speechResult);
         } else {
             // todo: handle case
-            alert('no luck identifying command');
+            // alert('no luck identifying command');
         }
         recognition.stop();
     }

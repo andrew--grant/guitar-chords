@@ -46,6 +46,14 @@ Guitar.prototype.drawFretBoard = function() {
         this.x += (this.opts.fingerSize * 6);
         this.fretBoard.addFret(fret);
     }
+
+    var allFretsCount = $('.fret-box').length;
+    var firstFretCount = $('.first-fret-box').length;
+    console.log(allFretsCount + ' - ' + firstFretCount);
+    var firstFretCurrPosX = parseInt($('.first-fret-box').attr('x'));
+    var firstFretCurrPosY = parseInt($('.first-fret-box').attr('y'));
+    $('.first-fret-box').attr('x', firstFretCurrPosX + 20);
+    $('.first-fret-box').attr('y', firstFretCurrPosY + 20);
 }
 
 Guitar.prototype.drawChord = function(chord) {
@@ -121,7 +129,7 @@ var Fret = function(svg, opts, x, y) {
 }
 
 Fret.prototype.draw = function(fretNumber) {
-
+    var firstFret = fretNumber == 1;
     var fretHeight = 0;
     for (var i = 1; i <= 6; i++) {
         // get calculated height for use earlier
@@ -135,18 +143,20 @@ Fret.prototype.draw = function(fretNumber) {
     fret.attr({
         fill: this.opts.fretColour,
         stroke: "#000",
-        strokeDasharray: '1 1'
+        strokeDasharray: '1 1',
+        class: firstFret ? 'first-fret-box fret-box' : 'fret-box'
     });
 
     // draw fret number
     var text = this.svg.text(this.fretx + this.opts.fingerSize * 3, this.frety + fretHeight + this.opts.fingerSize * 1.6, fretNumber);
     text.attr({
         'font-size': this.opts.fingerSize,
-        fill: this.opts.fretNumberColour
+        fill: this.opts.fretNumberColour,
+        class: firstFret ? 'first-fret-box-fret-number fret-box' : 'fret-box'
     });
 
     // draw strings and fingers on this fret
-    this.drawStrings(fretNumber);
+    this.drawStrings(fretNumber, firstFret);
 }
 
 Fret.prototype.extractShapeData = function(stringNumber, shape) {
@@ -166,14 +176,14 @@ Fret.prototype.calcFretY = function(stringNumber) {
     return this.frety + (stringNumber * (this.opts.fingerSize * 2) - this.opts.fingerSize);
 }
 
-Fret.prototype.drawStrings = function(fretNumber) {
+Fret.prototype.drawStrings = function(fretNumber, firstFret) {
 
     for (var i = 1; i <= 6; i++) {
         //var shapeData = this.extractShapeData(i, shape);
         var frety = this.calcFretY(i);
         // draw string on to the fret
         var guitarString = new GuitarString(this.svg, this.opts);
-        guitarString.draw(this.fretx, frety, this.opts.fingerSize * 6, i);
+        guitarString.draw(this.fretx, frety, this.opts.fingerSize * 6, i, firstFret);
 
         if (fretNumber == 1) {
             this.addOpenNotesReference(i, this.fretx, frety);
@@ -228,7 +238,7 @@ var GuitarString = function(svg, opts) {
     this.opts = opts;
 }
 
-GuitarString.prototype.draw = function(guitarStringx, guitarStringy, width, stringNumber) {
+GuitarString.prototype.draw = function(guitarStringx, guitarStringy, width, stringNumber, firstFret) {
     // proportional string widths 
     var stringThickness = (this.opts.fingerSize / 12);
     if (6 / stringNumber == 1) {
@@ -241,7 +251,8 @@ GuitarString.prototype.draw = function(guitarStringx, guitarStringy, width, stri
     }
     var guitarString = this.svg.rect(guitarStringx, guitarStringy, width, stringThickness);
     guitarString.attr({
-        fill: this.opts.stringColour
+        fill: this.opts.stringColour,
+        class: firstFret ? 'first-fret-box-string fret-box' : 'fret-box'
     });
 }
 

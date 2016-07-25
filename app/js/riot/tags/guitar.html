@@ -1,6 +1,6 @@
 <guitar>
     <div class="guitar" onclick={click}>
-        <svg id='svg' style='height:1000px;width:1800px;'></svg>
+        <svg id='svg' style='height:700px;width:100%;'></svg>
     </div>
     <script>
         var self = this;
@@ -11,11 +11,16 @@
 
             // fingerSize is a base ratio for all proportions
 
+
+            // todo: can manipulat viewable portin of fret board with 
+            // minus x (-1250 eg). Consider issue of needing the string
+            // EADGBe reference and open string indicators
+
             self.guitar = new Guitar("#svg", {
                 model: this.opts.model,
                 x: 50,
                 y: 50,
-                fingerSize: 35,
+                fingerSize: 13,
                 fingerColour: 'black',
                 stringColour: 'black',
                 fretColour: '#D2B48C'
