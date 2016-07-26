@@ -1,7 +1,7 @@
 <app>
+    <a href="#" onclick={slideFretboard}>Slide Fretboard</a>
     <chord-selector doselect={chordSelected} chords={opts.chords} frets={opts.frets}></chord-selector>
     <guitar model={opts}></guitar>
-
     <script>
         var self = this;
 
@@ -29,5 +29,10 @@
             self.tags['guitar'].removeChordEls();
 
         }
+
+        slideFretboard(){
+          self.tags['guitar'].slide();
+        }
+
     </script>
 </app>
