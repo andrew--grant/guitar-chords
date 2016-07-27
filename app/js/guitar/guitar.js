@@ -44,9 +44,10 @@ Guitar.prototype.drawFretBoard = function () {
     // create a reference to 
     // the entire fretboard
     this.fretBoard = new FretBoard();
-
+    var originalXpos = this.x;
+    var fret = null;
     for (var i = 1; i <= this.opts.model.frets.length; i++) {
-        var fret = new Fret(this.svg, this.opts, this.x, this.y, this);
+        fret = new Fret(this.svg, this.opts, this.x, this.y, this);
         var fretGroup = fret.draw(i);
         this.x += (this.opts.fingerSize * 6);
         if (i > 1) {
@@ -54,6 +55,16 @@ Guitar.prototype.drawFretBoard = function () {
         }
         this.fretBoard.addFret(fret);
     }
+
+    var fretMask = this.svg.rect(originalXpos, this.y, this.opts.model.frets.length * (this.opts.fingerSize * 6), fret.fretHeight);
+    fretMask.attr({
+        id: 'fretMask',
+        fill: '#666'
+    });
+    this.fret2toNGroup.add(fretMask);
+    // this.fret2toNGroup.attr({
+    //     mask:fretMask
+    // });
 
 }
 
@@ -135,23 +146,24 @@ var Fret = function (svg, opts, x, y, guitar) {
     this.fretx = x;
     this.frety = y;
     this.guitar = guitar;
+    this.fretHeight = 0;
     this.spacer = this.fretHeight / 6;
 }
 
 Fret.prototype.draw = function (fretNumber) {
-    var fretHeight = 0;
+
     for (var i = 1; i <= 6; i++) {
         // get calculated height for use earlier
         // in the source code order (no z-index 
         // in this SVG version)
-        fretHeight += this.opts.fingerSize * 2;
+        this.fretHeight += this.opts.fingerSize * 2;
     }
 
     var fretGroup = this.svg.group();
     fretGroup.attr({ id: 'fret' + fretNumber })
 
     // draw a fret
-    var fret = this.svg.rect(this.fretx, this.frety, this.opts.fingerSize * 6, fretHeight);
+    var fret = this.svg.rect(this.fretx, this.frety, this.opts.fingerSize * 6, this.fretHeight);
     fret.attr({
         fill: this.opts.fretColour,
         stroke: "#000",
@@ -161,7 +173,7 @@ Fret.prototype.draw = function (fretNumber) {
     fretGroup.attr({ x: this.fretx });
 
     // draw fret number
-    var text = this.svg.text(this.fretx + this.opts.fingerSize * 3, this.frety + fretHeight + this.opts.fingerSize * 1.6, fretNumber);
+    var text = this.svg.text(this.fretx + this.opts.fingerSize * 3, this.frety + this.fretHeight + this.opts.fingerSize * 1.6, fretNumber);
     text.attr({
         'font-size': this.opts.fingerSize,
         fill: this.opts.fretNumberColour
