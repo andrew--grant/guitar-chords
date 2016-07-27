@@ -21,7 +21,6 @@ function guitarModel() {
                     [3, 6, 0]
                 ]
             },
-
             {
                 name: 'g',
                 families: ['g', 'c', 'd', 'em', 'am', 'bm'],
@@ -35,7 +34,6 @@ function guitarModel() {
                     [3, 6, 3]
                 ]
             },
-
             {
                 name: 'e',
                 families: ['e', 'a', 'b', 'cm', 'fm', 'gm'],
@@ -49,7 +47,6 @@ function guitarModel() {
                     [6, 6, 1]
                 ]
             }
-
         ],
         /* 
             Frets: 
