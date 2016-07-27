@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="../js/lib/snap.svg-min.js"></script>
+    <script>
+
+      window.addEventListener('load', doSvg, false); 
+    
+    function doSvg(){ 
+
+        var s = Snap("#svgout");    
+
+        var bigC = s.circle(100,100,50).attr({ stroke: 'silver', 'strokeWidth': 40, fill: 'silver' });
+        var bigC2 = bigC.clone().attr({ cx: 200, cy: 200, fill: 'red' }); 
+        var bigC3 = bigC.clone().attr({ cx: 200, cy: 50, fill: 'green' });
+
+        var fretBoard = s.group(bigC,bigC2,bigC3);
+
+        var c = s.circle(50,50,150).attr({ stroke: '#123456', 'strokeWidth': 20, fill: 'blue' });
+
+        c.attr({ mask:fretBoard });
+        c.animate({ cx: 400 }, 2000);
+    }
+
+
+
+        
+
+
+
+</script>
+</head>
+
+<body>
+
+    <svg id="svgout"></svg>
+
+</body>
+
+</html>

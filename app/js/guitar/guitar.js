@@ -56,15 +56,11 @@ Guitar.prototype.drawFretBoard = function () {
         this.fretBoard.addFret(fret);
     }
 
-    var fretMask = this.svg.rect(originalXpos, this.y, this.opts.model.frets.length * (this.opts.fingerSize * 6), fret.fretHeight);
-    fretMask.attr({
-        id: 'fretMask',
-        fill: '#666'
-    });
-    this.fret2toNGroup.add(fretMask);
-    // this.fret2toNGroup.attr({
-    //     mask:fretMask
-    // });
+    // not a 'real' SVG mask, but blocks the fretboard as it slides left
+    var fretMask = this.svg.rect(originalXpos - 875, this.y, this.opts.model.frets.length * (this.opts.fingerSize * 6) / 2, fret.fretHeight + 75).attr({ id: 'fret-mask', fill: 'red' });
+    // in wrong z-order, use DOM to move
+    $('#fret-mask').hide();
+    // todo: no hide, do the append/prepend op !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 }
 
@@ -228,6 +224,12 @@ Fret.prototype.addOpenNotesReference = function (stringNumber, x, y, openNotesRe
         fill: this.opts.fretNumberColour
     });
     openNotesReferenceGroup.add(eNoteRef);
+
+
+
+
+
+
 }
 
 Fret.prototype.drawChordShape = function (fretNumber, shape) {
