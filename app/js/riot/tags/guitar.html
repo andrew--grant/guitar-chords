@@ -11,19 +11,15 @@
 
             // fingerSize is a base ratio for all proportions
 
-
-            // todo: can manipulat viewable portin of fret board with 
-            // minus x (-1250 eg). Consider issue of needing the string
-            // EADGBe reference and open string indicators
-
             self.guitar = new Guitar("#svg", {
                 model: this.opts.model,
                 x: 50,
                 y: 50,
-                fingerSize: 15,
+                fingerSize: 30,
                 fingerColour: 'black',
                 stringColour: 'black',
-                fretColour: '#D2B48C'
+                fretColour: '#D2B48C',
+                backgroundColour: '#ddd'
             });
 
             self.guitar.drawFretBoard();
@@ -43,7 +39,7 @@
         }
 
         slide() {
-            self.guitar.slide();
+            self.guitar.slide(12);
 
         }
     </script>
