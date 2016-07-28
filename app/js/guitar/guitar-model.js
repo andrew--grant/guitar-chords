@@ -22,6 +22,19 @@ function guitarModel() {
                 ]
             },
             {
+                name: 'b',
+                families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
+                difficulty: 2,
+                shape: [
+                    [18, 1, -1], // fret, string, finger
+                    [19, 2, 0],
+                    [17, 3, 1],
+                    [18, 4, 2],
+                    [18, 5, 3],
+                    [17, 6, 0]
+                ]
+            },
+            {
                 name: 'g',
                 families: ['g', 'c', 'd', 'em', 'am', 'bm'],
                 difficulty: 4,
