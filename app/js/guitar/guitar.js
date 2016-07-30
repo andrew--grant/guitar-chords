@@ -83,6 +83,7 @@ Guitar.prototype.drawFretBoard = function() {
 }
 
 Guitar.prototype.drawChord = function(chord) {
+    // todo: review animation approach - why is animation not linear (string by string) anymore?
     // display any given chords' 
     // shape on to the fretboard 
     this.fretBoard.drawChord(chord);
