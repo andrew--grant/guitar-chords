@@ -25,7 +25,6 @@
             var vc = new VoiceCommands(
                 // chord cb
                 function(chord) {
-                    console.log(opts.chords);
                     for (var i = 0; i < opts.chords.length; i++) {
                         if (opts.chords[i].name == chord) {
 
@@ -58,7 +57,7 @@
             self.opts.doselect(self.opts.chords[self.chordIndex]);
             if (e.target.isVoiceCommand) {
                 // change select UI when voice activated
-                console.log($('#chord-select')[0].selectedIndex = self.chordIndex);
+                // console.log($('#chord-select')[0].selectedIndex = self.chordIndex);
 
             }
         }
