@@ -34,8 +34,7 @@ var Guitar = function(svg, opts) {
     this.x = this.opts.x || opts.defaults.x;
     this.y = this.opts.y || opts.defaults.y;
     this.fretBoard = null;
-    this.fret2toNGroup = this.svg.group();
-    this.fret2toNGroup.attr({ id: 'fret2toN' });
+    this.fret2toNGroup = null;
     this.openNotesReferenceGroup = this.svg.group();
     this.openNotesReferenceGroup.attr({ id: 'open-notes' });
     this.slidToFret = 2; // default, fret 2 is butted up against fret 1
@@ -56,6 +55,10 @@ Guitar.prototype.drawFretBoard = function() {
         var fretGroup = fret.draw(i);
         this.x += (this.opts.fingerSize * 6);
         if (i > 1) {
+            if (!this.fret2toNGroup) {
+                this.fret2toNGroup = this.svg.group();
+                this.fret2toNGroup.attr({ id: 'fret2toN' });
+            }
             this.fret2toNGroup.add(fretGroup);
         }
         this.fretBoard.addFret(fret);
@@ -63,20 +66,20 @@ Guitar.prototype.drawFretBoard = function() {
 
     var fret1x = this.fretBoard.frets[0].fretx;
     var fretHeight = this.fretBoard.frets[0].fretHeight;
-    console.log(fret1x);
-    console.log(fretHeight);
 
-
-    // not a 'real' SVG mask, but blocks the fretboard as it slides left
+    // not a 'real' SVG mask, but blocks the fretboard as it slides left 
     var fretMaskVertical = this.svg.rect(0, this.y - 1, originalXpos, fret.fretHeight + (this.opts.fingerSize * 2))
         .attr({ id: 'fret-mask-vertical', fill: this.opts.backgroundColour });
     // in source order, use DOM to move open-notes above mask
     $('#open-notes').prepend($('#fret-mask-vertical'));
 
-
     var fretMaskHorizonontal = this.svg.rect(50, fretHeight, fret.fretHeight / 3, (fret.fretHeight / (this.opts.fingerSize * 2)) + (this.opts.fingerSize * 2))
         .attr({ id: 'fret-mask-horizontal', fill: this.opts.backgroundColour });
     $('#open-notes').prepend($('#fret-mask-horizontal'));
+    //$('#fret2toN').append($('#open-notes')); 
+    //$('#open-notes').appendTo($('#fret2toN'));
+    $('#open-notes#').insertAfter($('fret2toN')); // todo: need open-notes to appear last in src order
+
 
 }
 
@@ -85,20 +88,29 @@ Guitar.prototype.drawChord = function(chord) {
     // shape on to the fretboard 
     this.fretBoard.drawChord(chord);
     var delayTime = 0;
+    // todo: relying on source order, which changed when
+    // the fretToNGroup approach was adopted - fix or removed
+    // stepped/ordered animation? Could just do a step 1, 
+    // fingers, then step 2, end fret indicators?
+
+    // $('.chord-indicator-finger,.chord-indicator-finger-text,.chord-indicator-noplay,.chord-indicator-open').animate({
+    //     opacity: 1
+    // }, 750, function() { console.log('ended'); });
+
     $('.chord-indicator-finger,.chord-indicator-finger-text')
-        .each(function() {
+        .each(function(evt) {
             $(this).delay(delayTime).animate({
                 opacity: 1
-            }, 750);
-            delayTime += 50;
+            }, 200);
+            delayTime += 70;
         });
 
     $('.chord-indicator-noplay,.chord-indicator-open')
         .each(function() {
             $(this).delay(delayTime).animate({
                 opacity: 1
-            }, 750);
-            delayTime += 50;
+            }, 200);
+            delayTime += 70;
         });
 
     // slide chord into view
@@ -108,7 +120,7 @@ Guitar.prototype.drawChord = function(chord) {
 Guitar.prototype.removeChord = function(chord) {
     var delayTime = 0;
     var animationTime = 35;
-    $($(".chord-indicator-finger,.chord-indicator").get().reverse())
+    $($('.chord-indicator-finger,.chord-indicator-finger-text,.chord-indicator-open,.chord-indicator-noplay').get().reverse())
         .each(function() {
             $(this).delay(delayTime).animate({
                 opacity: 0
@@ -266,7 +278,6 @@ Fret.prototype.drawStrings = function(fretNumber, fretGroup) {
         if (fretNumber == 1) {
             this.addOpenNotesReference(i, this.fretx, frety, this.guitar.openNotesReferenceGroup);
         }
-
     }
 }
 
@@ -284,6 +295,7 @@ Fret.prototype.addOpenNotesReference = function(stringNumber, x, y, openNotesRef
 }
 
 Fret.prototype.drawChordShape = function(fretNumber, shape) {
+
     var barredFret = 0; // assume no bar required
 
     for (var i = 1; i <= 6; i++) {
