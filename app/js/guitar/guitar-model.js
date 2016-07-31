@@ -6,12 +6,27 @@ function guitarModel() {
                 Shape: 
                 First index in sub-array is string number
                 Second index in sub-array is the fret to hold (if any, 0 if no hold)
-                Play open string = 0 | Dont play this string = -1
+                Play open string = 0 | Dont play this string = -1 | -2 barred
+
+                NOTE: add bars (-2) to first item in shape array, hen use 0 where
+                // no fingers are required
 
                 NOTE: Using anything less than 1 as a fret number can cause
                 issues issue with non-finger indicators (no-play, open-string etc)
              */
             {
+                name: 'g6', // uses a bar ( -2)
+                families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
+                difficulty: 2,
+                shape: [
+                    [7, 1, -2], // fret, string, finger
+                    [8, 2, 1],
+                    [7, 3, 0],
+                    [9, 4, 2],
+                    [7, 5, 0],
+                    [7, 6, 0]
+                ]
+            }, {
                 name: 'a',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,

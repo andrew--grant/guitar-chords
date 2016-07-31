@@ -61,8 +61,6 @@ Guitar.prototype.drawFretBoard = function() {
         this.fretBoard.addFret(fret);
     }
 
-
-
     var fret1x = this.fretBoard.frets[0].fretx;
     var fretHeight = this.fretBoard.frets[0].fretHeight;
     console.log(fret1x);
@@ -72,7 +70,7 @@ Guitar.prototype.drawFretBoard = function() {
     // not a 'real' SVG mask, but blocks the fretboard as it slides left
     var fretMaskVertical = this.svg.rect(0, this.y - 1, originalXpos, fret.fretHeight + (this.opts.fingerSize * 2))
         .attr({ id: 'fret-mask-vertical', fill: this.opts.backgroundColour });
-    // in source order, use DOM to move open-notes above mask   this.opts.backgroundColour
+    // in source order, use DOM to move open-notes above mask
     $('#open-notes').prepend($('#fret-mask-vertical'));
 
 
@@ -83,26 +81,31 @@ Guitar.prototype.drawFretBoard = function() {
 }
 
 Guitar.prototype.drawChord = function(chord) {
-    // todo: review animation approach - why is animation not linear (string by string) anymore?
     // display any given chords' 
     // shape on to the fretboard 
     this.fretBoard.drawChord(chord);
     var delayTime = 0;
-    $('.chord-indicator-finger,.chord-indicator-open,.chord-indicator-finger-text,.chord-indicator-noplay,.chord-indicator')
+    $('.chord-indicator-finger,.chord-indicator-finger-text')
         .each(function() {
             $(this).delay(delayTime).animate({
                 opacity: 1
-            }, 50);
+            }, 750);
             delayTime += 50;
         });
 
+    $('.chord-indicator-noplay,.chord-indicator-open')
+        .each(function() {
+            $(this).delay(delayTime).animate({
+                opacity: 1
+            }, 750);
+            delayTime += 50;
+        });
 
-
+    // slide chord into view
     this.slide(chord);
 }
 
 Guitar.prototype.removeChord = function(chord) {
-    // todo: grouping text and finger, or leave separate?
     var delayTime = 0;
     var animationTime = 35;
     $($(".chord-indicator-finger,.chord-indicator").get().reverse())
@@ -119,15 +122,13 @@ Guitar.prototype.removeChord = function(chord) {
 Guitar.prototype.slide = function(chord) {
     // slides arg fretNum to butt up against fret 1
     var self = this;
-
-
     $('.fret-number').show();
 
     // todo: remove any unused vars
-    // todo: look for any optmisations
+    // todo: look for any optmisations 
 
-
-    // what is the slide pos required by this chord?  
+    // what is the slide pos
+    // required by this chord?  
     var fretArr = [];
     for (var i = 0; i < 6; i++) {
         if (chord.shape[i][0] > 0) {
@@ -165,8 +166,10 @@ Guitar.prototype.drawNotes = function(note) {
     // positions across the fretboard 
 }
 
-Guitar.prototype.drawCapo = function(note) {
-    // todo-feature: draw a capo when required
+Guitar.prototype.barFret = function(fretNum) {
+    // indicate this fret is barred
+
+
 }
 
 var FretBoard = function() {
@@ -281,11 +284,19 @@ Fret.prototype.addOpenNotesReference = function(stringNumber, x, y, openNotesRef
 }
 
 Fret.prototype.drawChordShape = function(fretNumber, shape) {
+    var barredFret = 0; // assume no bar required
 
     for (var i = 1; i <= 6; i++) {
         var fretGroupRef = this.svg.select('#fret' + fretNumber);
         var shapeData = this.extractShapeData(i, shape);
         var frety = this.calcFretY(i);
+
+        if (shapeData.shapeDataFinger == -2) {
+            barredFret = shapeData.shapeDataFret;
+            console.log('no need to draw other indicators as its barred anyway at fret ' + barredFret);
+
+        }
+
         // should we draw a finger on this string?
         if ((shapeData.shapeDataFret == fretNumber) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger > 0)) {
             var finger = new Finger(this.svg, this.opts);
@@ -304,6 +315,10 @@ Fret.prototype.drawChordShape = function(fretNumber, shape) {
                 'class': 'chord-indicator chord-indicator-noplay',
                 fill: 'red'
             });
+        } else if (barredFret > 0) {
+            // todo: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+            // its a barred chord
+            console.log('need to be drawing a  bar chord: ' + shapeData.shapeDataFinger);
         }
 
     }
