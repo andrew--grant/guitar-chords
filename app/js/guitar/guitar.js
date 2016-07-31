@@ -73,12 +73,10 @@ Guitar.prototype.drawFretBoard = function() {
     // in source order, use DOM to move open-notes above mask
     $('#open-notes').prepend($('#fret-mask-vertical'));
 
-    var fretMaskHorizonontal = this.svg.rect(50, fretHeight, fret.fretHeight / 3, (fret.fretHeight / (this.opts.fingerSize * 2)) + (this.opts.fingerSize * 2))
+    var fretMaskHorizonontal = this.svg.rect(fret1x, fretHeight + this.opts.fingerSize, fret.fretHeight / 4, (fret.fretHeight / (this.opts.fingerSize * 2)) + (this.opts.fingerSize))
         .attr({ id: 'fret-mask-horizontal', fill: this.opts.backgroundColour });
     $('#open-notes').prepend($('#fret-mask-horizontal'));
-    //$('#fret2toN').append($('#open-notes')); 
-    //$('#open-notes').appendTo($('#fret2toN'));
-    $('#open-notes#').insertAfter($('fret2toN')); // todo: need open-notes to appear last in src order
+    $('#open-notes').insertAfter($('#fret2toN'));
 
 
 }
@@ -328,9 +326,13 @@ Fret.prototype.drawChordShape = function(fretNumber, shape) {
                 fill: 'red'
             });
         } else if (barredFret > 0) {
-            // todo: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-            // its a barred chord
-            console.log('need to be drawing a  bar chord: ' + shapeData.shapeDataFinger);
+            // its a barred chord 
+            if (i == 1 && shapeData.shapeDataFret == fretNumber) {
+                // [7, 1, -2], // fret, string, finger
+                var bar = this.svg.rect(this.fretx, frety, 70, 90);
+                //todo: look at finger.draw to make it work !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            }
+
         }
 
     }
