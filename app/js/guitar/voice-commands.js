@@ -61,7 +61,7 @@ VoiceCommands.prototype.listen = function() {
     }
 
     recognition.onerror = function(event) {
-        console.log('onerror');
+        //console.log('onerror');
         if (event.error == 'no-speech') {
             self.listen();
         }
