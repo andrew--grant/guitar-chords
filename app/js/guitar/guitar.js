@@ -88,10 +88,6 @@ Guitar.prototype.drawChord = function(chord) {
     // shape on to the fretboard 
     this.fretBoard.drawChord(chord);
     var delayTime = 0;
-    // todo: relying on source order, which changed when
-    // the fretToNGroup approach was adopted - fix or removed
-    // stepped/ordered animation? Could just do a step 1, 
-    // fingers, then step 2, end fret indicators?
 
     // $('.chord-indicator-finger,.chord-indicator-finger-text,.chord-indicator-noplay,.chord-indicator-open').animate({
     //     opacity: 1
@@ -393,7 +389,7 @@ Finger.prototype.draw = function(fingerx, fingery, fingersize, fingerNumber, fre
         fill: this.opts.fingerColour
     });
 
-    fretGroupRef.add(finger); // todo: try grouping these together (so fade/show only the container)
+    fretGroupRef.add(finger);
 
     // finger number
     var text = this.svg.text(fingerx - (fingersize / 2.5), fingery + (fingersize / 2), fingerNumber);
