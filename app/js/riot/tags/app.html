@@ -1,8 +1,12 @@
 <app>
     <chord-selector doselect={chordSelected} chords={opts.chords} frets={opts.frets}></chord-selector>
     <guitar model={opts}></guitar>
+    <hr/>
     <script>
         var self = this;
+
+        // todo: some sort of bckdrop 'behind' fretboard when it is slid beyond end
+        // (perhaps just a lighter bg?)
 
         self.on('mount', function(e) {
             // get access to the guitar and 
