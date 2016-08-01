@@ -304,6 +304,7 @@ Fret.prototype.drawChordShape = function (fretNumber, shape) {
         if (shapeData.shapeDataFinger == -2) {
             barredFret = shapeData.shapeDataFret;
             console.log('no need to draw other indicators as its barred anyway at fret ' + barredFret);
+            // todo: dont draw first fret indicators in a bar scenario
 
         }
 
