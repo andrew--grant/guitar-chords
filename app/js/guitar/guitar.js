@@ -1,5 +1,5 @@
 /* Guitar class */
-var Guitar = function (svg, opts) {
+var Guitar = function(svg, opts) {
     // cant do anything without a guitar 
     // and chords data model or...
     if (!opts.model) {
@@ -15,10 +15,11 @@ var Guitar = function (svg, opts) {
     opts.defaults = {};
     opts.defaults.stringColour = 'red';
     opts.defaults.fingerColour = 'green';
+    opts.defaults.barColour = '#8B0000';
     opts.defaults.fingerNumberColour = 'white';
     opts.defaults.fretColour = '#D2B48C';
     opts.defaults.fretNumberColour = 'grey';
-    opts.defaults.fingerSize = 40;
+    opts.defaults.fingerSize = 30;
     opts.defaults.openStringColour = 'black';
     opts.defaults.backgroundColour = '#fff';
     opts.defaults.x = 75;
@@ -30,6 +31,7 @@ var Guitar = function (svg, opts) {
     opts.fretNumberColour = opts.fretNumberColour || opts.defaults.fretNumberColour;
     opts.stringColour = opts.stringColour || opts.defaults.stringColour;
     opts.fingerColour = opts.fingerColour || opts.defaults.fingerColour;
+    opts.barColour = opts.barColour || opts.defaults.barColour;
     opts.fingerNumberColour = opts.fingerNumberColour || opts.defaults.fingerNumberColour;
     this.x = this.opts.x || opts.defaults.x;
     this.y = this.opts.y || opts.defaults.y;
@@ -43,7 +45,7 @@ var Guitar = function (svg, opts) {
 
 }
 
-Guitar.prototype.drawFretBoard = function () {
+Guitar.prototype.drawFretBoard = function() {
 
     // create a reference to 
     // the entire fretboard
@@ -81,7 +83,7 @@ Guitar.prototype.drawFretBoard = function () {
 
 }
 
-Guitar.prototype.drawChord = function (chord) {
+Guitar.prototype.drawChord = function(chord) {
     // display any given chords' 
     // shape on to the fretboard 
     this.fretBoard.drawChord(chord);
@@ -96,40 +98,49 @@ Guitar.prototype.drawChord = function (chord) {
     // }, 750, function() { console.log('ended'); });
 
     $('.chord-indicator-finger,.chord-indicator-finger-text')
-        .each(function (evt) {
+        .each(function(evt) {
             $(this).delay(delayTime).animate({
                 opacity: 1
             }, 200);
             delayTime += 70;
         });
 
+    // ,.chord-indicator-bar
+
     $('.chord-indicator-noplay,.chord-indicator-open')
-        .each(function () {
+        .each(function() {
             $(this).delay(delayTime).animate({
                 opacity: 1
             }, 200);
             delayTime += 70;
         });
+
+    $('.chord-indicator-bar').animate({
+        opacity: 1
+    }, 500);
 
     // slide chord into view
     this.slide(chord);
 }
 
-Guitar.prototype.removeChord = function (chord) {
+Guitar.prototype.removeChord = function(chord) {
     var delayTime = 0;
     var animationTime = 35;
     $($('.chord-indicator-finger,.chord-indicator-finger-text,.chord-indicator-open,.chord-indicator-noplay').get().reverse())
-        .each(function () {
+        .each(function() {
             $(this).delay(delayTime).animate({
                 opacity: 0
-            }, animationTime, function () {
+            }, animationTime, function() {
                 $(this).remove();
             });
             delayTime += animationTime;
         });
+
+    $('.chord-indicator-bar').fadeOut(200);
+
 }
 
-Guitar.prototype.slide = function (chord) {
+Guitar.prototype.slide = function(chord) {
     // slides arg fretNum to butt up against fret 1
     var self = this;
     $('.fret-number').show();
@@ -146,7 +157,7 @@ Guitar.prototype.slide = function (chord) {
         }
     }
 
-    var leftMostFretForChord = _.min(fretArr, function (o) {
+    var leftMostFretForChord = _.min(fretArr, function(o) {
         return o.val;
     });
 
@@ -156,7 +167,7 @@ Guitar.prototype.slide = function (chord) {
     // do the slide 
     moveToX = moveToX >= 0 ? moveToX : 0;
     self.fret2toNGroup.animate({ 'transform': 'translate(-' + moveToX + ',0)' }, 1200, mina.easeinout,
-        function () {
+        function() {
             // self.slidToFret = leftMostFretForChord;
             // self.lastSlidtoNum = moveToX;
         }
@@ -171,26 +182,26 @@ Guitar.prototype.slide = function (chord) {
 
 }
 
-Guitar.prototype.drawNotes = function (note) {
+Guitar.prototype.drawNotes = function(note) {
     // todo-feature: draw any given notes' multiple 
     // positions across the fretboard 
 }
 
-Guitar.prototype.barFret = function (fretNum) {
+Guitar.prototype.barFret = function(fretNum) {
     // indicate this fret is barred
 
 
 }
 
-var FretBoard = function () {
+var FretBoard = function() {
     this.frets = [];
 }
 
-FretBoard.prototype.addFret = function (fret) {
+FretBoard.prototype.addFret = function(fret) {
     this.frets.push(fret);
 }
 
-FretBoard.prototype.drawChord = function (chord) {
+FretBoard.prototype.drawChord = function(chord) {
     for (var i = 0; i < this.frets.length; i++) {
         this.frets[i].drawChordShape(i + 1, chord.shape)
     }
@@ -198,7 +209,7 @@ FretBoard.prototype.drawChord = function (chord) {
 
 
 /* Fret class */
-var Fret = function (svg, opts, x, y, guitar) {
+var Fret = function(svg, opts, x, y, guitar) {
     this.svg = svg;
     this.opts = opts;
     this.fretx = x;
@@ -210,7 +221,7 @@ var Fret = function (svg, opts, x, y, guitar) {
     this.y = y;
 }
 
-Fret.prototype.draw = function (fretNumber) {
+Fret.prototype.draw = function(fretNumber) {
 
     for (var i = 1; i <= 6; i++) {
         // get calculated height for use earlier
@@ -247,7 +258,7 @@ Fret.prototype.draw = function (fretNumber) {
     return fretGroup;
 }
 
-Fret.prototype.extractShapeData = function (stringNumber, shape) {
+Fret.prototype.extractShapeData = function(stringNumber, shape) {
     // Shape Data:
     // Eg: [3,3,2]  Place finger 2 on string 3 at fret 3
     // Eg: [2,6,0]  Place no finger on string 6 at fret 2
@@ -260,11 +271,11 @@ Fret.prototype.extractShapeData = function (stringNumber, shape) {
     }
 }
 
-Fret.prototype.calcFretY = function (stringNumber) {
+Fret.prototype.calcFretY = function(stringNumber) {
     return this.frety + (stringNumber * (this.opts.fingerSize * 2) - this.opts.fingerSize);
 }
 
-Fret.prototype.drawStrings = function (fretNumber, fretGroup) {
+Fret.prototype.drawStrings = function(fretNumber, fretGroup) {
 
     for (var i = 1; i <= 6; i++) {
         //var shapeData = this.extractShapeData(i, shape);
@@ -279,9 +290,9 @@ Fret.prototype.drawStrings = function (fretNumber, fretGroup) {
     }
 }
 
-Fret.prototype.removeChordShape = function (fretNumber, shape) { }
+Fret.prototype.removeChordShape = function(fretNumber, shape) {}
 
-Fret.prototype.addOpenNotesReference = function (stringNumber, x, y, openNotesReferenceGroup) {
+Fret.prototype.addOpenNotesReference = function(stringNumber, x, y, openNotesReferenceGroup) {
     fretRef = ['E', 'A', 'D', 'G', 'B', 'e'];
     var eNoteRef = this.svg.text(x - (this.opts.fingerSize + 12), y + (this.opts.fingerSize / 2.5), fretRef[stringNumber - 1]);
     eNoteRef.attr({
@@ -292,9 +303,9 @@ Fret.prototype.addOpenNotesReference = function (stringNumber, x, y, openNotesRe
 
 }
 
-Fret.prototype.drawChordShape = function (fretNumber, shape) {
+Fret.prototype.drawChordShape = function(fretNumber, shape) {
 
-    var barredFret = 0; // assume no bar required
+    var barredFret = 0;
 
     for (var i = 1; i <= 6; i++) {
         var fretGroupRef = this.svg.select('#fret' + fretNumber);
@@ -303,22 +314,19 @@ Fret.prototype.drawChordShape = function (fretNumber, shape) {
 
         if (shapeData.shapeDataFinger == -2) {
             barredFret = shapeData.shapeDataFret;
-            console.log('no need to draw other indicators as its barred anyway at fret ' + barredFret);
-            // todo: dont draw first fret indicators in a bar scenario
-
         }
 
         // should we draw a finger on this string?
         if ((shapeData.shapeDataFret == fretNumber) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger > 0)) {
             var finger = new Finger(this.svg, this.opts);
             finger.draw(this.fretx + (this.opts.fingerSize * 3), frety, this.opts.fingerSize, shapeData.shapeDataFinger, fretGroupRef);
-        } else if ((shapeData.shapeDataFret == fretNumber) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == 0)) {
+        } else if ((shapeData.shapeDataFret == fretNumber) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == 0) && barredFret == 0) {
             var open = this.svg.circle(this.opts.fret1x, frety, this.opts.fingerSize / 4);
             open.attr({
                 'class': 'chord-indicator chord-indicator-open',
                 fill: this.opts.openStringColour
             });
-        } else if ((shapeData.shapeDataFret == fretNumber) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == -1)) {
+        } else if ((shapeData.shapeDataFret == fretNumber) && (shapeData.shapeDataString == i) && (shapeData.shapeDataFinger == -1) && barredFret == 0) {
             // must be a 'no play' indicator
             // todo: make an 'x' shape as per TAB notation  
             var doNotPlay = this.svg.circle(this.opts.fret1x, frety, this.opts.fingerSize / 4);
@@ -328,12 +336,15 @@ Fret.prototype.drawChordShape = function (fretNumber, shape) {
             });
         } else if (barredFret > 0) {
             // its a barred chord 
+            var fretWidth = this.opts.fingerSize * 6;
             if (i == 1 && shapeData.shapeDataFret == fretNumber) {
-                // [7, 1, -2], // fret, string, finger
-                var bar = this.svg.rect(this.fretx, frety, 70, 90);
+                var bar = this.svg.rect(this.fretx + (fretWidth / 2.5), this.y, this.opts.fingerSize * 1.5, this.opts.fingerSize * 12);
+                bar.attr({
+                    'class': 'chord-indicator-bar',
+                    fill: this.opts.barColour,
+                    opacity: 0
+                });
                 fretGroupRef.add(bar);
-                // console.log('fretNumber ' + fretNumber);
-                // console.log('this.fretx ' + this.fretx);
             }
 
         }
@@ -344,12 +355,12 @@ Fret.prototype.drawChordShape = function (fretNumber, shape) {
 
 
 /* GuitarString class */
-var GuitarString = function (svg, opts) {
+var GuitarString = function(svg, opts) {
     this.svg = svg;
     this.opts = opts;
 }
 
-GuitarString.prototype.draw = function (guitarStringx, guitarStringy, width, stringNumber, fretGroup) {
+GuitarString.prototype.draw = function(guitarStringx, guitarStringy, width, stringNumber, fretGroup) {
     // proportional string widths 
     var stringThickness = (this.opts.fingerSize / 12);
     if (6 / stringNumber == 1) {
@@ -368,12 +379,12 @@ GuitarString.prototype.draw = function (guitarStringx, guitarStringy, width, str
 }
 
 /* Finger class */
-var Finger = function (svg, opts) {
+var Finger = function(svg, opts) {
     this.svg = svg;
     this.opts = opts;
 }
 
-Finger.prototype.draw = function (fingerx, fingery, fingersize, fingerNumber, fretGroupRef) {
+Finger.prototype.draw = function(fingerx, fingery, fingersize, fingerNumber, fretGroupRef) {
 
     // finger
     var finger = this.svg.circle(fingerx, fingery, fingersize * .9);

@@ -8,6 +8,6 @@ GuitarString.prototype.draw = function(x, y) {
     line.graphics.beginStroke(this.stringColor);
     line.graphics.moveTo(position, position);
     line.graphics.lineTo(250, 250);
-    line.graphics.endStroke();
+    line.graphics.endStroke(); //zxcvs
     return line;
 }
