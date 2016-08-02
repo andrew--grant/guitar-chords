@@ -7,18 +7,18 @@
     <style>
         .chords-menu {
             /*background-color: #eee;*/
-            margin: 1em 1em 2em 2em;
-            font-size:2em;
+            margin: .1em .1em 2em 2em;
+            font-size: 2em;
         }
         
         .chord-button {
             background-color: #222;
-            margin: .5em;
-            padding: .5em;
-            color: white;
+            margin: .2em;
+            padding: .3em;
+            color: #eee;
             font-size: 1.1em;
-            border: solid 1px #eee;
-            border-radius: 5px;
+            border: none;
+            border-radius: 4px;
             outline: none;
         }
         
@@ -26,13 +26,16 @@
             background-color: #c22;
             color: white;
             font-size: 1.1em;
-            border: solid 1px #fce;
         }
         
         .chord-button:active {
-            background-color: #f22;
+            background-color: #c22;
             color: white;
             height: 100%;
+        }
+        
+        .chord-selected {
+            background-color: #c22;
         }
     </style>
     <script>
@@ -50,6 +53,8 @@
 
         chordSelected(e) {
             self.chordIndex = e.target.id;
+            $('.chord-button').removeClass('chord-selected');
+            $(e.target).addClass('chord-selected');
             self.opts.doselect(self.opts.chords[self.chordIndex]);
             if (e.target.isVoiceCommand) {
                 // change select UI when voice activated

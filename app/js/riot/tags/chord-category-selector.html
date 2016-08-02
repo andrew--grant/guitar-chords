@@ -1,0 +1,42 @@
+<chord-category-selector>
+    <div class="chord-category-selector" onclick={click}>
+        <ul>
+            <li>E</li>
+            <li>A</li>
+            <li>E</li>
+            <li>G</li>
+            <li>B</li>
+            <li>E</li>
+        </ul>
+    </div>
+    <style>
+        .chord-category-selector {
+            width: 50%;
+            margin: auto;
+            padding: .25em;
+            background-color: #ccc;
+        }
+        
+        .chord-category-selector ul {
+            list-style-type: none;
+            margin: 0;
+            padding: .5em;
+        }
+        
+        .chord-category-selector ul li {
+            display: inline;
+        }
+    </style>
+    <script>
+        var self = this;
+        self.details = null;
+
+        self.on('mount', function() {});
+
+        self.on('update', function() {});
+
+        click(e) {
+            console.log('yay');
+        }
+    </script>
+</chord-category-selector>
