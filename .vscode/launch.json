@@ -1,18 +1,19 @@
 {
-    "version": "0.2.0",
+    //https://blogs.msdn.microsoft.com/cdndevs/2015/12/21/visual-studio-code-debugger-for-chrome-extension/
+    //https://developers.google.com/web/tools/chrome-devtools/debug/breakpoints/add-breakpoints?hl=en
+    "version": "0.1.0",
     "configurations": [
         {
-            "name": "Launch Extension",
-            "type": "extensionHost",
-            "request": "launch",
-            "runtimeExecutable": "${execPath}",
-            "args": [
-                "--extensionDevelopmentPath=${workspaceRoot}"
-            ],
-            "stopOnEntry": false,
-            "sourceMaps": true,
-            "outDir": "${workspaceRoot}/out",
-            "preLaunchTask": "npm"
+            "name": "Launch localhost",
+            "type": "chrome",
+            "request": "launch", 
+            "diagnosticLogging": true,
+            "url": "http://localhost:3000/app/index.html",
+            "webRoot": "${workspaceRoot}",
+            "runtimeExecutable": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+            "runtimeArgs": [
+                "--remote-debugging-port=9222"
+            ]
         }
     ]
 }
