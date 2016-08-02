@@ -32,7 +32,7 @@ function guitarModel() {
                 difficulty: 2,
                 shape: [
                     [18, 1, 0], // fret, string, finger
-                    [19, 2, -1], // todo: why no show? (an a can show in same pos, why not this B? Something to do with being very last fret?
+                    [19, 2, -1], 
                     [17, 3, 1],
                     [18, 4, 2],
                     [18, 5, 3],

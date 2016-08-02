@@ -1,12 +1,14 @@
 <chords-menu>
     <div class="chords-menu">
-        <button each={opts.chords} class='chord-button' onclick={chordSelected}>
-           {name}
+        <button each={chord, i in opts.chords} id='{i}' class='chord-button' onclick={chordSelected}>
+           {chord.name}
         </button>
     </div>
     <style>
         .chords-menu {
             /*background-color: #eee;*/
+            margin: 1em 1em 2em 2em;
+            font-size:2em;
         }
         
         .chord-button {
@@ -17,6 +19,20 @@
             font-size: 1.1em;
             border: solid 1px #eee;
             border-radius: 5px;
+            outline: none;
+        }
+        
+        .chord-button:hover {
+            background-color: #c22;
+            color: white;
+            font-size: 1.1em;
+            border: solid 1px #fce;
+        }
+        
+        .chord-button:active {
+            background-color: #f22;
+            color: white;
+            height: 100%;
         }
     </style>
     <script>
@@ -25,7 +41,7 @@
         self.selectedChord = null;
 
         self.on('mount', function() {
-            console.log(self.opts.chords);
+            //console.log(self.opts.chords);
         });
 
         self.on('update', function() {
@@ -33,12 +49,11 @@
         });
 
         chordSelected(e) {
-            console.log(e.target.innerText);
-            self.chordIndex = e.target.selectedIndex;
-            self.opts.doselect(e.target.innerText); // todo: needs actual chord obj, so associate index with each btn (an id or class to be looked up)
+            self.chordIndex = e.target.id;
+            self.opts.doselect(self.opts.chords[self.chordIndex]);
             if (e.target.isVoiceCommand) {
                 // change select UI when voice activated
-                $('#chord-select')[0].selectedIndex = self.chordIndex
+                // $('#chord-select')[0].selectedIndex = self.chordIndex
             }
         }
     </script>
