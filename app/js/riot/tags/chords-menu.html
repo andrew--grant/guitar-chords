@@ -1,9 +1,5 @@
 <chords-menu>
-    <div class="chords-menu">
-        <button each={chord, i in opts.chords} id='{i}' class='chord-button' onclick={chordSelected}>
-           {chord.name}
-        </button>
-    </div>
+    <div class="chords-menu"></div>
     <style>
         .chords-menu {
             /*background-color: #eee;*/
@@ -44,11 +40,13 @@
         self.selectedChord = null;
 
         self.on('mount', function() {
-            //console.log(self.opts.chords);
+            // apply default menu items filter
+            self.renderMenuItems(null);
         });
 
         self.on('update', function() {
             self.selectedChord = self.opts.chords[self.chordIndex];
+            console.log('just updated!');
         });
 
         chordSelected(e) {
@@ -59,6 +57,47 @@
             if (e.target.isVoiceCommand) {
                 // change select UI when voice activated
                 // $('#chord-select')[0].selectedIndex = self.chordIndex
+            }
+        }
+
+        getChordsByFamily(family) {
+            var resultsArr = [];
+            for (var i = 0; i < 10; i++) {
+                resultsArr.push(opts.chords[i]);
+            }
+            return resultsArr;
+        }
+        renderMenuItems(filter) {
+            // reset container
+            $('.chords-menu').empty();
+            if (filter) {
+                var chords = self.getChordsByFamily(filter);
+                // Take filter arg, say, 'B'. Look up all chords that 
+                // have 'B' in their families array.
+                // todo: cache any results rather then loop each
+                // and every time a menu choice is made?
+                for (var i = 0; i < chords.length; i++) {
+                    $('.chords-menu').append('<button id=\'' + i + '\'  class=\'chord-button\'>' +
+                        opts.chords[i].name + '</button>');
+                }
+
+                console.log($('.chord-button'));
+
+                $('.chords-menu').on('click', '.chord-button', function() {
+                    // todo: using jQuery v1.10.2, could be why this 
+                    // fails to work?
+                    alert('see me now?');
+                });
+
+                self.update();
+
+            } else {
+                // default, render these chords
+                // todo: render all or some 'simple' or 'popular' set?
+                for (var i = 0; i < opts.chords.length; i++) {
+                    $('.chords-menu').append('<button id=\'' + i + '\'  class=\'chord-button\'>' +
+                        opts.chords[i].name + '</button>');
+                }
             }
         }
     </script>

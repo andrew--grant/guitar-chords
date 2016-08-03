@@ -1,43 +1,41 @@
 <app>
-    <!--<chord-selector doselect={chordSelected} chords={opts.chords} frets={opts.frets}></chord-selector>
-    <hr/>-->
+    <!-- <chord-selector doselect={chordSelected} chords={opts.chords} frets={opts.frets}></chord-selector> -->
     <guitar model={opts}></guitar>
-    <!--<hr/>-->
     <chords-menu doselect={chordSelected} chords={opts.chords}></chords-menu>
-    <chord-category-selector></chord-category-selector>
+    <chord-category-selector doselect={chordSetSelected}/>
     <script>
         var self = this;
+        var guitar = null;
+        var chordsMenu = null;
 
-        // todo: some sort of bckdrop 'behind' fretboard when it is slid beyond end
+        // todo: some sort of backdrop 'behind' fretboard when it is slid beyond end
         // (perhaps just a lighter bg?)
 
         self.on('mount', function(e) {
-            // get access to the guitar and 
-            // guitar-model for use in tag
-            self.guitar = null; //todo
-            // either leave blank, or animate
-            // the default chord in here
+            guitar = self.tags['guitar'];
+            chordsMenu = self.tags['chords-menu'];
         });
 
         self.on('update', function(e) {});
+
+        chordSetSelected(category) {
+            chordsMenu.renderMenuItems(category);
+        }
 
         chordSelected(chord) {
             self.drawChord(chord);
         }
 
         drawChord(chord) {
-            // animate any previous chords out, then
-            // animate the selected chord in
-            self.tags['guitar'].drawChord(chord);
+            guitar.drawChord(chord);
         }
 
         removeChordEls() {
-            self.tags['guitar'].removeChordEls();
-
+            guitar.removeChordEls();
         }
 
         slideFretboard() {
-            self.tags['guitar'].slide();
+            guitar.slide();
         }
     </script>
 </app>

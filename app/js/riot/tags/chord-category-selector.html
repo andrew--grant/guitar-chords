@@ -1,13 +1,13 @@
 <chord-category-selector>
-    <div class="chord-category-selector" onclick={click}>
+    <div class="chord-category-selector">
         <!-- todo: sound samples, other tips/feedback from steve -->
+        <!-- use mobiscroll for selection? -->
         <ul>
-            <li>E</li>
-            <li>A</li>
-            <li>E</li>
-            <li>G</li>
-            <li>B</li>
-            <li>E</li>
+            <li><a href='#' onclick={click} id='E'>E</a></li>
+            <li><a href='#' onclick={click} id='A'>A</a></li>
+            <li><a href='#' onclick={click} id='D'>D</a></li>
+            <li><a href='#' onclick={click} id='G'>G</a></li>
+            <li><a href='#' onclick={click} id='B'>B</a></li>
         </ul>
     </div>
     <style>
@@ -37,7 +37,8 @@
         self.on('update', function() {});
 
         click(e) {
-            console.log('yay');
+            // drive menu filtering 
+            self.opts.doselect(e.target.id);
         }
     </script>
 </chord-category-selector>
