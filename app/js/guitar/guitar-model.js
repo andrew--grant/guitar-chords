@@ -1,5 +1,6 @@
 function guitarModel() {
     // todo: reserch: https://en.wikipedia.org/wiki/Tablature
+    // todo: uppercase chord names?
     return {
         chords: [
             /* 

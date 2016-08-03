@@ -2,12 +2,15 @@
     <div class="chord-category-selector">
         <!-- todo: sound samples, other tips/feedback from steve -->
         <!-- use mobiscroll for selection? -->
+        <!-- Family/Song/Custom switcher? -->
         <ul>
+            <li>Family:</li>
             <li><a href='#' onclick={click} id='E'>E</a></li>
             <li><a href='#' onclick={click} id='A'>A</a></li>
             <li><a href='#' onclick={click} id='D'>D</a></li>
             <li><a href='#' onclick={click} id='G'>G</a></li>
             <li><a href='#' onclick={click} id='B'>B</a></li>
+            <li><a href='#' onclick={click} id=''>Reset</a></li>
         </ul>
     </div>
     <style>
@@ -15,7 +18,9 @@
             width: 50%;
             margin: auto;
             padding: .25em;
-            background-color: #ccc;
+            border-radius: 4px;
+            background-color: #c22;
+            color: white;
         }
         
         .chord-category-selector ul {
@@ -24,8 +29,19 @@
             padding: .5em;
         }
         
+        .chord-category-selector ul li:first {
+            border-right: solid 1px gray;
+        }
+        
         .chord-category-selector ul li {
             display: inline;
+            margin: .5em;
+            padding: .5em;
+            /*border: */
+        }
+        
+        .chord-category-selector ul li a {
+            color: white;
         }
     </style>
     <script>

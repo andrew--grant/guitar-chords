@@ -14,7 +14,7 @@
             color: #eee;
             font-size: 1.1em;
             border: none;
-            border-radius: 4px;
+            border-radius: 4px; 
             outline: none;
         }
         
@@ -46,13 +46,13 @@
 
         self.on('update', function() {
             self.selectedChord = self.opts.chords[self.chordIndex];
-            console.log('just updated!');
         });
 
         chordSelected(e) {
             self.chordIndex = e.target.id;
             $('.chord-button').removeClass('chord-selected');
             $(e.target).addClass('chord-selected');
+            console.log('xxx');
             self.opts.doselect(self.opts.chords[self.chordIndex]);
             if (e.target.isVoiceCommand) {
                 // change select UI when voice activated
@@ -67,38 +67,38 @@
             }
             return resultsArr;
         }
+
         renderMenuItems(filter) {
-            // reset container
+            // reset container  
+            $('.chords-menu').off('click');
             $('.chords-menu').empty();
+            var chords = null;
+            // which view of chords to render?
             if (filter) {
-                var chords = self.getChordsByFamily(filter);
-                // Take filter arg, say, 'B'. Look up all chords that 
-                // have 'B' in their families array.
-                // todo: cache any results rather then loop each
-                // and every time a menu choice is made?
-                for (var i = 0; i < chords.length; i++) {
-                    $('.chords-menu').append('<button id=\'' + i + '\'  class=\'chord-button\'>' +
-                        opts.chords[i].name + '</button>');
-                }
-
-                console.log($('.chord-button'));
-
-                $('.chords-menu').on('click', '.chord-button', function() {
-                    // todo: using jQuery v1.10.2, could be why this 
-                    // fails to work?
-                    alert('see me now?');
-                });
-
-                self.update();
-
+                chords = self.getChordsByFamily(filter);
             } else {
-                // default, render these chords
-                // todo: render all or some 'simple' or 'popular' set?
-                for (var i = 0; i < opts.chords.length; i++) {
-                    $('.chords-menu').append('<button id=\'' + i + '\'  class=\'chord-button\'>' +
-                        opts.chords[i].name + '</button>');
-                }
+                // default, render all or some 'simple' or 'popular' set?
+                chords = self.opts.chords;
             }
+
+            // render chords
+            for (var i = 0; i < chords.length; i++) {
+                $('.chords-menu').append('<button id=\'' + i + '\'  class=\'chord-button\'>' +
+                    chords[i].name + '</button>');
+            }
+
+            // attach events
+            $('.chords-menu').on('click', '.chord-button', function(e) {
+                // todo: using jQuery v1.10.2, could be why error on windows??
+                var chord = chords[e.target.id];
+                for (var i = 0; i < chord.families.length; i++) {
+                    //console.log(chord.families[i] + ' / ' + filter);
+                }
+                self.opts.doselect(chord);
+            });
+
+
+
         }
     </script>
 </chords-menu>
