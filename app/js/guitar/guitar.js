@@ -18,7 +18,7 @@ var Guitar = function(svg, opts) {
     opts.defaults.barColour = '#8B0000';
     opts.defaults.fingerNumberColour = 'white';
     opts.defaults.fretColour = '#D2B48C';
-    opts.defaults.fretNumberColour = 'grey';
+    opts.defaults.fretNumberColour = 'white';
     opts.defaults.fingerSize = 30;
     opts.defaults.openStringColour = 'black';
     opts.defaults.backgroundColour = '#fff';
@@ -70,14 +70,14 @@ Guitar.prototype.drawFretBoard = function() {
     var fretHeight = this.fretBoard.frets[0].fretHeight;
 
     // not a 'real' SVG mask, but blocks the fretboard as it slides left 
-    var fretMaskVertical = this.svg.rect(0, this.y - 1, originalXpos, fret.fretHeight + (this.opts.fingerSize * 2))
-        .attr({ id: 'fret-mask-vertical', fill: this.opts.backgroundColour });
+    var fretMaskVertical = this.svg.rect(0, this.y - 1, originalXpos, fret.fretHeight)
+        .attr({ id: 'fret-mask-vertical', fill: this.opts.fretColour });
     // in source order, use DOM to move open-notes above mask
     $('#open-notes').prepend($('#fret-mask-vertical'));
 
-    var fretMaskHorizonontal = this.svg.rect(fret1x, fretHeight + this.opts.fingerSize, fret.fretHeight / 4, (fret.fretHeight / (this.opts.fingerSize * 2)) + (this.opts.fingerSize))
-        .attr({ id: 'fret-mask-horizontal', fill: this.opts.backgroundColour });
-    $('#open-notes').prepend($('#fret-mask-horizontal'));
+    // var fretMaskHorizonontal = this.svg.rect(fret1x, fretHeight + this.opts.fingerSize, fret.fretHeight / 4, (fret.fretHeight / (this.opts.fingerSize * 2)) + (this.opts.fingerSize))
+    //     .attr({ id: 'fret-mask-horizontal', fill: this.opts.fretColour });
+    // $('#open-notes').prepend($('#fret-mask-horizontal'));
     $('#open-notes').insertAfter($('#fret2toN'));
 
 
@@ -170,10 +170,11 @@ Guitar.prototype.slide = function(chord) {
     );
 
     // prevent fret number overlaying fret number of fret 1
-
+    // and hide fret number before it
     var fretNum = leftMostFretForChord;
     if (fretNum > 3) {
         $('#fret-number-' + (fretNum - 2)).hide();
+        $('#fret-number-' + (fretNum - 3)).hide();
     }
 
 }

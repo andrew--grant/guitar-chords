@@ -30,6 +30,12 @@
             height: 100%;
         }
         
+        .chord-button-active {
+            background-color: #c22;
+            color: white;
+            height: 100%;
+        }
+        
         .chord-selected {
             background-color: #c22;
         }
@@ -81,39 +87,43 @@
         }
 
         renderMenuItems(filter) {
-            // get chord set based on filter
-
-
             // reset container  
             $('.chords-menu').off('click');
-            $('.chords-menu').empty();
+            //$('.chord-button-active').removeClass('chord-button-active');
             var chords = null;
-            // which view of chords to render?
-            if (filter) {
-                chords = self.filterChords(filter);
-            } else {
-                // default, render all or some 'simple' or 'popular' set?
-                chords = self.opts.chords;
-            }
-
-            // render chords
-            for (var i = 0; i < chords.length; i++) {
-                $('.chords-menu').append('<button id=\'' + i + '\'  class=\'chord-button\'>' +
-                    chords[i].name + '</button>');
-            }
+            var fadeSpeed = 'fast';
+            $('.chords-menu').fadeOut(fadeSpeed, function() {
+                $('.chords-menu').empty();
+                // which view of chords to render?
+                if (filter) {
+                    chords = self.filterChords(filter);
+                } else {
+                    // default, render all or some 'simple' or 'popular' set?
+                    chords = self.opts.chords;
+                }
+                // render chords
+                for (var i = 0; i < chords.length; i++) {
+                    $('.chords-menu').append('<button id=\'' + i + '\'  class=\'chord-button\'>' + chords[i].name + '</button>');
+                }
+                $('.chords-menu').fadeIn(fadeSpeed, function() {
+                    //$('.chords-menu').empty();
+                });
+            });
 
             // attach events
             $('.chords-menu').on('click', '.chord-button', function(e) {
                 // todo: using jQuery v1.10.2, could be why error on windows??
                 var chord = chords[e.target.id];
+                // keep this menu item active/selected
+                console.log('len: ' + $('.chord-button-active').length);
+                $('.chord-button-active').removeClass('chord-button-active');
+                $('#' + e.target.id).addClass('chord-button-active');
                 for (var i = 0; i < chord.families.length; i++) {
-                    //console.log(chord.families[i] + ' / ' + filter);
+                    // console.log(chord.families[i] + ' / ' + filter);
+                    // todo: remove this pointless loop! (test)
                 }
                 self.opts.doselect(chord);
             });
-
-
-
         }
     </script>
 </chords-menu>
