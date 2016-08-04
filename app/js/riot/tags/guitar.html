@@ -1,11 +1,12 @@
 <guitar>
     <div class="guitar" onclick={click}>
-        <svg id='svg' style='height:400px;width:95%;'></svg>
+        <svg id='svg' style='height:400px;width:90%;'></svg>
     </div>
     <style>
         .guitar {
             width: 90%;
             margin: auto;
+            margin-top: 30px;
         }
     </style>
     <script>
@@ -20,7 +21,7 @@
 
             self.guitar = new Guitar("#svg", {
                 model: this.opts.model,
-                fingerSize: 27,
+                fingerSize: 25,
                 fingerColour: 'black',
                 stringColour: 'black',
                 fretColour: '#D2B48C',
@@ -36,7 +37,6 @@
             // the selected chord object
             self.guitar.removeChord();
             self.guitar.drawChord(chord);
-            console.log('drawChord');
         }
 
         removeChordEls() {

@@ -1,32 +1,64 @@
 <chord-category-selector>
-    <div class="chord-category-selector">
+    <div class='chord-category-selector'>
         <!-- todo: sound samples, other tips/feedback from steve -->
         <!-- use mobiscroll for selection? -->
         <!-- Family/Song/Custom switcher? -->
-        <ul>
-            <li>Family:</li>
-            <li><a href='#' onclick={click} id='E'>E</a></li>
-            <li><a href='#' onclick={click} id='A'>A</a></li>
-            <li><a href='#' onclick={click} id='D'>D</a></li>
-            <li><a href='#' onclick={click} id='G'>G</a></li>
-            <li><a href='#' onclick={click} id='B'>B</a></li>
-            <li><a href='#' onclick={click} id=''>Reset</a></li>
+        <div id='chord-category-switcher' class='menu-section'>
+            <select onchange={chordCategorySelected}>
+                <option>Chord Categories</option>
+                <option disabled>---------------------</option>
+                <option>Key of A</option> 
+                <option>Key of B</option>
+                <option>Key of C</option>
+                <option>Key of D</option>
+                <option>Key of F</option>
+                <option>Key of F</option>
+                <option>Key of G</option> 
+                <option disabled>---------------------</option>
+                <option>Major</option>
+                <option>Minor</option>
+                <option>Dominant Seventh</option>
+                <option>Sixth</option>
+                <option>Suspended</option>
+                <option>Diminished</option>
+                <option disabled>---------------------</option>
+                <option>Easy</option>
+                <option>Moderate</option> 
+                <option>Difficult</option> 
+                <option disabled>---------------------</option>
+                <option>Default</option> 
+            </select>
+        </div>
+        <div class='menu-section'>logo here</div>
+        <ul id='menu' class='menu-section'>
+            <li><a href='#' onclick={click} id='A'>Play</a></li>
+            <li><a href='#' onclick={click} id='A'>Stop</a></li>
+            <li><a href='#' onclick={click} id='A'>Voice Control</a></li>
+            <li><a href='#' onclick={click} id='E'>Tuner</a></li>
+            <li><a href='#' onclick={click} id='D'>Help</a></li>
         </ul>
     </div>
     <style>
         .chord-category-selector {
-            width: 50%;
-            margin: auto;
             padding: .25em;
-            border-radius: 4px;
+            border-radius: 4px 4px 0 0;
             background-color: #c22;
             color: white;
+            position: absolute;
+            bottom: 0;
+            left: 200px;
+            right: 200px;
+            margin: 0;
         }
         
         .chord-category-selector ul {
             list-style-type: none;
-            margin: 0;
-            padding: .5em;
+        }
+        
+        .chord-category-selector ul#families {}
+        
+        .chord-category-selector #menu {
+            float: right;
         }
         
         .chord-category-selector ul li:first {
@@ -37,11 +69,21 @@
             display: inline;
             margin: .5em;
             padding: .5em;
-            /*border: */
         }
         
-        .chord-category-selector ul li a {
+        .menu-section {
+            margin: .5em;
+            padding: .5em;
+            float: left;
+            border: solid 1px black;
+        }
+        
+        .menu-section a {
             color: white;
+        }
+        
+        #chord-category-switcher {
+            min-width: 250px;
         }
     </style>
     <script>
@@ -55,6 +97,10 @@
         click(e) {
             // drive menu filtering 
             self.opts.doselect(e.target.id);
+        }
+
+        chordCategorySelected(e) {
+            self.opts.doselect(e.target.selectedOptions[0].innerText);
         }
     </script>
 </chord-category-selector>

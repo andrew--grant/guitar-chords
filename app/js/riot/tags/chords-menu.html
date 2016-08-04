@@ -14,7 +14,7 @@
             color: #eee;
             font-size: 1.1em;
             border: none;
-            border-radius: 4px; 
+            border-radius: 4px;
             outline: none;
         }
         
@@ -52,7 +52,6 @@
             self.chordIndex = e.target.id;
             $('.chord-button').removeClass('chord-selected');
             $(e.target).addClass('chord-selected');
-            console.log('xxx');
             self.opts.doselect(self.opts.chords[self.chordIndex]);
             if (e.target.isVoiceCommand) {
                 // change select UI when voice activated
@@ -69,6 +68,8 @@
         }
 
         renderMenuItems(filter) {
+            console.log('xxx ' + filter);
+
             // reset container  
             $('.chords-menu').off('click');
             $('.chords-menu').empty();
