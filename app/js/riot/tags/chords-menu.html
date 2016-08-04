@@ -41,7 +41,7 @@
 
         self.on('mount', function() {
             // apply default menu items filter
-            self.renderMenuItems(null);
+            self.renderMenuItems('Default');
         });
 
         self.on('update', function() {
@@ -59,16 +59,30 @@
             }
         }
 
-        getChordsByFamily(family) {
+        filterChords(filter) {
             var resultsArr = [];
-            for (var i = 0; i < 10; i++) {
-                resultsArr.push(opts.chords[i]);
+            filter = filter.toLowerCase();
+            if (filter.indexOf('key of ') > -1) {
+                filter = filter.replace('key of ', '');
+            }
+            if (filter == 'load...') {
+                alert('load logic here');
+            }
+            if (filter == 'default') {
+                resultsArr = opts.chords;
+            } else {
+                for (var i = 0; i < opts.chords.length; i++) {
+                    if (_.includes(opts.chords[i].families, filter)) {
+                        resultsArr.push(opts.chords[i]);
+                    }
+                }
             }
             return resultsArr;
         }
 
         renderMenuItems(filter) {
-            console.log('xxx ' + filter);
+            // get chord set based on filter
+
 
             // reset container  
             $('.chords-menu').off('click');
@@ -76,7 +90,7 @@
             var chords = null;
             // which view of chords to render?
             if (filter) {
-                chords = self.getChordsByFamily(filter);
+                chords = self.filterChords(filter);
             } else {
                 // default, render all or some 'simple' or 'popular' set?
                 chords = self.opts.chords;

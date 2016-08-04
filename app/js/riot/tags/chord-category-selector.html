@@ -3,39 +3,56 @@
         <!-- todo: sound samples, other tips/feedback from steve -->
         <!-- use mobiscroll for selection? -->
         <!-- Family/Song/Custom switcher? -->
+        <!-- implement 'load' feature of category switcher (custom 
+        chord selections prev saved somewhere) This can open a 'type 
+        in chords' or 'chords picker' with save/name dialog-->
         <div id='chord-category-switcher' class='menu-section'>
             <select onchange={chordCategorySelected}>
                 <option>Chord Categories</option>
                 <option disabled>---------------------</option>
+                <!--<option disabled>Key</option>
+                <option disabled>---------------------</option>-->
                 <option>Key of A</option> 
                 <option>Key of B</option>
                 <option>Key of C</option>
                 <option>Key of D</option>
                 <option>Key of F</option>
                 <option>Key of F</option>
-                <option>Key of G</option> 
-                <option disabled>---------------------</option>
+                <option>Key of G</option>  
                 <option>Major</option>
                 <option>Minor</option>
                 <option>Dominant Seventh</option>
                 <option>Sixth</option>
                 <option>Suspended</option>
                 <option>Diminished</option>
+                 <option disabled>---------------------</option>
+                <option disabled>Difficulty Level</option>
                 <option disabled>---------------------</option>
                 <option>Easy</option>
                 <option>Moderate</option> 
                 <option>Difficult</option> 
+                 <option disabled>---------------------</option>
+                <option disabled>Songs</option> 
+                <option disabled>---------------------</option>
+                <option>Imagine - John Lennon</option>
+                <option>One - U2</option>
+                 <option>Imagine - John Lennon</option>
+                <option>One - U2</option>
+                  <option disabled>---------------------</option>
+                <option disabled>Reset</option>
                 <option disabled>---------------------</option>
                 <option>Default</option> 
+                <option>Random</option> 
+                <option>Load...</option> 
             </select>
         </div>
         <div class='menu-section'>logo here</div>
         <ul id='menu' class='menu-section'>
-            <li><a href='#' onclick={click} id='A'>Play</a></li>
-            <li><a href='#' onclick={click} id='A'>Stop</a></li>
-            <li><a href='#' onclick={click} id='A'>Voice Control</a></li>
-            <li><a href='#' onclick={click} id='E'>Tuner</a></li>
-            <li><a href='#' onclick={click} id='D'>Help</a></li>
+            <li><a href='#' onclick={click} id='play'>Play</a></li>
+            <li><a href='#' onclick={click} id='stop'>Stop</a></li>
+            <li><a href='#' onclick={click} id='vc'>Voice Control</a></li>
+            <li><a href='#' onclick={click} id='tuner'>Tuner</a></li>
+            <li><a href='#' onclick={click} id='help'>Help</a></li>
         </ul>
     </div>
     <style>
@@ -95,7 +112,6 @@
         self.on('update', function() {});
 
         click(e) {
-            // drive menu filtering 
             self.opts.doselect(e.target.id);
         }
 
