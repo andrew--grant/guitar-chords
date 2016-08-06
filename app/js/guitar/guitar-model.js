@@ -38,8 +38,7 @@ function guitarModel() {
                     [3, 4, 2],
                     [3, 5, 3],
                     [3, 6, 0]
-                ],
-                markers: [3]
+                ]
             }, {
                 name: 'b',
                 families: ['b', 'minor', 'e', 'f#m', 'bm', 'c#m'],
@@ -51,8 +50,7 @@ function guitarModel() {
                     [18, 4, 2],
                     [18, 5, 3],
                     [17, 6, 0]
-                ],
-                markers: [1, 6]
+                ]
             }, {
                 name: 'f',
                 families: ['a', 'd', 'minor', 'f#m', 'f', 'c#m'],
@@ -556,8 +554,7 @@ function guitarModel() {
                     [3, 4, 2],
                     [3, 5, 3],
                     [3, 6, 0]
-                ],
-                markers: [2, 5]
+                ]
             }, {
                 name: 'f5',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
@@ -662,25 +659,25 @@ function guitarModel() {
             Second index in sub-array is any markings (todo: currently not accounting for more than one)
        */
         frets: [
-            [1, 3],
+            [1, 0],
             [2, 0],
-            [3, 0],
+            [3, 1],
             [4, 0],
-            [5, 3],
+            [5, 2],
             [6, 0],
             [7, 0],
-            [8, 3],
+            [8, 2],
             [9, 0],
             [10, 0],
             [11, 0],
-            [12, 3],
+            [12, 0],
             [13, 0],
             [14, 0],
-            [15, 0],
-            [16, 3],
-            [17, 0],
+            [15, 1],
+            [16, 1],
+            [17, 1],
             [18, 0],
-            [19, 0]
+            [19, 0],
         ]
     }
 

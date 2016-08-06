@@ -51,8 +51,8 @@ Guitar.prototype.drawFretBoard = function() {
     var originalXpos = this.x;
     var fret = null;
     for (var i = 1; i <= this.opts.model.frets.length; i++) {
-        fret = new Fret(this.svg, this.opts, this.x - 20, this.y, null, this);
-        var fretGroup = fret.draw(i);
+        fret = new Fret(this.svg, this.opts, this.x - 20, this.y, this);
+        var fretGroup = fret.draw(i, this.opts.model.frets[i - 1][1]);
         this.x += (this.opts.fingerSize * 6);
         if (i > 1) {
             if (!this.fret2toNGroup) {
@@ -207,7 +207,7 @@ FretBoard.prototype.drawChord = function(chord) {
 }
 
 /* Fret class */
-var Fret = function(svg, opts, x, y, markers, guitar) {
+var Fret = function(svg, opts, x, y, guitar) {
     this.svg = svg;
     this.opts = opts;
     this.fretx = x;
@@ -217,11 +217,10 @@ var Fret = function(svg, opts, x, y, markers, guitar) {
     this.spacer = this.fretHeight / 6;
     this.x = x;
     this.y = y;
-    this.markers = markers;
 }
 
-Fret.prototype.draw = function(fretNumber) {
-
+Fret.prototype.draw = function(fretNumber, markers) {
+    var fretWidth = this.opts.fingerSize * 6;
     for (var i = 1; i <= 6; i++) {
         // calculate fret height
         this.fretHeight += this.opts.fingerSize * 2;
@@ -231,7 +230,7 @@ Fret.prototype.draw = function(fretNumber) {
     fretGroup.attr({ id: 'fret' + fretNumber })
 
     // draw fret
-    var fret = this.svg.rect(this.fretx, this.frety, this.opts.fingerSize * 6, this.fretHeight);
+    var fret = this.svg.rect(this.fretx, this.frety, fretWidth, this.fretHeight);
     fret.attr({
         fill: this.opts.fretColour,
         stroke: "#000",
@@ -241,7 +240,7 @@ Fret.prototype.draw = function(fretNumber) {
     fretGroup.attr({ x: this.fretx });
 
     // draw fret number
-    var text = this.svg.text(this.fretx + this.opts.fingerSize * 3, this.frety + this.fretHeight + this.opts.fingerSize * 1.6, fretNumber);
+    var text = this.svg.text(this.fretx + (fretWidth / 2), this.frety + this.fretHeight + this.opts.fingerSize * 1.6, fretNumber);
     text.attr({
         'font-size': this.opts.fingerSize,
         fill: this.opts.fretNumberColour,
@@ -249,6 +248,45 @@ Fret.prototype.draw = function(fretNumber) {
         'class': 'fret-number'
     });
     fretGroup.add(text);
+
+    // draw marker(s) 
+    // todo: option for markers on/off
+    var markerOpacity = .1;
+    var markerClassName = 'fret-marker';
+    var markerFillColor = '#333';
+    var markerSize = 14;
+    var markerx = this.fretx - (fretWidth / 2);
+    switch (markers) {
+        case 1:
+            var marker = this.svg.circle(markerx, this.frety + (this.fretHeight / 2), markerSize);
+            marker.attr({
+                fill: markerFillColor,
+                opacity: markerOpacity,
+                'class': markerClassName
+            });
+            fretGroup.add(marker);
+            break;
+
+        case 2:
+            var marker1 = this.svg.circle(markerx, this.frety + (this.fretHeight - 50), markerSize);
+            marker1.attr({
+                fill: markerFillColor,
+                opacity: markerOpacity,
+                'class': markerClassName
+            });
+            fretGroup.add(marker1);
+
+            var marker2 = this.svg.circle(markerx, this.frety + (this.fretHeight - (this.fretHeight - 50)), markerSize);
+            marker2.attr({
+                fill: markerFillColor,
+                opacity: markerOpacity,
+                'class': markerClassName
+            });
+            fretGroup.add(marker2);
+            break;
+    }
+
+
 
     // draw strings and fingers on this fret
     this.drawStrings(fretNumber, fretGroup);
