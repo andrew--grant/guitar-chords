@@ -114,13 +114,10 @@ Guitar.prototype.removeChord = function(chord) {
             });
             delayTime += animationTime;
         });
-
     $('.chord-indicator-bar').fadeOut(200);
-
 }
 
 Guitar.prototype.slide = function(chord) {
-    // slides arg fretNum to butt up against fret 1
     var self = this;
     $('.fret-number').show();
     $('#fret1Copy').fadeOut();
@@ -133,8 +130,6 @@ Guitar.prototype.slide = function(chord) {
     // todo: remove any unused vars
     // todo: look for any optmisations 
 
-    // what is the slide pos
-    // required by this chord?  
     var fretArr = [];
     for (var i = 0; i < 6; i++) {
         if (chord.shape[i][0] > 0) {
@@ -149,8 +144,7 @@ Guitar.prototype.slide = function(chord) {
     var fretWidth = self.opts.fingerSize * 6;
     var moveToX = (fretWidth * (leftMostFretForChord - 3));
 
-    // do the slide
-    // todo: fade fret number out as opposed to current status quos
+    // slide the fretboard
     moveToX = moveToX >= 0 ? moveToX : 0;
     self.fret2toNGroup.animate({ 'transform': 'translate(-' + moveToX + ',0)' }, 1200, mina.easeinout,
         function() {
@@ -166,26 +160,28 @@ Guitar.prototype.slide = function(chord) {
         $('#fret-number-' + (fretNum - 3)).hide();
 
         // todo: try new rect appraoch, not fret clone
-        var fret1Copy = self.svg.select('#fret1').clone()
-            .attr({
-                id: 'fret1Copy',
-                filter: self.svg.filter(Snap.filter.shadow(2, 2, 5, "#000"))
-            });
+        // todo: bug, only relevant until different approach used
+        // (cloning keeps finger, but finger should be removed!)
 
-        // self.svg.select('#open-notes')
+        // var fret1Copy = self.svg.select('#fret1').clone()
         //     .attr({
-        //         //filter: self.svg.filter(Snap.filter.???)
+        //         id: 'fret1Copy',
+        //         filter: self.svg.filter(Snap.filter.shadow(2, 2, 5, "#000"))
         //     });
+        // console.log($('#fret1Copy'));
+        // $('#fret1Copy').hide().insertAfter($('#fret2toN')).fadeIn();
 
-        $('#fret1Copy').hide().insertAfter($('#fret2toN')).fadeIn();
+
+        // todo: continue !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        var fret1Shadow = this.svg.rect(this.fretx, this.frety, fretWidth, this.fretHeight);
+        fret1Shadow.attr({
+            filter: self.svg.filter(Snap.filter.shadow(2, 2, 5, "#000"))
+        });
+
+
+
+
     }
-    // todo: can we listen for numbers, not being 1, passing 
-    // the 1 position, then fade them out when they do?
-}
-
-Guitar.prototype.drawNotes = function(note) {
-    // todo-feature: draw any given notes' multiple 
-    // positions across the fretboard 
 }
 
 Guitar.prototype.barFret = function(fretNum) {
@@ -253,10 +249,11 @@ Fret.prototype.draw = function(fretNumber, markers) {
     // todo: option for markers on/off
     var markerOpacity = .1;
     var markerClassName = 'fret-marker';
-    var markerFillColor = '#333';
+    var markerFillColor = '#f00';
     var markerSize = 14;
     var markerx = this.fretx - (fretWidth / 2);
     switch (markers) {
+
         case 1:
             var marker = this.svg.circle(markerx, this.frety + (this.fretHeight / 2), markerSize);
             marker.attr({
@@ -275,7 +272,6 @@ Fret.prototype.draw = function(fretNumber, markers) {
                 'class': markerClassName
             });
             fretGroup.add(marker1);
-
             var marker2 = this.svg.circle(markerx, this.frety + (this.fretHeight - (this.fretHeight - 50)), markerSize);
             marker2.attr({
                 fill: markerFillColor,
@@ -285,8 +281,6 @@ Fret.prototype.draw = function(fretNumber, markers) {
             fretGroup.add(marker2);
             break;
     }
-
-
 
     // draw strings and fingers on this fret
     this.drawStrings(fretNumber, fretGroup);
@@ -318,8 +312,6 @@ Fret.prototype.drawStrings = function(fretNumber, fretGroup) {
         }
     }
 }
-
-Fret.prototype.removeChordShape = function(fretNumber, shape) {}
 
 Fret.prototype.addOpenNotesReference = function(stringNumber, x, y, openNotesReferenceGroup) {
     fretRef = ['e', 'B', 'G', 'D', 'A', 'E'];
