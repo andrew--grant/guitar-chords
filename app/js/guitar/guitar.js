@@ -42,7 +42,6 @@ var Guitar = function(svg, opts) {
     this.slidToFret = 2; // default, fret 2 is butted up against fret 1
     this.lastSlidtoNum = 0; // default, not moved yet
     this.opts.fret1x = this.x;
-
 }
 
 Guitar.prototype.drawFretBoard = function() {
@@ -52,7 +51,7 @@ Guitar.prototype.drawFretBoard = function() {
     var originalXpos = this.x;
     var fret = null;
     for (var i = 1; i <= this.opts.model.frets.length; i++) {
-        fret = new Fret(this.svg, this.opts, this.x - 20, this.y, this);
+        fret = new Fret(this.svg, this.opts, this.x - 20, this.y, null, this);
         var fretGroup = fret.draw(i);
         this.x += (this.opts.fingerSize * 6);
         if (i > 1) {
@@ -64,7 +63,7 @@ Guitar.prototype.drawFretBoard = function() {
         }
         this.fretBoard.addFret(fret);
     }
-
+    // this.frets[i].drawChordMarker(i + 1, chord.markers);
     var fret1x = this.fretBoard.frets[0].fretx;
     var fretHeight = this.fretBoard.frets[0].fretHeight;
 
@@ -124,10 +123,11 @@ Guitar.prototype.slide = function(chord) {
     // slides arg fretNum to butt up against fret 1
     var self = this;
     $('.fret-number').show();
+    $('#fret1Copy').fadeOut();
 
     self.svg.select('#fret1')
         .attr({
-            filter: null // todo: fade out?
+            filter: null // todo: fade out? is this even required anymore?
         });
 
     // todo: remove any unused vars
@@ -149,11 +149,12 @@ Guitar.prototype.slide = function(chord) {
     var fretWidth = self.opts.fingerSize * 6;
     var moveToX = (fretWidth * (leftMostFretForChord - 3));
 
-    // do the slide 
+    // do the slide
+    // todo: fade fret number out as opposed to current status quos
     moveToX = moveToX >= 0 ? moveToX : 0;
     self.fret2toNGroup.animate({ 'transform': 'translate(-' + moveToX + ',0)' }, 1200, mina.easeinout,
         function() {
-            //?
+            // todo: remove if no longer needed, test!
         }
     );
 
@@ -164,14 +165,22 @@ Guitar.prototype.slide = function(chord) {
         $('#fret-number-' + (fretNum - 2)).hide();
         $('#fret-number-' + (fretNum - 3)).hide();
 
-        // todo: low down z-index - make higher copy?
-        // add first fret drop shadow
-        self.svg.select('#fret1')
+        // todo: try new rect appraoch, not fret clone
+        var fret1Copy = self.svg.select('#fret1').clone()
             .attr({
-                filter: self.svg.filter(Snap.filter.shadow(2, 2, 10, "#000"))
+                id: 'fret1Copy',
+                filter: self.svg.filter(Snap.filter.shadow(2, 2, 5, "#000"))
             });
-    }
 
+        // self.svg.select('#open-notes')
+        //     .attr({
+        //         //filter: self.svg.filter(Snap.filter.???)
+        //     });
+
+        $('#fret1Copy').hide().insertAfter($('#fret2toN')).fadeIn();
+    }
+    // todo: can we listen for numbers, not being 1, passing 
+    // the 1 position, then fade them out when they do?
 }
 
 Guitar.prototype.drawNotes = function(note) {
@@ -193,13 +202,12 @@ FretBoard.prototype.addFret = function(fret) {
 
 FretBoard.prototype.drawChord = function(chord) {
     for (var i = 0; i < this.frets.length; i++) {
-        this.frets[i].drawChordShape(i + 1, chord.shape)
+        this.frets[i].drawChordShape(i + 1, chord.shape);
     }
 }
 
-
 /* Fret class */
-var Fret = function(svg, opts, x, y, guitar) {
+var Fret = function(svg, opts, x, y, markers, guitar) {
     this.svg = svg;
     this.opts = opts;
     this.fretx = x;
@@ -209,6 +217,7 @@ var Fret = function(svg, opts, x, y, guitar) {
     this.spacer = this.fretHeight / 6;
     this.x = x;
     this.y = y;
+    this.markers = markers;
 }
 
 Fret.prototype.draw = function(fretNumber) {
@@ -278,14 +287,27 @@ Fret.prototype.addOpenNotesReference = function(stringNumber, x, y, openNotesRef
     fretRef = ['e', 'B', 'G', 'D', 'A', 'E'];
     var eNoteRef = this.svg.text(x - (this.opts.fingerSize - 2.5), y + (this.opts.fingerSize / 5), fretRef[stringNumber - 1]);
     eNoteRef.attr({
-        'font-size': this.opts.fingerSize * .6,
+        'font-size': this.opts.fingerSize * .5,
         fill: this.opts.fretNumberColour
     });
     openNotesReferenceGroup.add(eNoteRef);
 
 }
 
+Fret.prototype.drawChordMarker = function(fretNumber, markers) {
+    if (markers) {
+        for (var i = 0; i < markers.length; i++) {
+            var marker = this.svg.circle(this.opts.fret1x + 100, 40, this.opts.fingerSize / 4);
+            marker.attr({
+                'class': 'chord-indicator chord-indicator-marker',
+                fill: 'green'
+            });
+        }
+    }
+}
+
 Fret.prototype.drawChordShape = function(fretNumber, shape) {
+
     var barredFret = 0;
     for (var i = 1; i <= 6; i++) {
         var fretGroupRef = this.svg.select('#fret' + fretNumber);

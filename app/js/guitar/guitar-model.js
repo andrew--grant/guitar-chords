@@ -38,7 +38,8 @@ function guitarModel() {
                     [3, 4, 2],
                     [3, 5, 3],
                     [3, 6, 0]
-                ]
+                ],
+                markers: [3]
             }, {
                 name: 'b',
                 families: ['b', 'minor', 'e', 'f#m', 'bm', 'c#m'],
@@ -50,7 +51,8 @@ function guitarModel() {
                     [18, 4, 2],
                     [18, 5, 3],
                     [17, 6, 0]
-                ]
+                ],
+                markers: [1, 6]
             }, {
                 name: 'f',
                 families: ['a', 'd', 'minor', 'f#m', 'f', 'c#m'],
@@ -554,7 +556,8 @@ function guitarModel() {
                     [3, 4, 2],
                     [3, 5, 3],
                     [3, 6, 0]
-                ]
+                ],
+                markers: [2, 5]
             }, {
                 name: 'f5',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
