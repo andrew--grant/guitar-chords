@@ -1,0 +1,23 @@
+<neck>
+    <div class="neck">
+        <fret each={fret in opts.frets} fret={fret} chord={chord}></fret>
+    </div>
+    <style>
+        .neck {
+            clear: both;
+            width: 100%;
+            border: solid 2px green;
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        var self = this;
+        self.chord = opts.chord;
+
+        self.on('mount', function(e) {});
+
+        self.on('update', function() {
+            self.chord = opts.chord;
+        });
+    </script>
+</neck>

@@ -178,9 +178,7 @@ Guitar.prototype.slide = function(chord) {
 }
 
 Guitar.prototype.barFret = function(fretNum) {
-    // todo: refactor to use this func?
-    // todo: review barred fret visuals alongside the fretmarkers
-    // (z-index issue / centering issue)
+    // indicate this fret is barred
 }
 
 var FretBoard = function() {

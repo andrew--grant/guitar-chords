@@ -6,8 +6,8 @@
         <!-- implement 'load' feature of category switcher (custom 
         chord selections prev saved somewhere) This can open a 'type 
         in chords' or 'chords picker' with save/name dialog-->
-        <div id='chord-category-switcher' class='menu-section styled-select'>
-            <select class='' onchange={chordCategorySelected}>
+        <div id='chord-category-switcher' class='menu-section'>
+            <select onchange={chordCategorySelected}>
                 <option>Chord Categories</option>
                 <option disabled>---------------------</option>
                 <!--<option disabled>Key</option>
@@ -58,7 +58,7 @@
     <style>
         .chord-category-selector {
             padding: .25em;
-            border-radius: 0 0 4px 4px;
+            border-radius: 4px 4px 0 0;
             background-color: #a22;
             color: white;
             /*position: absolute;
@@ -67,35 +67,6 @@
             margin: auto;
             max-width: 1000px;
             min-width: 800px;
-        }
-        
-        .styled-select select {
-            /* todo: clean up, learn, etc */
-            background: transparent;
-            border: none;
-            font-size: 14px;
-            width: 250px;
-            -webkit-appearance: button;
-            border-radius: 4px;
-            -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-            -webkit-padding-end: 20px;
-            -webkit-padding-start: 2px;
-            -webkit-user-select: none;
-            background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
-            background-position: 97% center;
-            background-repeat: no-repeat;
-            border: 1px solid #AAA;
-            color: #111;
-            font-size: inherit;
-            /*margin: 20px;*/
-            overflow: hidden;
-            padding: 5px 10px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        
-        .styled-select option {
-            /*color: '#f00';*/
         }
         
         .chord-category-selector ul {
@@ -120,9 +91,9 @@
             margin: .5em;
             padding: .5em;
             float: left;
-            /*border: solid 1px #d22;*/
+            border: solid 1px #d22;
             border-radius: 4px;
-            /*background-color: #c22;*/
+            background-color: #c22;
         }
         
         .menu-section a {
