@@ -48,11 +48,11 @@
         </div>
         <div class='menu-section'>logo here</div>
         <ul id='menu' class='menu-section'>
-            <li><a href='#' onclick={click} id='play'>Play</a></li>
-            <li><a href='#' onclick={click} id='stop'>Stop</a></li>
-            <li><a href='#' onclick={click} id='vc'>Voice Control</a></li>
-            <li><a href='#' onclick={click} id='tuner'>Tuner</a></li>
-            <li><a href='#' onclick={click} id='help'>Help</a></li>
+            <li><a href='#' onclick={play} id='play'>Play</a></li>
+            <li><a href='#' onclick={stop} id='stop'>Stop</a></li>
+            <li><a href='#' onclick={vc} id='vc'>Voice Control</a></li>
+            <li><a href='#' onclick={tuner} id='tuner'>Tuner</a></li>
+            <li><a href='#' onclick={help} id='help'>Help</a></li>
         </ul>
     </div>
     <style>
@@ -95,7 +95,9 @@
         }
         
         .styled-select option {
-            /*color: '#f00';*/
+            color: #f00;
+            background-color: black;
+            font-size: 14px;
         }
         
         .chord-category-selector ul {
@@ -141,8 +143,24 @@
 
         self.on('update', function() {});
 
-        click(e) {
-            self.opts.doselect(e.target.id);
+        play(e) { 
+            console.log('play');
+        }
+
+        stop(e) {
+            console.log('stop');
+        }
+
+        vc(e) {
+            console.log('vc');
+        }
+
+        tuner(e) {
+            console.log('tuner');
+        }
+
+        help(e) {
+            console.log('help');
         }
 
         chordCategorySelected(e) {
