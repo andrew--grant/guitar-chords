@@ -1,8 +1,8 @@
 <app>
     <!-- <chord-selector doselect={chordSelected} chords={opts.chords} frets={opts.frets}></chord-selector> -->
 
-    <chord-category-selector doselect={chordSetSelected}/>
-    <guitar model={opts}></guitar>
+    <chord-category-selector dotuner={} doselect={chordSetSelected} doplay={playChords}/>
+    <guitar model={opts} chordfamilychanged={chordFamilyChanged}></guitar>
     <chords-menu doselect={chordSelected} chords={opts.chords}></chords-menu>
     <style>
 
@@ -11,9 +11,7 @@
         var self = this;
         var guitar = null;
         var chordsMenu = null;
-
-        // todo: some sort of backdrop 'behind' fretboard when it is slid beyond end
-        // (perhaps just a lighter bg?)
+        var currentChordCategory = null;
 
         self.on('mount', function(e) {
             guitar = self.tags['guitar'];
@@ -24,6 +22,7 @@
 
         chordSetSelected(category) {
             chordsMenu.renderMenuItems(category);
+            currentChordCategory = category;
         }
 
         chordSelected(chord) {
@@ -32,6 +31,24 @@
 
         drawChord(chord) {
             guitar.drawChord(chord);
+        }
+
+        chordCategoryChanged(category) {
+            console.log('chordfamilychanged: ' + category);
+            currentChordCategory = category;
+        }
+
+        playChords() {
+            if (currentChordCategory) {
+                console.log('Can play: ' + currentChordCategory);
+
+
+
+            } else {
+                console.log('currentChordCategory is null');
+                // todo: logic for this case
+                // set a default, pop up a warning etc
+            }
         }
 
         removeChordEls() {

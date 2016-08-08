@@ -52,7 +52,7 @@
             <li><a href='#' onclick={stop} id='stop'>Stop</a></li>
             <li><a href='#' onclick={vc} id='vc'>Voice Control</a></li>
             <li><a href='#' onclick={tuner} id='tuner'>Tuner</a></li>
-            <li><a href='#' onclick={help} id='help'>Help</a></li>
+            <li><a href='#' onclick={settings} id='settings'>Settings</a></li>
         </ul>
     </div>
     <style>
@@ -143,8 +143,13 @@
 
         self.on('update', function() {});
 
-        play(e) { 
+        play(e) {
             console.log('play');
+            // what is the current set of chords?
+            self.opts.doplay(3333);
+
+
+
         }
 
         stop(e) {
@@ -159,8 +164,8 @@
             console.log('tuner');
         }
 
-        help(e) {
-            console.log('help');
+        settings(e) {
+            console.log('settings');
         }
 
         chordCategorySelected(e) {
