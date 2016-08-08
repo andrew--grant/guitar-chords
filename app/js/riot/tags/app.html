@@ -9,12 +9,12 @@
     </style>
     <script>
         var self = this;
-        var guitar = null;
+        var guitarTag = null;
         var chordsMenu = null;
         var currentChordCategory = null;
 
         self.on('mount', function(e) {
-            guitar = self.tags['guitar'];
+            guitarTag = self.tags['guitar'];
             chordsMenu = self.tags['chords-menu'];
         });
 
@@ -30,7 +30,7 @@
         }
 
         drawChord(chord) {
-            guitar.drawChord(chord);
+            guitarTag.drawChord(chord);
         }
 
         chordCategoryChanged(category) {
@@ -40,7 +40,9 @@
 
         playChords() {
             if (currentChordCategory) {
-                console.log('Can play: ' + currentChordCategory);
+                var chordCategory = self.opts.getChordsByCategory(currentChordCategory);
+                console.log(chordCategory);
+                guitarTag.guitar.playChordCategory(currentChordCategory);
 
 
 

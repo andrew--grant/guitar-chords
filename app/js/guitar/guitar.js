@@ -102,6 +102,13 @@ Guitar.prototype.drawChord = function(chord) {
     this.slide(chord);
 }
 
+Guitar.prototype.playChordCategory = function(chordCategory) {
+    console.log('play: ' + chordCategory);
+
+
+    
+}
+
 Guitar.prototype.removeChord = function(chord) {
     var delayTime = 0;
     var animationTime = 35;

@@ -438,7 +438,26 @@ function guitarModel() {
             [17, 1],
             [18, 0],
             [19, 0],
-        ]
+        ],
+        // todo: refactor current stuff with this (chords-menu etc)
+        // todo: test this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        getChordsByCategory: function(category) {
+            var resultsArr = [];
+            category = category.toLowerCase();
+            if (category.indexOf('key of ') > -1) {
+                category = category.replace('key of ', '');
+            }
+            if (category == 'default') {
+                resultsArr = this.chords;
+            } else {
+                for (var i = 0; i < this.chords.length; i++) {
+                    if (_.includes(this.chords[i].families, category)) {
+                        resultsArr.push(this.chords[i]);
+                    }
+                }
+            }
+            return resultsArr;
+        }
     }
 
 }
