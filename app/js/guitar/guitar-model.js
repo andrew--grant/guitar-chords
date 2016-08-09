@@ -16,6 +16,18 @@ function guitarModel() {
                 issues issue with non-finger indicators (no-play, open-string etc)
              */
             {
+                name: 'd',
+                families: ['c', 'd', 'major', 'f#m', 'bm', 'c#m'],
+                difficulty: 2, // remove, its just  a case of 'family'
+                shape: [
+                    [1, 1, -1], // fret, string, finger 0 1 0 2 3
+                    [1, 2, -1],
+                    [1, 3, 0],
+                    [2, 4, 1],
+                    [3, 5, 2],
+                    [2, 6, 3]
+                ]
+            }, {
                 name: 'c',
                 families: ['c', 'd', 'major', 'f#m', 'bm', 'c#m'],
                 difficulty: 2, // remove, its just  a case of 'family'

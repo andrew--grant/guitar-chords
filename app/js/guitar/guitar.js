@@ -328,6 +328,7 @@ Fret.prototype.drawStrings = function(fretNumber, fretGroup) {
 }
 
 Fret.prototype.addOpenNotesReference = function(stringNumber, x, y, openNotesReferenceGroup) {
+    // todo: option to show numbers instead of 'EADGBe'
     fretRef = ['e', 'B', 'G', 'D', 'A', 'E'];
     var eNoteRef = this.svg.text(x - (this.opts.fingerSize - 2.5), y + (this.opts.fingerSize / 5), fretRef[stringNumber - 1]);
     eNoteRef.attr({
