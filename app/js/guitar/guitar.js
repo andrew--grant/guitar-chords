@@ -99,6 +99,19 @@ Guitar.prototype.drawChord = function(chord) {
     $('.chord-indicator-bar').animate({
         opacity: 1
     }, 500);
+
+    $('.chord-button').removeClass('chord-button-active');
+    var elsToMakeActive = $('.chord-button').filter(
+        function(index) {
+            return $(this).text() === chord.name;
+        });
+    if (elsToMakeActive) {
+        // todo: only caters to 1 menu item, but we could 
+        // have multiple elements that need updating
+        // todo: animate/fade etc
+        $(elsToMakeActive[0]).addClass('chord-button-active');
+    }
+    console.log(elsToMakeActive[0].innerText);
     this.slide(chord);
 }
 
@@ -107,10 +120,10 @@ Guitar.prototype.playChordCategory = function(chordCategory) {
     _.forEach(chordCategory, function(value, index) {
         var interval = 7000;
         // todo: allow for interupting, clear all timeouts
+        // todo: set a 'time to grab guitar' delay
         setTimeout(function() {
-            console.log(value);
             // todo: timer as per Chris idea (need to set a fixed size for
-            // chrd menu items)
+            // chord menu items)
             // todo: highlight currently playing chord (on the menu item)
             // todo: need to allow looping? A setting?
             // todo: photo library, optional setting?
