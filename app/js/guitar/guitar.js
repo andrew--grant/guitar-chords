@@ -103,10 +103,19 @@ Guitar.prototype.drawChord = function(chord) {
 }
 
 Guitar.prototype.playChordCategory = function(chordCategory) {
-    console.log('play: ' + chordCategory);
-
-
-    
+    var self = this;
+    _.forEach(chordCategory, function(value, index) {
+        var interval = 7000;
+        setTimeout(function() {
+            console.log(value);
+            // todo: timer as per Chris idea (need to set a fixed size for
+            // chrd menu items)
+            // todo: highlight currently playing chord (on the menu item)
+            // todo: need to allow looping? A setting?
+            self.removeChord();
+            self.drawChord(value);
+        }, interval * index);
+    });
 }
 
 Guitar.prototype.removeChord = function(chord) {

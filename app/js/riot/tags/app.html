@@ -43,11 +43,7 @@
         playChords() {
             if (currentChordCategory) {
                 var chordCategory = self.opts.getChordsByCategory(currentChordCategory);
-                console.log(chordCategory);
-                guitarTag.guitar.playChordCategory(currentChordCategory);
-
-
-
+                guitarTag.guitar.playChordCategory(chordCategory);
             } else {
                 console.log('currentChordCategory is null');
                 // todo: logic for this case
