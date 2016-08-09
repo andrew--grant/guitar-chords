@@ -55,7 +55,7 @@
         });
 
         self.on('update', function() {
-            self.selectedChord = self.opts.chords[self.chordIndex];
+            self.selectedChord = self.opts.model.chords[self.chordIndex];
             // fire an event
 
         });
@@ -64,32 +64,11 @@
             self.chordIndex = e.target.id;
             $('.chord-button').removeClass('chord-selected');
             $(e.target).addClass('chord-selected');
-            self.opts.doselect(self.opts.chords[self.chordIndex]);
+            self.opts.doselect(self.opts.model.chords[self.chordIndex]);
             if (e.target.isVoiceCommand) {
                 // change select UI when voice activated
                 // $('#chord-select')[0].selectedIndex = self.chordIndex
             }
-        }
-
-        filterChords(filter) {
-            var resultsArr = [];
-            filter = filter.toLowerCase();
-            if (filter.indexOf('key of ') > -1) {
-                filter = filter.replace('key of ', '');
-            }
-            if (filter == 'load...') {
-                alert('load logic here');
-            }
-            if (filter == 'default') {
-                resultsArr = opts.chords;
-            } else {
-                for (var i = 0; i < opts.chords.length; i++) {
-                    if (_.includes(opts.chords[i].families, filter)) {
-                        resultsArr.push(opts.chords[i]);
-                    }
-                }
-            }
-            return resultsArr;
         }
 
         renderMenuItems(filter) {
@@ -102,10 +81,10 @@
                 $('.chords-menu').empty();
                 // which view of chords to render?
                 if (filter) {
-                    chords = self.filterChords(filter);
+                    chords = self.opts.model.getChordsByCategory(filter); // self.filterChords(filter);
                 } else {
                     // default, render all or some 'simple' or 'popular' set?
-                    chords = self.opts.chords;
+                    chords = self.opts.model.chords;
                 }
                 // render chords
                 for (var i = 0; i < chords.length; i++) {

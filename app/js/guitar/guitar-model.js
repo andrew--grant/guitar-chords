@@ -439,8 +439,6 @@ function guitarModel() {
             [18, 0],
             [19, 0],
         ],
-        // todo: refactor current stuff with this (chords-menu etc)
-        // todo: test this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         getChordsByCategory: function(category) {
             var resultsArr = [];
             category = category.toLowerCase();
