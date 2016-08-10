@@ -1,0 +1,53 @@
+<progress-bar>
+
+    <div id="line-container">
+        <div id="line"></div>
+    </div>
+
+    <style>
+        #line-container {
+            height: 4px;
+            width: 100%;
+            margin: auto;
+            margin-top: 1em;
+            max-width: 1000px;
+            min-width: 800px;
+            background-color: #000;
+        }
+        
+        #line {
+            height: 100%;
+            width: 100%;
+            background-color: #f00;
+        }
+    </style>
+
+    <script>
+        var self = this;
+        var count = 100;
+
+        self.on('mount', function() {
+            console.log(self.opts.speed);
+            self.updateLine(1000);
+        });
+
+        self.on('update', function() {});
+
+        updateLine(timeSpan) {
+             // todo: fire a 'started' event
+            var interval = setInterval(function() {
+                if (count > 0) {
+                    console.log('x');
+                    count = count - 1;
+                    $('#line').css('width', count + '%');
+                    // todo: fire a 'progressed' event
+                } else {
+                    console.log('done');
+                    // todo: fire a 'completed' event
+                    clearInterval(interval);
+                }
+            }, timeSpan);
+        }
+    </script>
+
+</progress-bar>

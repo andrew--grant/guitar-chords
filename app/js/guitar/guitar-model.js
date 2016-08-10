@@ -16,7 +16,7 @@ function guitarModel() {
                 issues issue with non-finger indicators (no-play, open-string etc)
              */
             {
-                name: 'd',
+                name: 'D',
                 families: ['c', 'd', 'major', 'f#m', 'bm', 'c#m'],
                 difficulty: 2, // remove, its just  a case of 'family'
                 shape: [
@@ -28,7 +28,7 @@ function guitarModel() {
                     [2, 6, 3]
                 ]
             }, {
-                name: 'c',
+                name: 'C',
                 families: ['c', 'd', 'major', 'f#m', 'bm', 'c#m'],
                 difficulty: 2, // remove, its just  a case of 'family'
                 shape: [
@@ -40,7 +40,7 @@ function guitarModel() {
                     [1, 6, -1]
                 ]
             }, {
-                name: 'e',
+                name: 'E',
                 families: ['e', 'a', 'b', 'cm', 'fm', 'gm', 'easy'],
                 difficulty: 3,
                 shape: [
@@ -52,7 +52,7 @@ function guitarModel() {
                     [6, 6, 1]
                 ]
             }, {
-                name: 'c',
+                name: 'G',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -64,7 +64,7 @@ function guitarModel() {
                     [1, 6, -1]
                 ]
             }, {
-                name: 'a',
+                name: 'A',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m', 'easy'],
                 difficulty: 2,
                 shape: [
@@ -76,7 +76,7 @@ function guitarModel() {
                     [3, 6, 0]
                 ]
             }, {
-                name: 'b',
+                name: 'B',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -88,7 +88,7 @@ function guitarModel() {
                     [17, 6, 0]
                 ]
             }, {
-                name: 'f',
+                name: 'F',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -100,7 +100,7 @@ function guitarModel() {
                     [11, 6, 0]
                 ]
             }, {
-                name: 'g',
+                name: 'G',
                 families: ['g', 'c', 'd', 'em', 'am', 'bm'],
                 difficulty: 4,
                 shape: [
@@ -112,7 +112,7 @@ function guitarModel() {
                     [3, 6, 3]
                 ]
             }, {
-                name: 'g6', // uses a bar ( -2)
+                name: 'G6', // uses a bar ( -2)
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -124,7 +124,7 @@ function guitarModel() {
                     [7, 6, 0]
                 ]
             }, {
-                name: 'e',
+                name: 'Amin',
                 families: ['e', 'a', 'b', 'cm', 'fm', 'gm'],
                 difficulty: 3,
                 shape: [
@@ -136,7 +136,7 @@ function guitarModel() {
                     [6, 6, 1]
                 ]
             }, {
-                name: 'c',
+                name: 'Emin',
                 families: ['c', 'f', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -148,7 +148,7 @@ function guitarModel() {
                     [1, 6, -1]
                 ]
             }, {
-                name: 'a-maj-7',
+                name: 'G7',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -160,7 +160,7 @@ function guitarModel() {
                     [3, 6, 0]
                 ]
             }, {
-                name: 'f5',
+                name: 'E7',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -172,7 +172,7 @@ function guitarModel() {
                     [17, 6, 0]
                 ]
             }, {
-                name: 'g-maj-7',
+                name: 'Asus4',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -184,7 +184,7 @@ function guitarModel() {
                     [11, 6, 0]
                 ]
             }, {
-                name: 'g',
+                name: 'Asus2',
                 families: ['g', 'c', 'd', 'em', 'am', 'bm'],
                 difficulty: 4,
                 shape: [
@@ -196,7 +196,7 @@ function guitarModel() {
                     [3, 6, 3]
                 ]
             }, {
-                name: 'g6', // uses a bar ( -2)
+                name: 'Dsus2', // uses a bar ( -2)
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -208,7 +208,7 @@ function guitarModel() {
                     [7, 6, 0]
                 ]
             }, {
-                name: 'e',
+                name: 'E',
                 families: ['e', 'a', 'b', 'cm', 'fm', 'gm'],
                 difficulty: 3,
                 shape: [
@@ -220,7 +220,7 @@ function guitarModel() {
                     [6, 6, 1]
                 ]
             }, {
-                name: 'c',
+                name: 'minor 7',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -232,7 +232,7 @@ function guitarModel() {
                     [1, 6, -1]
                 ]
             }, {
-                name: 'a',
+                name: 'Major Triad 1',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -244,7 +244,7 @@ function guitarModel() {
                     [3, 6, 0]
                 ]
             }, {
-                name: 'b',
+                name: 'Major Triad 2',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -256,7 +256,7 @@ function guitarModel() {
                     [17, 6, 0]
                 ]
             }, {
-                name: 'f',
+                name: 'Major Triad 3',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -268,7 +268,7 @@ function guitarModel() {
                     [11, 6, 0]
                 ]
             }, {
-                name: 'c-min-5',
+                name: 'Min7b5',
                 families: ['g', 'c', 'd', 'em', 'am', 'bm'],
                 difficulty: 4,
                 shape: [
@@ -280,7 +280,7 @@ function guitarModel() {
                     [3, 6, 3]
                 ]
             }, {
-                name: 'g6', // uses a bar ( -2)
+                name: 'Dim 7', // uses a bar ( -2)
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -292,7 +292,7 @@ function guitarModel() {
                     [7, 6, 0]
                 ]
             }, {
-                name: 'e',
+                name: 'D/F#',
                 families: ['e', 'a', 'b', 'cm', 'fm', 'gm'],
                 difficulty: 3,
                 shape: [
@@ -303,80 +303,9 @@ function guitarModel() {
                     [5, 5, 1],
                     [6, 6, 1]
                 ]
-            }, {
-                name: 'c',
-                families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
-                difficulty: 2,
-                shape: [
-                    [1, 1, 0], // fret, string, finger 0 1 0 2 3
-                    [1, 2, 1],
-                    [1, 3, 0],
-                    [2, 4, 2],
-                    [3, 5, 3],
-                    [1, 6, -1]
-                ]
-            }, {
-                name: 'a',
-                families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
-                difficulty: 2,
-                shape: [
-                    [3, 1, -1], // fret, string, finger
-                    [3, 2, 0],
-                    [3, 3, 1],
-                    [3, 4, 2],
-                    [3, 5, 3],
-                    [3, 6, 0]
-                ]
-            }, {
-                name: 'b',
-                families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
-                difficulty: 2,
-                shape: [
-                    [18, 1, 0], // fret, string, finger
-                    [19, 2, -1],
-                    [17, 3, 1],
-                    [18, 4, 2],
-                    [18, 5, 3],
-                    [17, 6, 0]
-                ]
-            }, {
-                name: 'f',
-                families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
-                difficulty: 2,
-                shape: [
-                    [11, 1, -1], // fret, string, finger
-                    [11, 2, 0],
-                    [11, 3, 1],
-                    [12, 4, 2],
-                    [12, 5, 3],
-                    [11, 6, 0]
-                ]
-            }, {
-                name: 'g',
-                families: ['g', 'c', 'd', 'em', 'am', 'bm'],
-                difficulty: 4,
-                shape: [
-                    [3, 1, 1],
-                    [2, 2, 2],
-                    [1, 3, -1],
-                    [1, 4, 0],
-                    [1, 5, 0],
-                    [3, 6, 3]
-                ]
-            }, {
-                name: 'g6', // uses a bar ( -2)
-                families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
-                difficulty: 2,
-                shape: [
-                    [7, 1, -2], // fret, string, finger
-                    [8, 2, 1],
-                    [7, 3, 0],
-                    [9, 4, 2],
-                    [7, 5, 0],
-                    [7, 6, 0]
-                ]
-            }, {
-                name: 'e',
+            }
+            , {
+                name: 'G/B',
                 families: ['e', 'a', 'b', 'cm', 'fm', 'gm'],
                 difficulty: 3,
                 shape: [
@@ -386,42 +315,6 @@ function guitarModel() {
                     [4, 4, 1],
                     [5, 5, 1],
                     [6, 6, 1]
-                ]
-            }, {
-                name: 'c',
-                families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
-                difficulty: 2,
-                shape: [
-                    [1, 1, 0], // fret, string, finger 0 1 0 2 3
-                    [1, 2, 1],
-                    [1, 3, 0],
-                    [2, 4, 2],
-                    [3, 5, 3],
-                    [1, 6, -1]
-                ]
-            }, {
-                name: 'a',
-                families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
-                difficulty: 2,
-                shape: [
-                    [3, 1, -1], // fret, string, finger
-                    [3, 2, 0],
-                    [3, 3, 1],
-                    [3, 4, 2],
-                    [3, 5, 3],
-                    [3, 6, 0]
-                ]
-            }, {
-                name: 'b',
-                families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
-                difficulty: 2,
-                shape: [
-                    [18, 1, 0], // fret, string, finger
-                    [19, 2, -1],
-                    [17, 3, 1],
-                    [18, 4, 2],
-                    [18, 5, 3],
-                    [17, 6, 0]
                 ]
             }
         ],
@@ -451,7 +344,7 @@ function guitarModel() {
             [18, 0],
             [19, 0],
         ],
-        getChordsByCategory: function(category) {
+        getChordsByCategory: function (category) {
             var resultsArr = [];
             category = category.toLowerCase();
             if (category.indexOf('key of ') > -1) {
