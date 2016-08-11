@@ -1,11 +1,9 @@
-<menuitem>
-<button class='chord-button'> ddsdsdas </button>
-</menuitem>
-
 <chords-menu-w-progress>
     <div each={mi in menuItems }>
         <div style='border:solid 1px red;'>
-            <raw content="{ mi }" />
+            <raw>
+                <button class='chord-button'> {mi.name} {mi.index} </button>
+            </raw>
         </div>
     </div>
     <style></style>
@@ -25,10 +23,9 @@
         renderMenuItems() {
             for (var i = 0; i < 10; i++) {
                 this.menuItems.push({
-                    "name": "sds",
-                    "tag": "menuitem"
+                    "name": "fred",
+                    "index": i
                 });
-                console.log('pushed!!');
             }
             this.update();
         }
