@@ -32,22 +32,26 @@
         self.on('update', function() {});
 
         updateLine(duration) {
-            // todo: fire a 'started' event 
-            // todo: fire a 'progressed' event 
-            // todo: fire a 'completed' event 
-
+            if (self.opts.start) {
+                self.opts.start();
+            }
             var endMillis = new Date().getTime() + parseInt(duration);
             var millisRightNow = null;
+            var width = null;
             var interval = setInterval(function() {
                 millisRightNow = new Date().getTime();
                 if (endMillis >= millisRightNow) {
-                    var width = ((endMillis - millisRightNow) / duration) * 100;
-                    console.log(Math.floor(width));
+                    width = ((endMillis - millisRightNow) / duration) * 100;
+                    width = Math.floor(width);
                     $('#line').css('width', width + '%');
+                    if (self.opts.progress) {
+                        self.opts.progress();
+                    }
                 } else {
-                    console.log('done');
-                    console.log(millisRightNow);
                     clearInterval(interval);
+                    if (self.opts.end) {
+                        self.opts.end();
+                    }
                 }
             }, self.opts.speed || 50);
         }

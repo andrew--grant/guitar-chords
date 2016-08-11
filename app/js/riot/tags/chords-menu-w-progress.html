@@ -1,0 +1,36 @@
+<menuitem>
+<button class='chord-button'> ddsdsdas </button>
+</menuitem>
+
+<chords-menu-w-progress>
+    <div each={mi in menuItems }>
+        <div style='border:solid 1px red;'>
+            <raw content="{ mi }" />
+        </div>
+    </div>
+    <style></style>
+    <script>
+        var self = this;
+        this.menuItems = [];
+
+        self.on('mount', function() {
+            // apply default menu items filter
+            self.renderMenuItems();
+        });
+
+        self.on('update', function() {});
+
+        chordSelected(e) {}
+
+        renderMenuItems() {
+            for (var i = 0; i < 10; i++) {
+                this.menuItems.push({
+                    "name": "sds",
+                    "tag": "menuitem"
+                });
+                console.log('pushed!!');
+            }
+            this.update();
+        }
+    </script>
+</chords-menu-w-progress>

@@ -2,9 +2,16 @@
     <!-- <chord-selector doselect={chordSelected} chords={opts.chords} frets={opts.frets}></chord-selector> -->
 
     <chord-category-selector doselect={chordSetSelected} doplay={playChords}/>
-    <progress-bar duration='5'></progress-bar>
+    <progress-bar duration='7' start={doProgressStart} end={doProgressEnd} progress={doProgress}></progress-bar>
     <guitar model={opts} chordfamilychanged={chordFamilyChanged}></guitar>
+
+    <hr>
+    <chords-menu-w-progress></chords-menu-w-progress>
+    <hr>
+
+
     <chords-menu doselect={chordSelected} model={opts}></chords-menu>
+
     <style>
 
     </style>
@@ -18,6 +25,18 @@
             guitarTag = self.tags['guitar'];
             chordsMenu = self.tags['chords-menu'];
         });
+
+        doProgressStart() {
+            console.log('started!!');
+        }
+
+        doProgressEnd() {
+            console.log('ended!!');
+        }
+
+        doProgress() {
+            console.log('progress!!');
+        }
 
         showTuner() {}
 
