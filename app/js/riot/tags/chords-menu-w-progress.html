@@ -1,12 +1,61 @@
 <chords-menu-w-progress>
-    <div each={mi in menuItems }>
-        <div style='border:solid 1px red;'>
-            <raw>
-                <button class='chord-button'> {mi.name} {mi.index} </button>
-            </raw>
-        </div>
+    <div each={mi in menuItems } class='chord-button-container'>
+        <!-- button and progress indicator-->
+        <button id={mi.index} class='chord-button'>{mi.name}</button>
+        <div>xxxxx</div>
+
     </div>
-    <style></style>
+    <style>
+        .chords-menu {
+            margin: auto;
+            text-align: center;
+            font-size: 2em;
+            max-width: 1000px;
+            min-width: 800px;
+        }
+        
+        .chord-button {
+            background-color: #222;
+            margin: .2em;
+            padding: .2em;
+            color: #eee;
+            font-size: 1em;
+            border: none;
+            border-radius: 4px 4px 0 0 !important;
+            outline: none;
+            min-width: 50px;
+        }
+        
+        .chord-button-container {
+            float: left;
+            border: solid 1px red;
+            /*todo: style this properly*/
+            /*todo: remove src/import of unused file, appears to generate
+            css in head even when ot used as actual tag*/
+        }
+        
+        .chord-button:hover {
+            background-color: #c22;
+            color: white;
+            font-size: 1em;
+        }
+        
+        .chord-button:active {
+            background-color: #c22;
+            color: white;
+            height: 100%;
+        }
+        
+        .chord-button-active {
+            background-color: #c22;
+            color: white;
+            height: 100%;
+        }
+        
+        .chord-selected {
+            background-color: #c22;
+        }
+    </style>
     <script>
         var self = this;
         this.menuItems = [];
@@ -23,7 +72,7 @@
         renderMenuItems() {
             for (var i = 0; i < 10; i++) {
                 this.menuItems.push({
-                    "name": "fred",
+                    "name": "G",
                     "index": i
                 });
             }
