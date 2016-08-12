@@ -1,9 +1,8 @@
 <chords-menu-w-progress>
     <div each={mi in menuItems } class='chord-button-container'>
         <!-- button and progress indicator-->
-        <button id="chord-button-{mi.index}" " class='chord-button'>G</button>
-        <progress-bar duration="10 " start={doProgressStart} end={doProgressEnd} progress={doProgress}></progress-bar>
-
+        <button id="chord-button-{mi.index}" class='chord-button' onclick={chordSelected}>G</button>
+        <progress-bar id="progress-bar-{mi.index}" duration="10 " start={doProgressStart} end={doProgressEnd} progress={doProgress} loaded={doProgressLoaded}/>
     </div>
     <style>
         .chords-menu {
@@ -67,24 +66,34 @@
 
         self.on('update', function() {});
 
-        chordSelected(e) {}
+        chordSelected(e) {
+            console.log('chordSelected --> ' + e.target.innerText);
+            // todo: update firing issue to address
+            // todo: how to access can call start() on specific
+            // buttons progres bar?
+        }
 
         renderMenuItems() {
             for (var i = 0; i < 10; i++) {
                 this.menuItems.push({
-                    "name ": "G ",
-                    "index ": i
+                    "name": "G",
+                    "index": i
                 });
             }
             this.update();
         }
- 
+
+        doProgressLoaded(pb) {
+            // console.log('doProgressLoaded');
+            // pb.start();
+        }
+
         doProgressStart() {
             //console.log('doProgressStart');
         }
 
         doProgressEnd() {
-            console.log('doProgressEnd');
+            //console.log('doProgressEnd');
         }
 
         doProgress() {

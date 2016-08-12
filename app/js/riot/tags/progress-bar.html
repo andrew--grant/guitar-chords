@@ -1,6 +1,6 @@
 <progress-bar>
 
-    <div class="progress-line-container">
+    <div id="{opts.id}" class="progress-line-container">
         <div class="progress-line"></div>
     </div>
 
@@ -25,15 +25,29 @@
 
     <script>
         var self = this;
+        //self.progressStarted = false; 
 
         self.on('mount', function() {
-            self.updateLine(self.opts.duration * 1000);
+            //console.log('mount ' + self.opts.loaded); // undefined 
+            // self.startProgress(self.opts.duration * 1000);
         });
 
-        self.on('update', function() {});
+        self.on('update', function() {
+            console.log('progress-bar update fired');
+            // cant do this in mount, function 
+            // is undefined at that point
+            if (!this.progressStarted) {
+                self.opts.loaded(self);
+            } else {
+                this.progressStarted = true;
+            }
+        });
 
-        updateLine(duration) {
+        start() {
+            self.startProgress(self.opts.duration * 1000);
+        }
 
+        startProgress(duration) {
             if (self.opts.start) {
                 self.opts.start();
             }
@@ -45,8 +59,8 @@
                 if (endMillis >= millisRightNow) {
                     width = ((endMillis - millisRightNow) / duration) * 100;
                     width = Math.floor(width);
-                    console.log($('progress-bar .progress-line').length + ' w = ' + width);
-                    $('progress-bar .progress-line').first().css('width', width + '%');
+                    // todo: target a specific one, not all of them
+                    $('progress-bar .progress-line').css('width', width + '%');
                     if (self.opts.progress) {
                         self.opts.progress();
                     }
