@@ -232,7 +232,7 @@ function guitarModel() {
                     [1, 6, -1]
                 ]
             }, {
-                name: 'Major Triad 1',
+                name: 'Asus7#',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -244,7 +244,7 @@ function guitarModel() {
                     [3, 6, 0]
                 ]
             }, {
-                name: 'Major Triad 2',
+                name: 'Major 3',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -256,7 +256,7 @@ function guitarModel() {
                     [17, 6, 0]
                 ]
             }, {
-                name: 'Major Triad 3',
+                name: 'Major 7',
                 families: ['a', 'd', 'e', 'f#m', 'bm', 'c#m'],
                 difficulty: 2,
                 shape: [
@@ -303,8 +303,7 @@ function guitarModel() {
                     [5, 5, 1],
                     [6, 6, 1]
                 ]
-            }
-            , {
+            }, {
                 name: 'G/B',
                 families: ['e', 'a', 'b', 'cm', 'fm', 'gm'],
                 difficulty: 3,
@@ -344,7 +343,7 @@ function guitarModel() {
             [18, 0],
             [19, 0],
         ],
-        getChordsByCategory: function (category) {
+        getChordsByCategory: function(category) {
             var resultsArr = [];
             category = category.toLowerCase();
             if (category.indexOf('key of ') > -1) {

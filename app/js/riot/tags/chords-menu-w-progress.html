@@ -1,8 +1,8 @@
 <chords-menu-w-progress>
     <div each={mi in menuItems } class='chord-button-container'>
         <!-- button and progress indicator-->
-        <button id="chord-button-{mi.index}" class='chord-button' onclick={chordSelected}>G</button>
-        <progress-bar shape="bar" reverse="true" id="progress-bar-{mi.index}" duration="10" start={doProgressStart} end={doProgressEnd} progress={doProgress}/>
+        <button id="{mi.index}" class='chord-button' onclick={chordSelected}>{mi.name}</button>
+        <progress-bar shape="bar" reverse="true" id="{mi.index}" duration="10" start={doProgressStart} end={doProgressEnd} progress={doProgress}/>
     </div>
     <style>
         .chords-menu {
@@ -57,39 +57,49 @@
     </style>
     <script>
         var self = this;
+        self.chordIndex = 0;
+        self.selectedChord = null;
         this.menuItems = [];
 
         self.on('mount', function() {
             // apply default menu items filter
-            self.renderMenuItems();
+            self.renderMenuItems('Default');
         });
 
-        self.on('update', function() {});
+        self.on('update', function() {
+            self.selectedChord = self.opts.model.chords[self.chordIndex];
+        });
 
         chordSelected(e) {
-            console.log('chordSelected --> ' + e.target.innerText);
-            // todo: populate with actual chords, then query for 
-            // specific progress-bar to start (via renderMenuItems below)
-
-
-            // todo: bad - innerText could contain invalid stuff like # char, coudl 
-            // use an id to chord mapping (like button relationship is to playChord)
-            var progressBarToStart = 'progress-bar-' + e.target.innerText;
-
-            console.log(progressBarToStart);
+            self.chordIndex = e.target.id;
+            $('.chord-button').removeClass('chord-selected');
+            $(e.target).addClass('chord-selected');
+            self.opts.doselect(self.opts.model.chords[self.chordIndex]);
+            // start this menu items progress bar
             var tags = self.tags['progress-bar'];
-            tags[7].start();
-            console.log(tags[7]);
-
+            tags[e.target.id].start();
+            // todo: visuals, forward or reverse? 
+            // todo: hide progress bar indicator when not needed
+            // (no red strip underneath when ot being played)
+            // todo: test, slideshow implications will produce work
         }
 
-        renderMenuItems() {
-            for (var i = 0; i < 10; i++) {
+        renderMenuItems(filter) {
+            var chords = null;
+            if (filter) {
+                chords = self.opts.model.getChordsByCategory(filter); // self.filterChords(filter);
+            } else {
+                // default, render all or some 'simple' or 'popular' set?
+                chords = self.opts.model.chords;
+            }
+            // render chords
+            for (var i = 0; i < chords.length; i++) {
                 this.menuItems.push({
-                    "name": "G", //todo: actual chord name
+                    "name": chords[i].name, //todo: actual chord name
                     "index": i
                 });
             }
+
             this.update();
         }
 
