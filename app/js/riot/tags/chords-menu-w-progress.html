@@ -2,7 +2,7 @@
     <div each={mi in menuItems } class='chord-button-container'>
         <!-- button and progress indicator-->
         <button id="chord-button-{mi.index}" class='chord-button' onclick={chordSelected}>G</button>
-        <progress-bar id="progress-bar-{mi.index}" duration="10 " start={doProgressStart} end={doProgressEnd} progress={doProgress} loaded={doProgressLoaded}/>
+        <progress-bar id="progress-bar-{mi.index}" duration="10 " start={doProgressStart} end={doProgressEnd} progress={doProgress}/>
     </div>
     <style>
         .chords-menu {
@@ -68,15 +68,18 @@
 
         chordSelected(e) {
             console.log('chordSelected --> ' + e.target.innerText);
-            // todo: update firing issue to address
-            // todo: how to access can call start() on specific
-            // buttons progres bar?
+            // todo: populate with actual chords, then query for 
+            // specific progress-bar to start (via renderMenuItems below)
+            var tags = self.tags['progress-bar'];
+            tags[7].start();
+            console.log(tags[7]);
+
         }
 
         renderMenuItems() {
             for (var i = 0; i < 10; i++) {
                 this.menuItems.push({
-                    "name": "G",
+                    "name": "G", //todo: actual chord name
                     "index": i
                 });
             }

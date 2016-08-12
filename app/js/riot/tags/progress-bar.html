@@ -25,7 +25,7 @@
 
     <script>
         var self = this;
-        //self.progressStarted = false; 
+        self.isProgressing = false;
 
         self.on('mount', function() {
             //console.log('mount ' + self.opts.loaded); // undefined 
@@ -34,17 +34,13 @@
 
         self.on('update', function() {
             console.log('progress-bar update fired');
-            // cant do this in mount, function 
-            // is undefined at that point
-            if (!this.progressStarted) {
-                self.opts.loaded(self);
-            } else {
-                this.progressStarted = true;
-            }
         });
 
         start() {
-            self.startProgress(self.opts.duration * 1000);
+            if (!self.isProgressing) {
+                self.startProgress(self.opts.duration * 1000);
+                self.isProgressing = true;
+            }
         }
 
         startProgress(duration) {
@@ -60,12 +56,14 @@
                     width = ((endMillis - millisRightNow) / duration) * 100;
                     width = Math.floor(width);
                     // todo: target a specific one, not all of them
-                    $('progress-bar .progress-line').css('width', width + '%');
+                    console.log('progress-bar div#' + self.opts.id + ' .progress-line');
+                    $('progress-bar div#' + self.opts.id + ' .progress-line').css('width', width + '%');
                     if (self.opts.progress) {
                         self.opts.progress();
                     }
                 } else {
                     clearInterval(interval);
+                    self.isProgressing = false;
                     if (self.opts.end) {
                         self.opts.end();
                     }
