@@ -1,6 +1,6 @@
 <app>
     <chord-category-selector doselect={chordSetSelected} doplay={playChords}/>
-    <progress-bar duration='7' start={doProgressStart} end={doProgressEnd} progress={doProgress}></progress-bar>
+    <!--<progress-bar duration='2' start={doProgressStart} end={doProgressEnd} progress={doProgress}></progress-bar>-->
     <guitar model={opts} chordfamilychanged={chordFamilyChanged}></guitar>
 
     <chords-menu-w-progress></chords-menu-w-progress>
@@ -21,17 +21,17 @@
             chordsMenu = self.tags['chords-menu'];
         });
 
-        doProgressStart() {
-            console.log('started!!');
-        }
+        // doProgressStart() {
+        //     console.log('started!!');
+        // }
 
-        doProgressEnd() {
-            console.log('ended!!');
-        }
+        // doProgressEnd() {
+        //     console.log('ended!!');
+        // }
 
-        doProgress() {
-            console.log('progress!!');
-        }
+        // doProgress() {
+        //     console.log('progress!!');
+        // }
 
         showTuner() {}
 

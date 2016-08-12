@@ -1,21 +1,22 @@
 <progress-bar>
 
-    <div id="line-container">
-        <div id="line"></div>
+    <div class="progress-line-container">
+        <div class="progress-line"></div>
     </div>
 
     <style>
-        #line-container {
+        .progress-line-container {
             height: 4px;
             width: 100%;
             margin: auto;
-            margin-top: 1em;
-            max-width: 1000px;
-            min-width: 800px;
+            margin-top: 0;
+            padding: 0;
+            /*max-width: 1000px;
+            min-width: 800px;*/
             background-color: #000;
         }
         
-        #line {
+        .progress-line {
             height: 100%;
             width: 100%;
             background-color: #f00;
@@ -32,6 +33,7 @@
         self.on('update', function() {});
 
         updateLine(duration) {
+
             if (self.opts.start) {
                 self.opts.start();
             }
@@ -43,7 +45,8 @@
                 if (endMillis >= millisRightNow) {
                     width = ((endMillis - millisRightNow) / duration) * 100;
                     width = Math.floor(width);
-                    $('#line').css('width', width + '%');
+                    console.log($('progress-bar .progress-line').length + ' w = ' + width);
+                    $('progress-bar .progress-line').first().css('width', width + '%');
                     if (self.opts.progress) {
                         self.opts.progress();
                     }
