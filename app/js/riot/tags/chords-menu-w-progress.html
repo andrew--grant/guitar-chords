@@ -1,16 +1,20 @@
 <chords-menu-w-progress>
-    <div each={mi in menuItems } class='chord-button-container'>
-        <!-- button and progress indicator-->
-        <button id="{mi.index}" class='chord-button' onclick={chordSelected}>{mi.name}</button>
-        <progress-bar shape="bar" reverse="true" id="{mi.index}" duration="10" start={doProgressStart} end={doProgressEnd} progress={doProgress}/>
+    <div class="chords-menu">
+        <div each={mi in menuItems } class='chord-button-container'>
+            <!-- button and progress indicator-->
+            <button id="{mi.index}" class='chord-button' onclick={chordSelected}>{mi.name}</button>
+            <progress-bar reverse="true" id="progress-bar-{mi.index}" duration="10" start={doProgressStart} end={doProgressEnd} progress={doProgress} removewhencomplete="true" />
+        </div>
     </div>
     <style>
         .chords-menu {
             margin: auto;
             text-align: center;
-            font-size: 2em;
             max-width: 1000px;
             min-width: 800px;
+            overflow: hidden;
+            background-color: #ccc;
+            border-radius: 4px;
         }
         
         .chord-button {
@@ -20,7 +24,7 @@
             color: #eee;
             font-size: 2em;
             border: none;
-            border-radius: 4px 4px 0 0;
+            border-radius: 4px;
             outline: none;
             width: 100%;
         }
@@ -32,6 +36,7 @@
             margin: .25em;
             text-align: center;
             width: 130px;
+            position: relative;
         }
         
         .chord-button:hover {
@@ -75,37 +80,35 @@
             $('.chord-button').removeClass('chord-selected');
             $(e.target).addClass('chord-selected');
             self.opts.doselect(self.opts.model.chords[self.chordIndex]);
-            // start this menu items progress bar
+            // start this menu items' progress bar
             var tags = self.tags['progress-bar'];
             tags[e.target.id].start();
-            // todo: visuals, forward or reverse? 
-            // todo: hide progress bar indicator when not needed
-            // (no red strip underneath when ot being played)
-            // todo: test, slideshow implications will produce work
         }
 
         renderMenuItems(filter) {
             var chords = null;
             if (filter) {
-                chords = self.opts.model.getChordsByCategory(filter); // self.filterChords(filter);
+                chords = self.opts.model.getChordsByCategory(filter);
             } else {
                 // default, render all or some 'simple' or 'popular' set?
                 chords = self.opts.model.chords;
             }
+            // clear out old data
+            this.menuItems = [];
             // render chords
+            $('.chords-menu').hide();
             for (var i = 0; i < chords.length; i++) {
                 this.menuItems.push({
-                    "name": chords[i].name, //todo: actual chord name
+                    "name": chords[i].name,
                     "index": i
                 });
             }
-
             this.update();
+            $('.chords-menu').fadeIn();
         }
 
         doProgressLoaded(pb) {
-            // console.log('doProgressLoaded');
-            // pb.start();
+            // console.log('doProgressLoaded'); 
         }
 
         doProgressStart() {
@@ -114,6 +117,8 @@
 
         doProgressEnd() {
             //console.log('doProgressEnd');
+
+
         }
 
         doProgress() {

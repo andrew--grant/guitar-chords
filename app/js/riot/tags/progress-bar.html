@@ -5,37 +5,40 @@
     </div>
 
     <style>
+        progress-bar {
+            display: none;
+        }
+        
         .progress-line-container {
-            height: 4px;
+            height: 70px;
             width: 100%;
             margin: auto;
-            margin-top: 0;
+            margin-top: -70px;
+            position: absolute;
+            z-index: 1000;
             padding: 0;
-            background-color: #222;
+            background-color: none;
         }
         
         .progress-line {
             height: 100%;
+            opacity: .2;
             width: 100%;
-            background-color: #f00;
+            background-color: #fff;
         }
     </style>
 
     <script>
         var self = this;
         self.isProgressing = false;
+        self.selector = '#' + self.opts.id;
+        self.on('mount', function() {});
 
-        self.on('mount', function() {
-            //console.log('mount ' + self.opts.loaded); // undefined 
-            // self.startProgress(self.opts.duration * 1000);
-        });
-
-        self.on('update', function() {
-            console.log('progress-bar update fired');
-        });
+        self.on('update', function() {});
 
         start() {
             if (!self.isProgressing) {
+                $(self.selector).show();
                 self.startProgress(self.opts.duration * 1000);
                 self.isProgressing = true;
             }
@@ -53,8 +56,6 @@
                 if (endMillis >= millisRightNow) {
                     width = ((endMillis - millisRightNow) / duration) * 100;
                     width = Math.floor(width);
-                    // todo: target a specific one, not all of them
-                    console.log('progress-bar div#' + self.opts.id + ' .progress-line');
                     $('progress-bar div#' + self.opts.id + ' .progress-line').css('width', width + '%');
                     if (self.opts.progress) {
                         self.opts.progress();
@@ -64,6 +65,9 @@
                     self.isProgressing = false;
                     if (self.opts.end) {
                         self.opts.end();
+                    }
+                    if (self.opts.removewhencomplete == 'true') {
+                        $(self.selector).hide();
                     }
                 }
             }, self.opts.speed || 50);

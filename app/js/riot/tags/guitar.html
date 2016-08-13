@@ -45,6 +45,23 @@
             // can use removeChord 
             self.guitar.removeChord();
             self.guitar.drawChord(chord);
+            var tags = self.parent.tags['progress-bar'];
+
+            // todo: progress bar on/off to also go here !!!!!!!!!!!!!!!!!!!!!
+            console.log(self.parent);
+            console.log(self.parent.root.children);
+
+
+            // self.chordIndex = e.target.id;
+            // $('.chord-button').removeClass('chord-selected');
+            // $(e.target).addClass('chord-selected');
+            // self.opts.doselect(self.opts.model.chords[self.chordIndex]);
+            // // start this menu items' progress bar
+            // var tags = self.tags['progress-bar'];
+            // console.log(tags);
+            // tags[e.target.id].start();
+
+
         }
 
         removeChordEls() {

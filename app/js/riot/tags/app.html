@@ -1,15 +1,8 @@
 <app>
     <chord-category-selector doselect={chordSetSelected} doplay={playChords}/>
-    <!--<progress-bar duration='2' start={doProgressStart} end={doProgressEnd} progress={doProgress}></progress-bar>-->
     <guitar model={opts} chordfamilychanged={chordFamilyChanged}></guitar>
-
     <chords-menu-w-progress model={opts} doselect={chordSelected}></chords-menu-w-progress>
-
-    <!--<chords-menu doselect={chordSelected} model={opts}></chords-menu>-->
-
-    <style>
-
-    </style>
+    <style></style>
     <script>
         var self = this;
         var guitarTag = null;
@@ -18,20 +11,8 @@
 
         self.on('mount', function(e) {
             guitarTag = self.tags['guitar'];
-            chordsMenu = self.tags['chords-menu'];
+            chordsMenu = self.tags['chords-menu-w-progress'];
         });
-
-        // doProgressStart() {
-        //     console.log('started!!');
-        // }
-
-        // doProgressEnd() {
-        //     console.log('ended!!');
-        // }
-
-        // doProgress() {
-        //     console.log('progress!!');
-        // }
 
         showTuner() {}
 
@@ -43,12 +24,8 @@
         }
 
         chordSelected(chord) {
-            self.drawChord(chord);
-        }
-
-        drawChord(chord) {
             guitarTag.drawChord(chord);
-        }
+        } 
 
         chordCategoryChanged(category) {
             console.log('chordfamilychanged: ' + category);
@@ -61,8 +38,7 @@
                 guitarTag.guitar.playChordCategory(chordCategory);
             } else {
                 console.log('currentChordCategory is null');
-                // todo: logic for this case
-                // set a default, pop up a warning etc
+                // todo: logic for this cases
             }
         }
 
