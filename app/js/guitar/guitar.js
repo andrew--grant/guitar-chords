@@ -161,7 +161,7 @@ Guitar.prototype.removeChord = function(chord) {
 Guitar.prototype.slide = function(chord) {
     var self = this;
 
-    self.shadowState.state = 'removing';
+    self.shadowState.state = 'removing'; // todo:wtf? undefined!!!!!!!!!!!!!!!!!!!
     $('.fret-number').show();
     $('#fret1shadow').fadeOut(function() {
         $('#fret1shadow').remove();
