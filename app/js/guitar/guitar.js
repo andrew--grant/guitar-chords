@@ -14,7 +14,7 @@ var Guitar = function(svg, opts) {
     this.opts = opts == null ? {} : opts;
     opts.defaults = {};
     opts.defaults.stringColour = 'red';
-    opts.defaults.fingerColour = 'black';
+    opts.defaults.fingerColour = 'blue';
     opts.defaults.barColour = '#8B0000';
     opts.defaults.fingerNumberColour = 'white';
     opts.defaults.fretColour = '#D2B48C';
