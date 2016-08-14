@@ -24,24 +24,20 @@
         }
 
         chordSelected(chord) {
-            guitarTag.drawChord(chord, 'zzz');
-        }
-
-        chordCategoryChanged(category) {
-            // todo: remove this function, appears to be unused
-            console.log('chordfamilychanged: ' + category);
-            currentChordCategory = category;
+            guitarTag.drawChord(chord);
         }
 
         playChords() {
+            // todo: fix all dbl click issues, inc drop shadow multiple render problem
+            // todo: clear any active button states so not active at start of slideshow
+            // todo: slideshow interupt solution - presently allows
+            // for actiavting buttons while in progress
+            // todo: issue of timer starting when chords not quite animated/rendered to screen
+            currentChordCategory = currentChordCategory || 'Default';
+            var pbArr = self.tags['chords-menu-w-progress'].tags['progress-bar'];
+            var chordCategory = self.opts.getChordsByCategory(currentChordCategory);
             if (currentChordCategory) {
-                console.log();
-                var pbArr = self.tags['chords-menu-w-progress'].tags['progress-bar'];
-                var chordCategory = self.opts.getChordsByCategory(currentChordCategory);
                 guitarTag.guitar.playChordCategory(chordCategory, pbArr);
-            } else {
-                console.log('currentChordCategory is null');
-                // todo: logic for this cases
             }
         }
 

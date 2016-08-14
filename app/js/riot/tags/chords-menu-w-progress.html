@@ -80,9 +80,10 @@
             $('.chord-button').removeClass('chord-selected');
             $(e.target).addClass('chord-selected');
             self.opts.doselect(self.opts.model.chords[self.chordIndex]);
-            // start this menu items' progress bar
-            var tags = self.tags['progress-bar'];
-            tags[e.target.id].start();
+            // dont do this when manually clicked, only
+            // need to use in slide-show mode
+            // var tags = self.tags['progress-bar'];
+            // tags[e.target.id].start();
         }
 
         renderMenuItems(filter) {
