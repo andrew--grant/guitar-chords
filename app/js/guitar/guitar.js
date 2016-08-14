@@ -80,7 +80,7 @@ Guitar.prototype.drawFretBoard = function() {
 }
 
 Guitar.prototype.drawChord = function(chord) {
-    console.log('Guitar.prototype.drawChord');
+
     this.fretBoard.drawChord(chord);
     var delayTime = 0;
     $('.chord-indicator-finger,.chord-indicator-finger-text')
@@ -111,16 +111,18 @@ Guitar.prototype.drawChord = function(chord) {
         // have multiple elements that need updating
         // todo: animate/fade etc
         $(elsToMakeActive[0]).addClass('chord-button-active');
-
+        console.log('global to all');
     }
 
     this.slide(chord);
 }
 
-Guitar.prototype.playChordCategory = function(chordCategory) {
+Guitar.prototype.playChordCategory = function(chordCategory, pbArr) {
+
+
     var self = this;
     _.forEach(chordCategory, function(value, index) {
-        var interval = 7000;
+        var interval = 10000; // needs to be automatically same as slideshow setting, hving to manually match them atm
         // todo: allow for interupting, clear all timeouts
         // todo: set a 'time to grab guitar' delay
         setTimeout(function() {
@@ -129,6 +131,10 @@ Guitar.prototype.playChordCategory = function(chordCategory) {
             // todo: highlight currently playing chord (on the menu item)
             // todo: need to allow looping? A setting?
             // todo: photo library, optional setting?
+            //var tags = self.tags['progress-bar']; 
+            //console.log(value);
+            console.log(pbArr[index]);
+            pbArr[index].start(); // todo: fix! Not in sync, but working at last !!!!!!!! see 'interval' var above
             self.removeChord();
             self.drawChord(value);
         }, interval * index);
