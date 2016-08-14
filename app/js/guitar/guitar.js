@@ -42,6 +42,7 @@ var Guitar = function(svg, opts) {
     this.slidToFret = 2; // default, fret 2 is butted up against fret 1
     this.lastSlidtoNum = 0; // default, not moved yet
     this.opts.fret1x = this.x;
+    self.shadowState.state = 'removed'; // no shadow at this time
 }
 
 Guitar.prototype.drawFretBoard = function() {
@@ -158,9 +159,13 @@ Guitar.prototype.removeChord = function(chord) {
 
 Guitar.prototype.slide = function(chord) {
     var self = this;
+
+    var shadowState = {};
+    self.shadowState.state = 'removing';
     $('.fret-number').show();
     $('#fret1shadow').fadeOut(function() {
         $('#fret1shadow').remove();
+        shadowState.state = 'removed';
     });
 
     self.svg.select('#fret1')
@@ -197,22 +202,27 @@ Guitar.prototype.slide = function(chord) {
     // and hide fret number before it
     var fretNum = leftMostFretForChord;
     if (fretNum > 3) {
+
         $('#fret-number-' + (fretNum - 2)).hide();
         $('#fret-number-' + (fretNum - 3)).hide();
 
         var gradient = self.svg.gradient("l(0, 0, 1, 0)-rgba(55,55,55,.7)-rgba(0,0,0,.3)-rgba(0,0,0,0)");
-
         var fretWidth = self.opts.fingerSize * 6;
         var fretHeight = self.fretBoard.frets[0].fretHeight
         var shadowx = parseInt(self.svg.select('#fret1').attr('x'));
         // todo: bug here - dbl clicking will cause multiple shadows, and remove only
         // removes one of them. Solve via a boroader dbl click prevention solution?
+
+        self.shadowState.state = 'adding';
         var fret1Shadow = this.svg.rect(shadowx + fretWidth, self.y, fretWidth / 12, fretHeight);
         fret1Shadow.attr({
             fill: gradient,
             id: 'fret1shadow'
         });
-        $('#fret1shadow').hide().insertAfter($('#fret2toN')).fadeIn();
+        $('#fret1shadow').hide().insertAfter($('#fret2toN')).fadeIn(function() { self.shadowState.state = 'added'; });
+
+        // todo: test this shadowState.state approach !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     }
 }
 
