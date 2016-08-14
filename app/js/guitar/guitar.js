@@ -42,6 +42,7 @@ var Guitar = function(svg, opts) {
     this.slidToFret = 2; // default, fret 2 is butted up against fret 1
     this.lastSlidtoNum = 0; // default, not moved yet
     this.opts.fret1x = this.x;
+    self.shadowState = {};
     self.shadowState.state = 'removed'; // no shadow at this time
 }
 
