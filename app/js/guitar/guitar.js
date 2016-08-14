@@ -165,7 +165,7 @@ Guitar.prototype.slide = function(chord) {
     $('.fret-number').show();
     $('#fret1shadow').fadeOut(function() {
         $('#fret1shadow').remove();
-        shadowState.state = 'removed';
+        self.shadowState.state = 'removed';
     });
 
     self.svg.select('#fret1')
