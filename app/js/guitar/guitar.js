@@ -42,8 +42,6 @@ var Guitar = function(svg, opts) {
     this.slidToFret = 2; // default, fret 2 is butted up against fret 1
     this.lastSlidtoNum = 0; // default, not moved yet
     this.opts.fret1x = this.x;
-    self.shadowState = {};
-    self.shadowState.state = 'removed'; // no shadow at this time
 }
 
 Guitar.prototype.drawFretBoard = function() {
@@ -113,7 +111,6 @@ Guitar.prototype.drawChord = function(chord) {
         // have multiple elements that need updating
         // todo: animate/fade etc
         $(elsToMakeActive[0]).addClass('chord-button-active');
-        console.log('global to all');
     }
 
     this.slide(chord);
@@ -159,22 +156,16 @@ Guitar.prototype.removeChord = function(chord) {
 }
 
 Guitar.prototype.slide = function(chord) {
-    var self = this;
-
-    self.shadowState.state = 'removing'; // todo:wtf? undefined!!!!!!!!!!!!!!!!!!!
-    $('.fret-number').show();
-    $('#fret1shadow').fadeOut(function() {
-        $('#fret1shadow').remove();
-        self.shadowState.state = 'removed';
-    });
-
-    self.svg.select('#fret1')
-        .attr({
-            filter: null // todo: fade out? is this even required anymore?
-        });
-
     // todo: remove any unused vars
     // todo: look for any optmisations 
+
+    var self = this;
+
+    $('.fret-number').show();
+    $('#fret1shadow').remove(); // todo: only remove if not required!!!!!!!
+    // $('#fret1shadow').fadeOut(function() {
+    //     $('#fret1shadow').remove();
+    // });
 
     var fretArr = [];
     for (var i = 0; i < 6; i++) {
@@ -198,8 +189,7 @@ Guitar.prototype.slide = function(chord) {
         }
     );
 
-    // prevent fret number overlaying fret number of fret 1
-    // and hide fret number before it
+    // prevent fret number overlaying fret number of fret 1 and hide fret number before it
     var fretNum = leftMostFretForChord;
     if (fretNum > 3) {
 
@@ -210,18 +200,15 @@ Guitar.prototype.slide = function(chord) {
         var fretWidth = self.opts.fingerSize * 6;
         var fretHeight = self.fretBoard.frets[0].fretHeight
         var shadowx = parseInt(self.svg.select('#fret1').attr('x'));
-        // todo: bug here - dbl clicking will cause multiple shadows, and remove only
-        // removes one of them. Solve via a boroader dbl click prevention solution?
 
-        self.shadowState.state = 'adding';
         var fret1Shadow = this.svg.rect(shadowx + fretWidth, self.y, fretWidth / 12, fretHeight);
         fret1Shadow.attr({
             fill: gradient,
             id: 'fret1shadow'
         });
-        $('#fret1shadow').hide().insertAfter($('#fret2toN')).fadeIn(function() { self.shadowState.state = 'added'; });
 
-        // todo: test this shadowState.state approach !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        $('#fret1shadow').hide().insertAfter($('#fret2toN')).fadeIn(function() {});
+
 
     }
 }
