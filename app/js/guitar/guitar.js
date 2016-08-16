@@ -162,7 +162,10 @@ Guitar.prototype.slide = function(chord) {
     var self = this;
 
     $('.fret-number').show();
-    $('#fret1shadow').remove(); // todo: only remove if not required!!!!!!!
+
+    // $('#fret1shadow').remove(); // todo: only remove if not required!!!!!!!
+
+
     // $('#fret1shadow').fadeOut(function() {
     //     $('#fret1shadow').remove();
     // });
@@ -200,16 +203,21 @@ Guitar.prototype.slide = function(chord) {
         var fretWidth = self.opts.fingerSize * 6;
         var fretHeight = self.fretBoard.frets[0].fretHeight
         var shadowx = parseInt(self.svg.select('#fret1').attr('x'));
+        if ($('#fret1shadow').length > 0) {
 
-        var fret1Shadow = this.svg.rect(shadowx + fretWidth, self.y, fretWidth / 12, fretHeight);
-        fret1Shadow.attr({
-            fill: gradient,
-            id: 'fret1shadow'
-        });
+        } else {
 
-        $('#fret1shadow').hide().insertAfter($('#fret2toN')).fadeIn(function() {});
+            var fret1Shadow = this.svg.rect(shadowx + fretWidth, self.y, fretWidth / 12, fretHeight);
+            fret1Shadow.attr({
+                fill: gradient,
+                id: 'fret1shadow'
+            });
 
+            $('#fret1shadow').hide().insertAfter($('#fret2toN')).fadeIn(function() {});
+        }
 
+    } else {
+        $('#fret1shadow').fadeOut(function() { $('#fret1shadow').remove(); });
     }
 }
 
