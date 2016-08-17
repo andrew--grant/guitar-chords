@@ -42,6 +42,7 @@ var Guitar = function(svg, opts) {
     this.slidToFret = 2; // default, fret 2 is butted up against fret 1
     this.lastSlidtoNum = 0; // default, not moved yet
     this.opts.fret1x = this.x;
+    this.pendingTimeouts = [];
 }
 
 Guitar.prototype.drawFretBoard = function() {
@@ -119,24 +120,24 @@ Guitar.prototype.drawChord = function(chord) {
 Guitar.prototype.playChordCategory = function(chordCategory, pbArr) {
 
 
+
+
     var self = this;
     _.forEach(chordCategory, function(value, index) {
         var interval = 10000; // needs to be automatically same as slideshow setting, hving to manually match them atm
         // todo: allow for interupting, clear all timeouts
         // todo: set a 'time to grab guitar' delay
-        setTimeout(function() {
-            // todo: timer as per Chris idea (need to set a fixed size for
-            // chord menu items)
+        var timeout = setTimeout(function() {
             // todo: highlight currently playing chord (on the menu item)
             // todo: need to allow looping? A setting?
-            // todo: photo library, optional setting?
-            //var tags = self.tags['progress-bar']; 
-            //console.log(value);
-            console.log(pbArr[index]);
+            // todo: photo library, optional setting?   
             pbArr[index].start(); // todo: fix! Not in sync, but working at last !!!!!!!! see 'interval' var above
             self.removeChord();
             self.drawChord(value);
         }, interval * index);
+        // todo: we can clear these and empty array when the 
+        // slideshow is interupted (by a chord button click, for example)
+        self.pendingTimeouts.push(timeout);
     });
 }
 
@@ -162,13 +163,6 @@ Guitar.prototype.slide = function(chord) {
     var self = this;
 
     $('.fret-number').show();
-
-    // $('#fret1shadow').remove(); // todo: only remove if not required!!!!!!!
-
-
-    // $('#fret1shadow').fadeOut(function() {
-    //     $('#fret1shadow').remove();
-    // });
 
     var fretArr = [];
     for (var i = 0; i < 6; i++) {

@@ -28,16 +28,19 @@
         }
 
         playChords() {
-            // todo: fix all dbl click issues, inc drop shadow multiple render problem
+            // todo: fix all dbl click issues
             // todo: clear any active button states so not active at start of slideshow
             // todo: slideshow interupt solution - presently allows
-            // for actiavting buttons while in progress
+            // for activating buttons while in progress
             // todo: issue of timer starting when chords not quite animated/rendered to screen
             currentChordCategory = currentChordCategory || 'Default';
             var pbArr = self.tags['chords-menu-w-progress'].tags['progress-bar'];
             var chordCategory = self.opts.getChordsByCategory(currentChordCategory);
             if (currentChordCategory) {
+                $('.chord-button').removeClass('chord-selected');
                 guitarTag.guitar.playChordCategory(chordCategory, pbArr);
+            } else {
+                // todo: ?
             }
         }
 
