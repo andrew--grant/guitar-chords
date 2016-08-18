@@ -80,7 +80,19 @@ Guitar.prototype.drawFretBoard = function() {
     $('#open-notes').insertAfter($('#fret2toN'));
 }
 
-Guitar.prototype.drawChord = function(chord) {
+Guitar.prototype.drawChord = function(chord, index, calledViaSlideshow) {
+    var self = this;
+    console.log(chord);
+    if (!calledViaSlideshow) {
+        // must be a button click, so cancel any slideshows  timeouts
+        _.forEach(self.pendingTimeouts, function(value, index) {
+            clearTimeout(self.pendingTimeouts[index]);
+            console.log('drawChord pos: ' + index);
+        });
+        self.pendingTimeouts = [];
+        $('progress-bar div#' + index + ' .progress-line').css('width', width + '%'); // todo: test if this works!!!!!!!!
+        console.log('drawChord - cleared');
+    }
 
     this.fretBoard.drawChord(chord);
     var delayTime = 0;
@@ -119,9 +131,6 @@ Guitar.prototype.drawChord = function(chord) {
 
 Guitar.prototype.playChordCategory = function(chordCategory, pbArr) {
 
-
-
-
     var self = this;
     _.forEach(chordCategory, function(value, index) {
         var interval = 10000; // needs to be automatically same as slideshow setting, hving to manually match them atm
@@ -133,7 +142,7 @@ Guitar.prototype.playChordCategory = function(chordCategory, pbArr) {
             // todo: photo library, optional setting?   
             pbArr[index].start(); // todo: fix! Not in sync, but working at last !!!!!!!! see 'interval' var above
             self.removeChord();
-            self.drawChord(value);
+            self.drawChord(value, index, true);
         }, interval * index);
         // todo: we can clear these and empty array when the 
         // slideshow is interupted (by a chord button click, for example)
