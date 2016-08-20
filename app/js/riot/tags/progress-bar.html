@@ -32,6 +32,8 @@
         var self = this;
         self.isProgressing = false;
         self.selector = '#' + self.opts.id;
+        self.interval = null;
+
         self.on('mount', function() {});
 
         self.on('update', function() {});
@@ -44,24 +46,38 @@
             }
         }
 
+        stop() {
+            if (self.isProgressing) {
+                self.isProgressing = false;
+                clearTimeout(self.interval);
+                //$('#progress-bar-' + self.opts.id).fadeOut(1000, null, function() {});
+                $('progress-bar#' + self.opts.id + ' .progress-line').css('width', '0%');
+                $('progress-bar#' + self.opts.id).hide();
+            }
+        }
+
         startProgress(duration) {
+
+            console.log('entered ' + self.opts.id);
+
             if (self.opts.start) {
                 self.opts.start();
             }
+
             var endMillis = new Date().getTime() + parseInt(duration);
             var millisRightNow = null;
             var width = null;
-            var interval = setInterval(function() {
+            self.interval = setInterval(function() {
                 millisRightNow = new Date().getTime();
                 if (endMillis >= millisRightNow) {
                     width = ((endMillis - millisRightNow) / duration) * 100;
                     width = Math.floor(width);
-                    $('progress-bar div#' + self.opts.id + ' .progress-line').css('width', width + '%');
+                    $('progress-bar#' + self.opts.id + ' div .progress-line').css('width', width + '%');
                     if (self.opts.progress) {
                         self.opts.progress();
                     }
                 } else {
-                    clearInterval(interval);
+                    clearInterval(self.interval);
                     self.isProgressing = false;
                     if (self.opts.end) {
                         self.opts.end();
@@ -71,6 +87,8 @@
                     }
                 }
             }, self.opts.speed || 50);
+
+
         }
     </script>
 

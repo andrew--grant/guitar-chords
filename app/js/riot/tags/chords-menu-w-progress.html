@@ -79,7 +79,7 @@
             self.chordIndex = e.target.id;
             $('.chord-button').removeClass('chord-selected');
             $(e.target).addClass('chord-selected');
-            self.opts.doselect(self.opts.model.chords[self.chordIndex]);
+            self.opts.doselect(self.opts.model.chords[self.chordIndex], self.chordIndex);
             // dont do this when manually clicked, only
             // need to use in slide-show mode
             // var tags = self.tags['progress-bar'];

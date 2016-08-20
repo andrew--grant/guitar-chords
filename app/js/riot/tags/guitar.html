@@ -38,13 +38,13 @@
 
         });
 
-        drawChord(chord) {
+        drawChord(chord, index) {
             // call guitar tag method with 
             // the selected chord object
             // todo: idea - make this more self contained, drawChord 
             // can use removeChord 
             self.guitar.removeChord();
-            self.guitar.drawChord(chord);
+            self.guitar.drawChord(chord, index);
 
         }
 

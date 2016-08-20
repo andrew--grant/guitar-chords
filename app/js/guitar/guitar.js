@@ -43,6 +43,7 @@ var Guitar = function(svg, opts) {
     this.lastSlidtoNum = 0; // default, not moved yet
     this.opts.fret1x = this.x;
     this.pendingTimeouts = [];
+    this.pendingProgressBars = [];
 }
 
 Guitar.prototype.drawFretBoard = function() {
@@ -82,16 +83,14 @@ Guitar.prototype.drawFretBoard = function() {
 
 Guitar.prototype.drawChord = function(chord, index, calledViaSlideshow) {
     var self = this;
-    console.log(chord);
     if (!calledViaSlideshow) {
-        // must be a button click, so cancel any slideshows  timeouts
+        // must be a button click, so cancel any slideshows timeouts
         _.forEach(self.pendingTimeouts, function(value, index) {
             clearTimeout(self.pendingTimeouts[index]);
-            console.log('drawChord pos: ' + index);
+            self.pendingProgressBars[index].stop();
         });
         self.pendingTimeouts = [];
-        $('progress-bar div#' + index + ' .progress-line').css('width', width + '%'); // todo: test if this works!!!!!!!!
-        console.log('drawChord - cleared');
+        self.pendingProgressBars = [];
     }
 
     this.fretBoard.drawChord(chord);
@@ -135,7 +134,7 @@ Guitar.prototype.playChordCategory = function(chordCategory, pbArr) {
     _.forEach(chordCategory, function(value, index) {
         var interval = 10000; // needs to be automatically same as slideshow setting, hving to manually match them atm
         // todo: allow for interupting, clear all timeouts
-        // todo: set a 'time to grab guitar' delay
+        // todo: set a 'time to grab guitar' delay  
         var timeout = setTimeout(function() {
             // todo: highlight currently playing chord (on the menu item)
             // todo: need to allow looping? A setting?
@@ -146,6 +145,7 @@ Guitar.prototype.playChordCategory = function(chordCategory, pbArr) {
         }, interval * index);
         // todo: we can clear these and empty array when the 
         // slideshow is interupted (by a chord button click, for example)
+        self.pendingProgressBars.push(pbArr[index]);
         self.pendingTimeouts.push(timeout);
     });
 }

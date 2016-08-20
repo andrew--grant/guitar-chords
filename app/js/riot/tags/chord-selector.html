@@ -54,7 +54,7 @@
 
         chordSelected(e) {
             self.chordIndex = e.target.selectedIndex;
-            self.opts.doselect(self.opts.chords[self.chordIndex]);
+            self.opts.doselect(self.opts.chords[self.chordIndex], self.chordIndex, false);
             if (e.target.isVoiceCommand) {
                 // change select UI when voice activated
                 $('#chord-select')[0].selectedIndex = self.chordIndex
